@@ -1,6 +1,7 @@
 mod backend;
 mod cli;
 mod config;
+mod docker;
 mod util;
 
 use anyhow::Result;

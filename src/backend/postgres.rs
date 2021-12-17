@@ -1,6 +1,6 @@
-use anyhow::{bail, Result};
-use bollard::{container, exec, models, Docker};
-use futures::StreamExt;
+use crate::docker::exec;
+use anyhow::Result;
+use bollard::{container, models, Docker};
 use std::collections::HashMap;
 
 pub struct Postgres {
@@ -64,26 +64,31 @@ impl Postgres {
     }
 
     pub async fn reset(&self, docker: &Docker) -> Result<()> {
-        let id = docker
-            .create_exec(&Self::container_name(), exec::CreateExecOptions {
-                attach_stdout: Some(true),
-                attach_stderr: Some(true),
-                cmd: Some(vec![
-                    "psql",
-                    "-c",
-                    &format!("DROP DATABASE IF EXISTS {}", self.database),
-                ]),
-                ..Default::default()
-            })
-            .await?
-            .id;
-        match docker.start_exec(&id, None).await? {
-            exec::StartExecResults::Attached { mut output, .. } =>
-                while let Some(Ok(msg)) = output.next().await {
-                    print!("{}", msg);
-                },
-            exec::StartExecResults::Detached => bail!("should not be detached"),
-        }
-        Ok(())
+        exec(docker, &Self::container_name(), &[
+            "psql",
+            "-c",
+            &format!("DROP DATABASE IF EXISTS {}", self.database),
+        ])
+        .await
     }
 }
+//
+// async fn docker_exec(docker: &Docker, container: &str, cmd: &[&str]) -> Result<()> {
+//     let id = docker
+//         .create_exec::<String>(container, exec::CreateExecOptions {
+//             attach_stdout: Some(true),
+//             attach_stderr: Some(true),
+//             cmd: Some(cmd.iter().map(|s| s.to_string()).collect()),
+//             ..Default::default()
+//         })
+//         .await?
+//         .id;
+//     match docker.start_exec(&id, None).await? {
+//         exec::StartExecResults::Attached { mut output, .. } =>
+//             while let Some(Ok(msg)) = output.next().await {
+//                 print!("{}", msg);
+//             },
+//         exec::StartExecResults::Detached => bail!("should not be detached"),
+//     }
+//     Ok(())
+// }

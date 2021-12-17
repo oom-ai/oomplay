@@ -1,11 +1,13 @@
-use anyhow::Result;
-use bollard::{container, models, Docker};
+use anyhow::{bail, Result};
+use bollard::{container, exec, models, Docker};
+use futures::StreamExt;
 use std::collections::HashMap;
 
 pub struct Postgres {
     pub port:     u16,
     pub user:     String,
     pub password: String,
+    pub database: String,
 }
 
 impl Postgres {
@@ -19,6 +21,7 @@ impl Postgres {
             env: Some(vec![
                 format!("POSTGRES_PASSWORD={}", self.password),
                 format!("POSTGRES_USER={}", self.user),
+                format!("PGUSER={}", self.user),
             ]),
             host_config: Some(models::HostConfig {
                 auto_remove: Some(true),
@@ -58,5 +61,29 @@ impl Postgres {
 
     pub async fn restart(&self, docker: &Docker) -> Result<()> {
         Ok(docker.restart_container(&Self::container_name(), None).await?)
+    }
+
+    pub async fn reset(&self, docker: &Docker) -> Result<()> {
+        let id = docker
+            .create_exec(&Self::container_name(), exec::CreateExecOptions {
+                attach_stdout: Some(true),
+                attach_stderr: Some(true),
+                cmd: Some(vec![
+                    "psql",
+                    "-c",
+                    &format!("DROP DATABASE IF EXISTS {}", self.database),
+                ]),
+                ..Default::default()
+            })
+            .await?
+            .id;
+        match docker.start_exec(&id, None).await? {
+            exec::StartExecResults::Attached { mut output, .. } =>
+                while let Some(Ok(msg)) = output.next().await {
+                    print!("{}", msg);
+                },
+            exec::StartExecResults::Detached => bail!("should not be detached"),
+        }
+        Ok(())
     }
 }

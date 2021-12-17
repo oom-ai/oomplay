@@ -32,8 +32,8 @@ async fn try_main() -> Result<()> {
             let config_map: ConfigMap = config.try_into()?;
             for (_k, v) in config_map.into_iter() {
                 match v {
-                    Backend::Postgres { port, user, password, .. } => {
-                        let pg = Postgres { port, user, password };
+                    Backend::Postgres { port, user, password, database, .. } => {
+                        let pg = Postgres { port, user, password, database };
                         pg.run(&docker).await?
                     }
                     _ => todo!(),
@@ -44,8 +44,8 @@ async fn try_main() -> Result<()> {
             let config_map: ConfigMap = config.try_into()?;
             for (_k, v) in config_map.into_iter() {
                 match v {
-                    Backend::Postgres { port, user, password, .. } => {
-                        let pg = Postgres { port, user, password };
+                    Backend::Postgres { port, user, password, database, .. } => {
+                        let pg = Postgres { port, user, password, database };
                         pg.stop(&docker).await?
                     }
                     _ => todo!(),
@@ -56,9 +56,21 @@ async fn try_main() -> Result<()> {
             let config_map: ConfigMap = config.try_into()?;
             for (_k, v) in config_map.into_iter() {
                 match v {
-                    Backend::Postgres { port, user, password, .. } => {
-                        let pg = Postgres { port, user, password };
+                    Backend::Postgres { port, user, password, database, .. } => {
+                        let pg = Postgres { port, user, password, database };
                         pg.restart(&docker).await?
+                    }
+                    _ => todo!(),
+                }
+            }
+        }
+        App::Reset { config } => {
+            let config_map: ConfigMap = config.try_into()?;
+            for (_k, v) in config_map.into_iter() {
+                match v {
+                    Backend::Postgres { port, user, password, database, .. } => {
+                        let pg = Postgres { port, user, password, database };
+                        pg.reset(&docker).await?
                     }
                     _ => todo!(),
                 }

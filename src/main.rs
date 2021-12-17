@@ -1,13 +1,16 @@
+mod backend;
 mod cli;
 mod config;
 mod util;
 
 use anyhow::Result;
+use backend::postgres::Postgres;
 use bollard::Docker;
 use clap::Parser;
 use cli::App;
-use config::Config;
 use std::io;
+
+use crate::config::{Backend, ConfigMap};
 
 #[tokio::main]
 async fn main() {
@@ -26,14 +29,42 @@ async fn try_main() -> Result<()> {
     let docker = Docker::connect_with_local_defaults()?;
     match App::parse() {
         App::Start { config } => {
-            let config: Config = config.try_into()?;
-            println!("{:#?}", config);
-            println!("{:?}", docker.version().await.unwrap());
+            let config_map: ConfigMap = config.try_into()?;
+            for (_k, v) in config_map.into_iter() {
+                match v {
+                    Backend::Postgres { port, user, password, .. } => {
+                        let pg = Postgres { port, user, password };
+                        pg.run(&docker).await?
+                    }
+                    _ => todo!(),
+                }
+            }
         }
-        App::Stop { config } => todo!(),
-        App::Restart { config } => todo!(),
-        App::Reset { config } => todo!(),
-        App::Apply { config } => todo!(),
+        App::Stop { config } => {
+            let config_map: ConfigMap = config.try_into()?;
+            for (_k, v) in config_map.into_iter() {
+                match v {
+                    Backend::Postgres { port, user, password, .. } => {
+                        let pg = Postgres { port, user, password };
+                        pg.stop(&docker).await?
+                    }
+                    _ => todo!(),
+                }
+            }
+        }
+        App::Restart { config } => {
+            let config_map: ConfigMap = config.try_into()?;
+            for (_k, v) in config_map.into_iter() {
+                match v {
+                    Backend::Postgres { port, user, password, .. } => {
+                        let pg = Postgres { port, user, password };
+                        pg.restart(&docker).await?
+                    }
+                    _ => todo!(),
+                }
+            }
+        }
+        _ => todo!(),
     }
     Ok(())
 }

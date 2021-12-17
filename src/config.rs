@@ -2,8 +2,7 @@ use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize, Deserialize)]
-pub struct Config(HashMap<String, Backend>);
+pub type ConfigMap = HashMap<String, Backend>;
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all(deserialize = "snake_case"))]

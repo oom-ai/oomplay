@@ -1,9 +1,9 @@
 use std::{fs::File, io::BufReader};
 
-use crate::{cli::ConfigOpt, config::Config};
-use anyhow::{bail, Error};
+use crate::{cli::ConfigOpt, config::ConfigMap};
+use anyhow::Error;
 
-impl TryFrom<ConfigOpt> for Config {
+impl TryFrom<ConfigOpt> for ConfigMap {
     type Error = Error;
 
     fn try_from(opt: ConfigOpt) -> Result<Self, Self::Error> {

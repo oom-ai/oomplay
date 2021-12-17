@@ -1,5 +1,40 @@
-use clap::Parser;
+use std::path::PathBuf;
 
-#[derive(Debug, Parser)]
+use clap::{Args, Parser};
+
+#[derive(Parser)]
 #[clap(about, version)]
-pub enum Args {}
+pub enum App {
+    /// Start playground
+    Start {
+        #[clap(flatten)]
+        config: ConfigOpt,
+    },
+    /// Stop playground
+    Stop {
+        #[clap(flatten)]
+        config: ConfigOpt,
+    },
+    /// Restart playground
+    Restart {
+        #[clap(flatten)]
+        config: ConfigOpt,
+    },
+    /// Reset playground
+    Reset {
+        #[clap(flatten)]
+        config: ConfigOpt,
+    },
+    /// Start or reset playground
+    Apply {
+        #[clap(flatten)]
+        config: ConfigOpt,
+    },
+}
+
+#[derive(Debug, Args)]
+pub struct ConfigOpt {
+    /// config file path
+    #[clap(short, long, display_order = 0)]
+    pub config: PathBuf,
+}

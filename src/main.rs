@@ -3,6 +3,7 @@ mod config;
 mod util;
 
 use anyhow::Result;
+use bollard::Docker;
 use clap::Parser;
 use cli::App;
 use config::Config;
@@ -22,10 +23,12 @@ async fn main() {
 }
 
 async fn try_main() -> Result<()> {
+    let docker = Docker::connect_with_local_defaults()?;
     match App::parse() {
         App::Start { config } => {
             let config: Config = config.try_into()?;
             println!("{:#?}", config);
+            println!("{:?}", docker.version().await.unwrap());
         }
         App::Stop { config } => todo!(),
         App::Restart { config } => todo!(),

@@ -14,4 +14,5 @@ clap = { version = "3.0.0-beta.5", features = ["wrap_help", "derive"] }
 clap_generate = "3.0.0-beta.5"
 serde = { version = "1.0", features = ["derive"] }
 serde_yaml = "0.8"
+bollard = "0.11"
 tokio = { version = "1.15", features = ["full"] }

@@ -73,7 +73,19 @@ async fn try_main() -> Result<()> {
                 }
             }
         }
-        _ => todo!(),
+        App::Init { config } => {
+            let config_map: ConfigMap = config.try_into()?;
+            for (name, backend) in config_map.into_iter() {
+                println!("init {name}...");
+                match backend {
+                    Backend::Postgres { port, user, password, database, .. } => {
+                        let pg = Postgres { port, user, password, database };
+                        docker.init(&pg).await?;
+                    }
+                    _ => todo!(),
+                }
+            }
+        }
     }
     Ok(())
 }

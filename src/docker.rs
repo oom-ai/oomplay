@@ -26,6 +26,15 @@ where
         }
         Ok(())
     }
+    async fn init(&self, store: &T) -> Result<()> {
+        match self.reset(store).await {
+            Ok(0) => Ok(()),
+            _ => {
+                self.run(store).await?;
+                self.wait_ready(store).await
+            }
+        }
+    }
 }
 
 #[async_trait]
@@ -47,16 +56,13 @@ where
                         .port_map()
                         .into_iter()
                         .map(|pm| {
-                            let (protocol, from, to) = match pm {
-                                PortMap::Tcp(from, to) => ("tcp", from, to),
-                                PortMap::Udp(from, to) => ("udp", from, to),
+                            let (from, to) = match pm {
+                                PortMap::Tcp(from, to) => (format!("{from}/tcp"), to.to_string()),
+                                PortMap::Udp(from, to) => (format!("{from}/udp"), to.to_string()),
                             };
                             (
-                                format!("{from}/{protocol}"),
-                                Some(vec![models::PortBinding {
-                                    host_port: Some(format!("{to}")),
-                                    ..Default::default()
-                                }]),
+                                from,
+                                Some(vec![models::PortBinding { host_port: Some(to), ..Default::default() }]),
                             )
                         })
                         .collect(),

@@ -1,3 +1,5 @@
+#![feature(duration_constants)]
+
 mod backend;
 mod cli;
 mod config;
@@ -35,7 +37,8 @@ async fn try_main() -> Result<()> {
                 match v {
                     Backend::Postgres { port, user, password, database, .. } => {
                         let pg = Postgres { port, user, password, database };
-                        pg.run(&docker).await?
+                        pg.run(&docker).await?;
+                        pg.wait_ready(&docker).await?;
                     }
                     _ => todo!(),
                 }
@@ -59,7 +62,8 @@ async fn try_main() -> Result<()> {
                 match v {
                     Backend::Postgres { port, user, password, database, .. } => {
                         let pg = Postgres { port, user, password, database };
-                        pg.restart(&docker).await?
+                        pg.restart(&docker).await?;
+                        pg.wait_ready(&docker).await?;
                     }
                     _ => todo!(),
                 }
@@ -71,7 +75,7 @@ async fn try_main() -> Result<()> {
                 match v {
                     Backend::Postgres { port, user, password, database, .. } => {
                         let pg = Postgres { port, user, password, database };
-                        pg.reset(&docker).await?
+                        pg.reset(&docker).await?;
                     }
                     _ => todo!(),
                 }

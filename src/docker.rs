@@ -1,8 +1,8 @@
-use anyhow::{bail, Result};
+use anyhow::{anyhow, bail, Result};
 use bollard::{exec, Docker};
 use futures::StreamExt;
 
-pub async fn exec(docker: &Docker, container: &str, cmd: &[&str]) -> Result<()> {
+pub async fn exec(docker: &Docker, container: &str, cmd: &[&str]) -> Result<i64> {
     let id = docker
         .create_exec::<String>(container, exec::CreateExecOptions {
             attach_stdout: Some(true),
@@ -19,5 +19,9 @@ pub async fn exec(docker: &Docker, container: &str, cmd: &[&str]) -> Result<()> 
             },
         exec::StartExecResults::Detached => bail!("should not be detached"),
     }
-    Ok(())
+    docker
+        .inspect_exec(&id)
+        .await?
+        .exit_code
+        .ok_or_else(|| anyhow!("exit code is empty"))
 }

@@ -1,7 +1,7 @@
 use crate::docker::exec;
 use anyhow::Result;
 use bollard::{container, models, Docker};
-use std::collections::HashMap;
+use std::{collections::HashMap, time::Duration};
 
 pub struct Postgres {
     pub port:     u16,
@@ -63,7 +63,7 @@ impl Postgres {
         Ok(docker.restart_container(&Self::container_name(), None).await?)
     }
 
-    pub async fn reset(&self, docker: &Docker) -> Result<()> {
+    pub async fn reset(&self, docker: &Docker) -> Result<i64> {
         exec(docker, &Self::container_name(), &[
             "psql",
             "-c",
@@ -71,24 +71,15 @@ impl Postgres {
         ])
         .await
     }
+
+    pub async fn ping(&self, docker: &Docker) -> Result<i64> {
+        exec(docker, &Self::container_name(), &["pg_isready"]).await
+    }
+
+    pub async fn wait_ready(&self, docker: &Docker) -> Result<()> {
+        while self.ping(docker).await? != 0 {
+            tokio::time::sleep(Duration::SECOND).await
+        }
+        Ok(())
+    }
 }
-//
-// async fn docker_exec(docker: &Docker, container: &str, cmd: &[&str]) -> Result<()> {
-//     let id = docker
-//         .create_exec::<String>(container, exec::CreateExecOptions {
-//             attach_stdout: Some(true),
-//             attach_stderr: Some(true),
-//             cmd: Some(cmd.iter().map(|s| s.to_string()).collect()),
-//             ..Default::default()
-//         })
-//         .await?
-//         .id;
-//     match docker.start_exec(&id, None).await? {
-//         exec::StartExecResults::Attached { mut output, .. } =>
-//             while let Some(Ok(msg)) = output.next().await {
-//                 print!("{}", msg);
-//             },
-//         exec::StartExecResults::Detached => bail!("should not be detached"),
-//     }
-//     Ok(())
-// }

@@ -4,6 +4,7 @@ mod backend;
 mod cli;
 mod config;
 mod docker;
+mod store;
 mod util;
 
 use anyhow::Result;
@@ -11,6 +12,7 @@ use backend::postgres::Postgres;
 use bollard::Docker;
 use clap::Parser;
 use cli::App;
+use docker::StoreRuntime;
 use std::io;
 
 use crate::config::{Backend, ConfigMap};
@@ -33,12 +35,13 @@ async fn try_main() -> Result<()> {
     match App::parse() {
         App::Start { config } => {
             let config_map: ConfigMap = config.try_into()?;
-            for (_k, v) in config_map.into_iter() {
-                match v {
+            for (name, backend) in config_map.into_iter() {
+                println!("start {name}...");
+                match backend {
                     Backend::Postgres { port, user, password, database, .. } => {
                         let pg = Postgres { port, user, password, database };
-                        pg.run(&docker).await?;
-                        pg.wait_ready(&docker).await?;
+                        docker.run(&pg).await?;
+                        docker.wait_ready(&pg).await?;
                     }
                     _ => todo!(),
                 }
@@ -46,11 +49,12 @@ async fn try_main() -> Result<()> {
         }
         App::Stop { config } => {
             let config_map: ConfigMap = config.try_into()?;
-            for (_k, v) in config_map.into_iter() {
-                match v {
+            for (name, backend) in config_map.into_iter() {
+                println!("stop {name}...");
+                match backend {
                     Backend::Postgres { port, user, password, database, .. } => {
                         let pg = Postgres { port, user, password, database };
-                        pg.stop(&docker).await?
+                        docker.stop(&pg).await?
                     }
                     _ => todo!(),
                 }
@@ -58,12 +62,13 @@ async fn try_main() -> Result<()> {
         }
         App::Restart { config } => {
             let config_map: ConfigMap = config.try_into()?;
-            for (_k, v) in config_map.into_iter() {
-                match v {
+            for (name, backend) in config_map.into_iter() {
+                println!("restart {name}...");
+                match backend {
                     Backend::Postgres { port, user, password, database, .. } => {
                         let pg = Postgres { port, user, password, database };
-                        pg.restart(&docker).await?;
-                        pg.wait_ready(&docker).await?;
+                        docker.restart(&pg).await?;
+                        docker.wait_ready(&pg).await?;
                     }
                     _ => todo!(),
                 }
@@ -71,11 +76,12 @@ async fn try_main() -> Result<()> {
         }
         App::Reset { config } => {
             let config_map: ConfigMap = config.try_into()?;
-            for (_k, v) in config_map.into_iter() {
-                match v {
+            for (name, backend) in config_map.into_iter() {
+                println!("reset {name}...");
+                match backend {
                     Backend::Postgres { port, user, password, database, .. } => {
                         let pg = Postgres { port, user, password, database };
-                        pg.reset(&docker).await?;
+                        docker.reset(&pg).await?;
                     }
                     _ => todo!(),
                 }

@@ -18,7 +18,6 @@ where
         self.start(store).await
     }
     async fn stop(&self, store: &T) -> Result<()>;
-    async fn restart(&self, store: &T) -> Result<()>;
     async fn reset(&self, store: &T) -> Result<i64>;
     async fn ping(&self, store: &T) -> Result<i64>;
     async fn wait_ready(&self, store: &T) -> Result<()> {
@@ -76,9 +75,6 @@ where
     }
     async fn stop(&self, store: &T) -> Result<()> {
         Ok(self.stop_container(&store.container_name(), None).await?)
-    }
-    async fn restart(&self, store: &T) -> Result<()> {
-        Ok(self.restart_container(&store.container_name(), None).await?)
     }
     async fn reset(&self, store: &T) -> Result<i64> {
         exec(self, &store.container_name(), store.reset_cmd()).await

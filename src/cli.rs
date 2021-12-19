@@ -15,18 +15,13 @@ pub enum App {
         #[clap(flatten)]
         config: ConfigOpt,
     },
-    /// Restart playground
-    Restart {
-        #[clap(flatten)]
-        config: ConfigOpt,
-    },
     /// Reset playground
     Reset {
         #[clap(flatten)]
         config: ConfigOpt,
     },
     /// Start or reset playground
-    Apply {
+    Init {
         #[clap(flatten)]
         config: ConfigOpt,
     },

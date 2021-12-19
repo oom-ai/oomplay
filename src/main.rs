@@ -60,20 +60,6 @@ async fn try_main() -> Result<()> {
                 }
             }
         }
-        App::Restart { config } => {
-            let config_map: ConfigMap = config.try_into()?;
-            for (name, backend) in config_map.into_iter() {
-                println!("restart {name}...");
-                match backend {
-                    Backend::Postgres { port, user, password, database, .. } => {
-                        let pg = Postgres { port, user, password, database };
-                        docker.restart(&pg).await?;
-                        docker.wait_ready(&pg).await?;
-                    }
-                    _ => todo!(),
-                }
-            }
-        }
         App::Reset { config } => {
             let config_map: ConfigMap = config.try_into()?;
             for (name, backend) in config_map.into_iter() {

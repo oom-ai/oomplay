@@ -20,11 +20,14 @@ impl Store for Mysql {
     }
 
     fn envs(&self) -> Vec<String> {
-        svec![
-            format!("MYSQL_ALLOW_EMPTY_PASSWORD={}", "yes"),
-            format!("MYSQL_USER={}", self.user),
-            format!("MYSQL_PASSWORD={}", self.password),
-        ]
+        match self.user.as_str() {
+            "root" => svec![format!("MYSQL_ROOT_PASSWORD={}", self.password)],
+            _ => svec![
+                format!("MYSQL_ALLOW_EMPTY_PASSWORD={}", "yes"),
+                format!("MYSQL_USER={}", self.user),
+                format!("MYSQL_PASSWORD={}", self.password),
+            ],
+        }
     }
 
     fn port_map(&self) -> Vec<PortMap> {
@@ -32,10 +35,17 @@ impl Store for Mysql {
     }
 
     fn reset_cmd(&self) -> Vec<String> {
-        svec!["mysql", "-e", format!("DROP DATABASE IF EXISTS {}", self.database)]
+        svec![
+            "mysql",
+            "-u",
+            self.user,
+            format!("-p{}", self.password),
+            "-e",
+            format!("DROP DATABASE IF EXISTS {}", self.database)
+        ]
     }
 
     fn ping_cmd(&self) -> Vec<String> {
-        svec!["mysqladmin", "ping", "-h", "localhost"]
+        svec!["mysqladmin", "-u", self.user, format!("-p{}", self.password), "ping",]
     }
 }

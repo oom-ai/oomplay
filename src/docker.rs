@@ -1,7 +1,7 @@
 use anyhow::{anyhow, bail, Result};
 use async_trait::async_trait;
-use bollard::{container, exec, models, Docker};
-use futures::StreamExt;
+use bollard::{container, exec, image, models, Docker};
+use futures::{StreamExt, TryStreamExt};
 use std::time::Duration;
 
 use crate::store::{PortMap, Store};
@@ -13,10 +13,7 @@ where
 {
     async fn start(&self, store: &T) -> Result<()>;
     async fn create(&self, store: &T) -> Result<models::ContainerCreateResponse>;
-    async fn run(&self, store: &T) -> Result<()> {
-        self.create(store).await?;
-        self.start(store).await
-    }
+    async fn run(&self, store: &T) -> Result<()>;
     async fn stop(&self, store: &T) -> Result<()>;
     async fn reset(&self, store: &T) -> Result<i64>;
     async fn ping(&self, store: &T) -> Result<i64>;
@@ -43,12 +40,13 @@ where
     T: Store + Sync,
 {
     async fn start(&self, store: &T) -> Result<()> {
-        Ok(self.start_container::<String>(&store.container_name(), None).await?)
+        Ok(self.start_container::<String>(&store.name(), None).await?)
     }
     async fn create(&self, store: &T) -> Result<models::ContainerCreateResponse> {
         let config = container::Config {
             image: Some(store.image()),
             env: Some(store.envs()),
+            cmd: store.cmd(),
             host_config: Some(models::HostConfig {
                 auto_remove: Some(true),
                 port_bindings: Some(
@@ -73,24 +71,28 @@ where
         };
 
         Ok(self
-            .create_container(
-                Some(container::CreateContainerOptions { name: store.container_name() }),
-                config,
-            )
+            .create_container(Some(container::CreateContainerOptions { name: store.name() }), config)
             .await?)
     }
+    async fn run(&self, store: &T) -> Result<()> {
+        if self.inspect_image(&store.image()).await.is_err() {
+            pull(self, &store.image()).await?
+        };
+        self.create(store).await?;
+        self.start(store).await
+    }
     async fn stop(&self, store: &T) -> Result<()> {
-        Ok(self.stop_container(&store.container_name(), None).await?)
+        Ok(self.stop_container(&store.name(), None).await?)
     }
     async fn reset(&self, store: &T) -> Result<i64> {
-        exec(self, &store.container_name(), store.reset_cmd()).await
+        exec(self, &store.name(), store.reset_cmd()).await
     }
     async fn ping(&self, store: &T) -> Result<i64> {
-        exec(self, &store.container_name(), store.ping_cmd()).await
+        exec(self, &store.name(), store.ping_cmd()).await
     }
 }
 
-pub async fn exec(docker: &Docker, container: &str, cmd: Vec<String>) -> Result<i64> {
+async fn exec(docker: &Docker, container: &str, cmd: Vec<String>) -> Result<i64> {
     let id = docker
         .create_exec::<String>(container, exec::CreateExecOptions {
             attach_stdout: Some(true),
@@ -112,4 +114,16 @@ pub async fn exec(docker: &Docker, container: &str, cmd: Vec<String>) -> Result<
         .await?
         .exit_code
         .ok_or_else(|| anyhow!("exit code is empty"))
+}
+
+async fn pull(docker: &Docker, image: &str) -> Result<()> {
+    docker
+        .create_image(
+            Some(image::CreateImageOptions { from_image: image, ..Default::default() }),
+            None,
+            None,
+        )
+        .try_collect::<Vec<_>>()
+        .await?;
+    Ok(())
 }

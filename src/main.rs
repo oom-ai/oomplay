@@ -48,7 +48,11 @@ async fn try_main() -> Result<()> {
                         docker.run(&store).await?;
                         docker.wait_ready(&store).await?;
                     }
-                    _ => todo!(),
+                    Backend::Redis { port, password, database, .. } => {
+                        let store = Redis { port, password, database };
+                        docker.run(&store).await?;
+                        docker.wait_ready(&store).await?;
+                    }
                 }
             }
         }
@@ -65,7 +69,10 @@ async fn try_main() -> Result<()> {
                         let store = Mysql { port, user, password, database };
                         docker.stop(&store).await?
                     }
-                    _ => todo!(),
+                    Backend::Redis { port, password, database, .. } => {
+                        let store = Redis { port, password, database };
+                        docker.stop(&store).await?
+                    }
                 }
             }
         }
@@ -82,7 +89,10 @@ async fn try_main() -> Result<()> {
                         let store = Mysql { port, user, password, database };
                         docker.reset(&store).await?;
                     }
-                    _ => todo!(),
+                    Backend::Redis { port, password, database, .. } => {
+                        let store = Redis { port, password, database };
+                        docker.reset(&store).await?;
+                    }
                 }
             }
         }
@@ -99,7 +109,10 @@ async fn try_main() -> Result<()> {
                         let store = Mysql { port, user, password, database };
                         docker.init(&store).await?;
                     }
-                    _ => todo!(),
+                    Backend::Redis { port, password, database, .. } => {
+                        let store = Redis { port, password, database };
+                        docker.init(&store).await?;
+                    }
                 }
             }
         }

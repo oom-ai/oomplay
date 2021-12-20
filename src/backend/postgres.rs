@@ -11,7 +11,7 @@ pub struct Postgres {
 }
 
 impl Store for Postgres {
-    fn container_name(&self) -> String {
+    fn name(&self) -> String {
         "oomstore-playground-postgres".to_string()
     }
 
@@ -28,7 +28,7 @@ impl Store for Postgres {
     }
 
     fn port_map(&self) -> Vec<PortMap> {
-        vec![PortMap::Tcp(self.port, self.port)]
+        vec![PortMap::Tcp(5432, self.port)]
     }
 
     fn reset_cmd(&self) -> Vec<String> {

@@ -11,7 +11,7 @@ pub struct Mysql {
 }
 
 impl Store for Mysql {
-    fn container_name(&self) -> String {
+    fn name(&self) -> String {
         "oomstore-playground-mysql".to_string()
     }
 
@@ -28,7 +28,7 @@ impl Store for Mysql {
     }
 
     fn port_map(&self) -> Vec<PortMap> {
-        vec![PortMap::Tcp(self.port, self.port)]
+        vec![PortMap::Tcp(3306, self.port)]
     }
 
     fn reset_cmd(&self) -> Vec<String> {

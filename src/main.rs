@@ -12,7 +12,7 @@ extern crate log;
 use anyhow::Result;
 use backend::*;
 use bollard::Docker;
-use clap::Parser;
+use clap::{IntoApp, Parser};
 use cli::App;
 use docker::StoreRuntime;
 use std::io;
@@ -119,6 +119,10 @@ async fn try_main() -> Result<()> {
                     }
                 }
             }
+        }
+        App::Completion { shell } => {
+            let app = &mut App::into_app();
+            clap_generate::generate(shell, app, app.get_name().to_string(), &mut io::stdout())
         }
     }
     Ok(())

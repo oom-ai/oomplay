@@ -1,6 +1,7 @@
 use std::path::PathBuf;
 
 use clap::{Args, Parser};
+use clap_generate::Shell;
 
 #[derive(Parser)]
 #[clap(about, version)]
@@ -24,6 +25,12 @@ pub enum App {
     Init {
         #[clap(flatten)]
         config: ConfigOpt,
+    },
+    /// Output shell completion code
+    Completion {
+        /// Target shell name
+        #[clap(arg_enum)]
+        shell: Shell,
     },
 }
 

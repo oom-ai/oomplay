@@ -3,27 +3,27 @@ use crate::{
     svec,
 };
 
-pub struct Postgres {
+pub struct Mysql {
     pub port:     u16,
     pub user:     String,
     pub password: String,
     pub database: String,
 }
 
-impl Store for Postgres {
+impl Store for Mysql {
     fn container_name(&self) -> String {
-        "oomstore-playground-postgres".to_string()
+        "oomstore-playground-mysql".to_string()
     }
 
     fn image(&self) -> String {
-        "postgres:14.0-alpine".to_string()
+        "mysql:8.0".to_string()
     }
 
     fn envs(&self) -> Vec<String> {
         svec![
-            format!("POSTGRES_PASSWORD={}", self.password),
-            format!("POSTGRES_USER={}", self.user),
-            format!("PGUSER={}", self.user),
+            format!("MYSQL_ALLOW_EMPTY_PASSWORD={}", "yes"),
+            format!("MYSQL_USER={}", self.user),
+            format!("MYSQL_PASSWORD={}", self.password),
         ]
     }
 
@@ -32,10 +32,10 @@ impl Store for Postgres {
     }
 
     fn reset_cmd(&self) -> Vec<String> {
-        svec!["psql", "-c", format!("DROP DATABASE IF EXISTS {}", self.database)]
+        svec!["mysql", "-e", format!("DROP DATABASE IF EXISTS {}", self.database)]
     }
 
     fn ping_cmd(&self) -> Vec<String> {
-        svec!["pg_isready"]
+        svec!["mysqladmin", "ping", "-h", "localhost"]
     }
 }

@@ -8,7 +8,7 @@ mod store;
 mod util;
 
 use anyhow::Result;
-use backend::postgres::Postgres;
+use backend::*;
 use bollard::Docker;
 use clap::Parser;
 use cli::App;
@@ -39,9 +39,14 @@ async fn try_main() -> Result<()> {
                 println!("start {name}...");
                 match backend {
                     Backend::Postgres { port, user, password, database, .. } => {
-                        let pg = Postgres { port, user, password, database };
-                        docker.run(&pg).await?;
-                        docker.wait_ready(&pg).await?;
+                        let store = Postgres { port, user, password, database };
+                        docker.run(&store).await?;
+                        docker.wait_ready(&store).await?;
+                    }
+                    Backend::Mysql { port, user, password, database, .. } => {
+                        let store = Mysql { port, user, password, database };
+                        docker.run(&store).await?;
+                        docker.wait_ready(&store).await?;
                     }
                     _ => todo!(),
                 }
@@ -53,8 +58,12 @@ async fn try_main() -> Result<()> {
                 println!("stop {name}...");
                 match backend {
                     Backend::Postgres { port, user, password, database, .. } => {
-                        let pg = Postgres { port, user, password, database };
-                        docker.stop(&pg).await?
+                        let store = Postgres { port, user, password, database };
+                        docker.stop(&store).await?
+                    }
+                    Backend::Mysql { port, user, password, database, .. } => {
+                        let store = Mysql { port, user, password, database };
+                        docker.stop(&store).await?
                     }
                     _ => todo!(),
                 }
@@ -66,8 +75,12 @@ async fn try_main() -> Result<()> {
                 println!("reset {name}...");
                 match backend {
                     Backend::Postgres { port, user, password, database, .. } => {
-                        let pg = Postgres { port, user, password, database };
-                        docker.reset(&pg).await?;
+                        let store = Postgres { port, user, password, database };
+                        docker.reset(&store).await?;
+                    }
+                    Backend::Mysql { port, user, password, database, .. } => {
+                        let store = Mysql { port, user, password, database };
+                        docker.reset(&store).await?;
                     }
                     _ => todo!(),
                 }
@@ -79,8 +92,12 @@ async fn try_main() -> Result<()> {
                 println!("init {name}...");
                 match backend {
                     Backend::Postgres { port, user, password, database, .. } => {
-                        let pg = Postgres { port, user, password, database };
-                        docker.init(&pg).await?;
+                        let store = Postgres { port, user, password, database };
+                        docker.init(&store).await?;
+                    }
+                    Backend::Mysql { port, user, password, database, .. } => {
+                        let store = Mysql { port, user, password, database };
+                        docker.init(&store).await?;
                     }
                     _ => todo!(),
                 }

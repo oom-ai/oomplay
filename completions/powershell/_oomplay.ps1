@@ -24,38 +24,38 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
             [CompletionResult]::new('-V', 'V', [CompletionResultType]::ParameterName, 'Print version information')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
-            [CompletionResult]::new('start', 'start', [CompletionResultType]::ParameterValue, 'Start playground')
-            [CompletionResult]::new('stop', 'stop', [CompletionResultType]::ParameterValue, 'Stop playground')
-            [CompletionResult]::new('reset', 'reset', [CompletionResultType]::ParameterValue, 'Reset playground')
-            [CompletionResult]::new('init', 'init', [CompletionResultType]::ParameterValue, 'Start or reset playground')
+            [CompletionResult]::new('start', 'start', [CompletionResultType]::ParameterValue, 'Start playgrounds')
+            [CompletionResult]::new('stop', 'stop', [CompletionResultType]::ParameterValue, 'Stop playgrounds')
+            [CompletionResult]::new('reset', 'reset', [CompletionResultType]::ParameterValue, 'Reset playgrounds')
+            [CompletionResult]::new('init', 'init', [CompletionResultType]::ParameterValue, 'Start or reset playgrounds')
             [CompletionResult]::new('completion', 'completion', [CompletionResultType]::ParameterValue, 'Output shell completion code')
             [CompletionResult]::new('help', 'help', [CompletionResultType]::ParameterValue, 'Print this message or the help of the given subcommand(s)')
             break
         }
         'oomplay;start' {
-            [CompletionResult]::new('-c', 'c', [CompletionResultType]::ParameterName, 'config file path')
-            [CompletionResult]::new('--config', 'config', [CompletionResultType]::ParameterName, 'config file path')
+            [CompletionResult]::new('-c', 'c', [CompletionResultType]::ParameterName, 'Config file path')
+            [CompletionResult]::new('--config', 'config', [CompletionResultType]::ParameterName, 'Config file path')
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
             break
         }
         'oomplay;stop' {
-            [CompletionResult]::new('-c', 'c', [CompletionResultType]::ParameterName, 'config file path')
-            [CompletionResult]::new('--config', 'config', [CompletionResultType]::ParameterName, 'config file path')
+            [CompletionResult]::new('-c', 'c', [CompletionResultType]::ParameterName, 'Config file path')
+            [CompletionResult]::new('--config', 'config', [CompletionResultType]::ParameterName, 'Config file path')
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
             break
         }
         'oomplay;reset' {
-            [CompletionResult]::new('-c', 'c', [CompletionResultType]::ParameterName, 'config file path')
-            [CompletionResult]::new('--config', 'config', [CompletionResultType]::ParameterName, 'config file path')
+            [CompletionResult]::new('-c', 'c', [CompletionResultType]::ParameterName, 'Config file path')
+            [CompletionResult]::new('--config', 'config', [CompletionResultType]::ParameterName, 'Config file path')
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
             break
         }
         'oomplay;init' {
-            [CompletionResult]::new('-c', 'c', [CompletionResultType]::ParameterName, 'config file path')
-            [CompletionResult]::new('--config', 'config', [CompletionResultType]::ParameterName, 'config file path')
+            [CompletionResult]::new('-c', 'c', [CompletionResultType]::ParameterName, 'Config file path')
+            [CompletionResult]::new('--config', 'config', [CompletionResultType]::ParameterName, 'Config file path')
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
             break

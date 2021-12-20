@@ -18,10 +18,20 @@ where
     async fn reset(&self, store: &T) -> Result<i64>;
     async fn ping(&self, store: &T) -> Result<i64>;
     async fn wait_ready(&self, store: &T) -> Result<()> {
-        while self.ping(store).await? != 0 {
-            tokio::time::sleep(Duration::SECOND).await
+        loop {
+            tokio::time::sleep(Duration::SECOND).await;
+            match self.ping(store).await {
+                Ok(0) => return Ok(()),
+                Ok(n) => {
+                    debug!("ping exited with none-zero code {}", n);
+                    continue;
+                }
+                Err(e) => {
+                    debug!("docker exec failed: {}", e);
+                    continue;
+                }
+            }
         }
-        Ok(())
     }
     async fn init(&self, store: &T) -> Result<()> {
         match self.reset(store).await {

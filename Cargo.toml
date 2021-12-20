@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 authors = ["Wenxuan Zhang <wenxuangm@gmail.com>"]
 categories = ["command-line-utilities"]
-description = "playground manager for oomstore"
+description = "Playground manager for oomstore"
 license = "MIT/Apache-2.0"
 exclude = ["/completions"]
 

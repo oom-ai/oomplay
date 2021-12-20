@@ -105,7 +105,7 @@ async fn exec(docker: &Docker, container: &str, cmd: Vec<String>) -> Result<i64>
     match docker.start_exec(&id, None).await? {
         exec::StartExecResults::Attached { mut output, .. } =>
             while let Some(Ok(msg)) = output.next().await {
-                print!("{}", msg);
+                debug!("{}", msg);
             },
         exec::StartExecResults::Detached => bail!("should not be detached"),
     }

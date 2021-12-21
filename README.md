@@ -13,7 +13,6 @@ Playground manager for [oomstore](https://github.com/oom-ai/oomstore).
 ```
 $ oomplay --help
 oomplay 0.1.2
-
 Playground manager for oomstore
 
 USAGE:
@@ -24,13 +23,18 @@ OPTIONS:
     -V, --version    Print version information
 
 SUBCOMMANDS:
-    stop          Stop playgrounds
     init          Initialize playgrounds
+    stop          Stop playgrounds
     completion    Output shell completion code
     help          Print this message or the help of the given subcommand(s)
 ```
 
 ## Example
+
+```
+$ oomplay init redis
+[*] init redis...
+```
 
 ```
 $ oomplay init -c config.yaml

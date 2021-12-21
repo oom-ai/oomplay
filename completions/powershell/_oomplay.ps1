@@ -24,14 +24,13 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
             [CompletionResult]::new('-V', 'V', [CompletionResultType]::ParameterName, 'Print version information')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
-            [CompletionResult]::new('start', 'start', [CompletionResultType]::ParameterValue, 'Start playgrounds')
+            [CompletionResult]::new('init', 'init', [CompletionResultType]::ParameterValue, 'Initialize playgrounds')
             [CompletionResult]::new('stop', 'stop', [CompletionResultType]::ParameterValue, 'Stop playgrounds')
-            [CompletionResult]::new('init', 'init', [CompletionResultType]::ParameterValue, 'Start or reset playgrounds')
             [CompletionResult]::new('completion', 'completion', [CompletionResultType]::ParameterValue, 'Output shell completion code')
             [CompletionResult]::new('help', 'help', [CompletionResultType]::ParameterValue, 'Print this message or the help of the given subcommand(s)')
             break
         }
-        'oomplay;start' {
+        'oomplay;init' {
             [CompletionResult]::new('-c', 'c', [CompletionResultType]::ParameterName, 'Config file path')
             [CompletionResult]::new('--config', 'config', [CompletionResultType]::ParameterName, 'Config file path')
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
@@ -39,13 +38,6 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             break
         }
         'oomplay;stop' {
-            [CompletionResult]::new('-c', 'c', [CompletionResultType]::ParameterName, 'Config file path')
-            [CompletionResult]::new('--config', 'config', [CompletionResultType]::ParameterName, 'Config file path')
-            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
-            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
-            break
-        }
-        'oomplay;init' {
             [CompletionResult]::new('-c', 'c', [CompletionResultType]::ParameterName, 'Config file path')
             [CompletionResult]::new('--config', 'config', [CompletionResultType]::ParameterName, 'Config file path')
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')

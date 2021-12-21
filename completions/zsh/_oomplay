@@ -28,7 +28,7 @@ _oomplay() {
         (( CURRENT += 1 ))
         curcontext="${curcontext%:*:*}:oomplay-command-$line[1]:"
         case $line[1] in
-            (start)
+            (init)
 _arguments "${_arguments_options[@]}" \
 '-c+[Config file path]:CONFIG: ' \
 '--config=[Config file path]:CONFIG: ' \
@@ -37,14 +37,6 @@ _arguments "${_arguments_options[@]}" \
 && ret=0
 ;;
 (stop)
-_arguments "${_arguments_options[@]}" \
-'-c+[Config file path]:CONFIG: ' \
-'--config=[Config file path]:CONFIG: ' \
-'-h[Print help information]' \
-'--help[Print help information]' \
-&& ret=0
-;;
-(init)
 _arguments "${_arguments_options[@]}" \
 '-c+[Config file path]:CONFIG: ' \
 '--config=[Config file path]:CONFIG: ' \
@@ -73,9 +65,8 @@ esac
 (( $+functions[_oomplay_commands] )) ||
 _oomplay_commands() {
     local commands; commands=(
-'start:Start playgrounds' \
+'init:Initialize playgrounds' \
 'stop:Stop playgrounds' \
-'init:Start or reset playgrounds' \
 'completion:Output shell completion code' \
 'help:Print this message or the help of the given subcommand(s)' \
     )
@@ -95,11 +86,6 @@ _oomplay__help_commands() {
 _oomplay__init_commands() {
     local commands; commands=()
     _describe -t commands 'oomplay init commands' commands "$@"
-}
-(( $+functions[_oomplay__start_commands] )) ||
-_oomplay__start_commands() {
-    local commands; commands=()
-    _describe -t commands 'oomplay start commands' commands "$@"
 }
 (( $+functions[_oomplay__stop_commands] )) ||
 _oomplay__stop_commands() {

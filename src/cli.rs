@@ -6,9 +6,9 @@ use clap_generate::Shell;
 #[derive(Parser)]
 #[clap(about, version)]
 pub enum App {
-    /// Start playgrounds
-    #[clap(display_order = 1)]
-    Start {
+    /// Initialize playgrounds
+    #[clap(display_order = 4)]
+    Init {
         #[clap(flatten)]
         config: ConfigOpt,
     },
@@ -16,13 +16,6 @@ pub enum App {
     /// Stop playgrounds
     #[clap(display_order = 2)]
     Stop {
-        #[clap(flatten)]
-        config: ConfigOpt,
-    },
-
-    /// Start or reset playgrounds
-    #[clap(display_order = 4)]
-    Init {
         #[clap(flatten)]
         config: ConfigOpt,
     },

@@ -19,8 +19,9 @@ where
     async fn ping(&self, store: &T) -> Result<()>;
     async fn wait_ready(&self, store: &T) -> Result<()> {
         while let Err(e) = self.ping(store).await {
-            debug!("docker exec failed: {}", e);
-            tokio::time::sleep(Duration::SECOND).await;
+            info!("⏳ Wait for the store to be ready ...");
+            debug!("ping failed: {}", e);
+            tokio::time::sleep(Duration::SECOND * 2).await;
         }
         Ok(())
     }
@@ -29,7 +30,9 @@ where
             .or_else(async move |e| {
                 debug!("reset failed: {}", e);
                 self.run(store).await?;
-                self.wait_ready(store).await
+                self.wait_ready(store).await?;
+                info!("❇️ store is ready");
+                Ok(())
             })
             .await
     }
@@ -41,9 +44,11 @@ where
     T: Store + Sync + ?Sized,
 {
     async fn start(&self, store: &T) -> Result<()> {
+        info!("🕹️ Starting container '{}' ...", store.name());
         Ok(self.start_container::<String>(&store.name(), None).await?)
     }
     async fn create(&self, store: &T) -> Result<models::ContainerCreateResponse> {
+        info!("🛠️ Creating container '{}' ...", store.name());
         let config = container::Config {
             image: Some(store.image()),
             env: Some(store.envs()),
@@ -85,13 +90,14 @@ where
     async fn stop(&self, store: &T) -> Result<()> {
         self.stop_container(&store.name(), None).await.or_else(|e| match e {
             DockerResponseNotFoundError { .. } => {
-                info!("{} already stopped", store.name());
+                debug!("'{}' already stopped", store.name());
                 Ok(())
             }
             _ => Err(e.into()),
         })
     }
     async fn reset(&self, store: &T) -> Result<()> {
+        info!("♻️ Reseting store ...");
         exec(self, &store.name(), store.reset_cmd()).await
     }
     async fn ping(&self, store: &T) -> Result<()> {
@@ -128,6 +134,7 @@ async fn exec(docker: &Docker, container: &str, cmd: Vec<String>) -> Result<()> 
 }
 
 async fn pull(docker: &Docker, image: &str) -> Result<()> {
+    info!("📦 Pulling image '{}' ...", image);
     docker
         .create_image(
             Some(image::CreateImageOptions { from_image: image, ..Default::default() }),

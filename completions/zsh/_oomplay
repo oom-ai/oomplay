@@ -30,19 +30,143 @@ _oomplay() {
         case $line[1] in
             (init)
 _arguments "${_arguments_options[@]}" \
-'-c+[Config file path]:CONFIG: ' \
-'--config=[Config file path]:CONFIG: ' \
+'-f+[file path containing backends]:FILE: ' \
+'--file=[file path containing backends]:FILE: ' \
+'-h[Print help information]' \
+'--help[Print help information]' \
+":: :_oomplay__init_commands" \
+"*::: :->init" \
+&& ret=0
+
+    case $state in
+    (init)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:oomplay-init-command-$line[1]:"
+        case $line[1] in
+            (redis)
+_arguments "${_arguments_options[@]}" \
+'-P+[]:PORT: ' \
+'--port=[]:PORT: ' \
+'-p+[]:PASSWORD: ' \
+'--password=[]:PASSWORD: ' \
+'-d+[]:DATABASE: ' \
+'--database=[]:DATABASE: ' \
+'--version[Print version information]' \
 '-h[Print help information]' \
 '--help[Print help information]' \
 && ret=0
 ;;
-(stop)
+(postgres)
 _arguments "${_arguments_options[@]}" \
-'-c+[Config file path]:CONFIG: ' \
-'--config=[Config file path]:CONFIG: ' \
+'-P+[]:PORT: ' \
+'--port=[]:PORT: ' \
+'-u+[]:USER: ' \
+'--user=[]:USER: ' \
+'-p+[]:PASSWORD: ' \
+'--password=[]:PASSWORD: ' \
+'-d+[]:DATABASE: ' \
+'--database=[]:DATABASE: ' \
+'--version[Print version information]' \
 '-h[Print help information]' \
 '--help[Print help information]' \
 && ret=0
+;;
+(mysql)
+_arguments "${_arguments_options[@]}" \
+'-P+[]:PORT: ' \
+'--port=[]:PORT: ' \
+'-u+[]:USER: ' \
+'--user=[]:USER: ' \
+'-p+[]:PASSWORD: ' \
+'--password=[]:PASSWORD: ' \
+'-d+[]:DATABASE: ' \
+'--database=[]:DATABASE: ' \
+'--version[Print version information]' \
+'-h[Print help information]' \
+'--help[Print help information]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+'--version[Print version information]' \
+'-h[Print help information]' \
+'--help[Print help information]' \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(stop)
+_arguments "${_arguments_options[@]}" \
+'-f+[file path containing backends]:FILE: ' \
+'--file=[file path containing backends]:FILE: ' \
+'-h[Print help information]' \
+'--help[Print help information]' \
+":: :_oomplay__stop_commands" \
+"*::: :->stop" \
+&& ret=0
+
+    case $state in
+    (stop)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:oomplay-stop-command-$line[1]:"
+        case $line[1] in
+            (redis)
+_arguments "${_arguments_options[@]}" \
+'-P+[]:PORT: ' \
+'--port=[]:PORT: ' \
+'-p+[]:PASSWORD: ' \
+'--password=[]:PASSWORD: ' \
+'-d+[]:DATABASE: ' \
+'--database=[]:DATABASE: ' \
+'--version[Print version information]' \
+'-h[Print help information]' \
+'--help[Print help information]' \
+&& ret=0
+;;
+(postgres)
+_arguments "${_arguments_options[@]}" \
+'-P+[]:PORT: ' \
+'--port=[]:PORT: ' \
+'-u+[]:USER: ' \
+'--user=[]:USER: ' \
+'-p+[]:PASSWORD: ' \
+'--password=[]:PASSWORD: ' \
+'-d+[]:DATABASE: ' \
+'--database=[]:DATABASE: ' \
+'--version[Print version information]' \
+'-h[Print help information]' \
+'--help[Print help information]' \
+&& ret=0
+;;
+(mysql)
+_arguments "${_arguments_options[@]}" \
+'-P+[]:PORT: ' \
+'--port=[]:PORT: ' \
+'-u+[]:USER: ' \
+'--user=[]:USER: ' \
+'-p+[]:PASSWORD: ' \
+'--password=[]:PASSWORD: ' \
+'-d+[]:DATABASE: ' \
+'--database=[]:DATABASE: ' \
+'--version[Print version information]' \
+'-h[Print help information]' \
+'--help[Print help information]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" \
+'--version[Print version information]' \
+'-h[Print help information]' \
+'--help[Print help information]' \
+&& ret=0
+;;
+        esac
+    ;;
+esac
 ;;
 (completion)
 _arguments "${_arguments_options[@]}" \
@@ -80,14 +204,64 @@ _oomplay__help_commands() {
     local commands; commands=()
     _describe -t commands 'oomplay help commands' commands "$@"
 }
+(( $+functions[_oomplay__init__help_commands] )) ||
+_oomplay__init__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'oomplay init help commands' commands "$@"
+}
+(( $+functions[_oomplay__stop__help_commands] )) ||
+_oomplay__stop__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'oomplay stop help commands' commands "$@"
+}
 (( $+functions[_oomplay__init_commands] )) ||
 _oomplay__init_commands() {
-    local commands; commands=()
+    local commands; commands=(
+'redis:' \
+'postgres:' \
+'mysql:' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
     _describe -t commands 'oomplay init commands' commands "$@"
+}
+(( $+functions[_oomplay__init__mysql_commands] )) ||
+_oomplay__init__mysql_commands() {
+    local commands; commands=()
+    _describe -t commands 'oomplay init mysql commands' commands "$@"
+}
+(( $+functions[_oomplay__stop__mysql_commands] )) ||
+_oomplay__stop__mysql_commands() {
+    local commands; commands=()
+    _describe -t commands 'oomplay stop mysql commands' commands "$@"
+}
+(( $+functions[_oomplay__init__postgres_commands] )) ||
+_oomplay__init__postgres_commands() {
+    local commands; commands=()
+    _describe -t commands 'oomplay init postgres commands' commands "$@"
+}
+(( $+functions[_oomplay__stop__postgres_commands] )) ||
+_oomplay__stop__postgres_commands() {
+    local commands; commands=()
+    _describe -t commands 'oomplay stop postgres commands' commands "$@"
+}
+(( $+functions[_oomplay__init__redis_commands] )) ||
+_oomplay__init__redis_commands() {
+    local commands; commands=()
+    _describe -t commands 'oomplay init redis commands' commands "$@"
+}
+(( $+functions[_oomplay__stop__redis_commands] )) ||
+_oomplay__stop__redis_commands() {
+    local commands; commands=()
+    _describe -t commands 'oomplay stop redis commands' commands "$@"
 }
 (( $+functions[_oomplay__stop_commands] )) ||
 _oomplay__stop_commands() {
-    local commands; commands=()
+    local commands; commands=(
+'redis:' \
+'postgres:' \
+'mysql:' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
     _describe -t commands 'oomplay stop commands' commands "$@"
 }
 

@@ -31,15 +31,115 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             break
         }
         'oomplay;init' {
-            [CompletionResult]::new('-c', 'c', [CompletionResultType]::ParameterName, 'Config file path')
-            [CompletionResult]::new('--config', 'config', [CompletionResultType]::ParameterName, 'Config file path')
+            [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
+            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
+            [CompletionResult]::new('redis', 'redis', [CompletionResultType]::ParameterValue, 'redis')
+            [CompletionResult]::new('postgres', 'postgres', [CompletionResultType]::ParameterValue, 'postgres')
+            [CompletionResult]::new('mysql', 'mysql', [CompletionResultType]::ParameterValue, 'mysql')
+            [CompletionResult]::new('help', 'help', [CompletionResultType]::ParameterValue, 'Print this message or the help of the given subcommand(s)')
+            break
+        }
+        'oomplay;init;redis' {
+            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
+            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
+            [CompletionResult]::new('-p', 'p', [CompletionResultType]::ParameterName, 'p')
+            [CompletionResult]::new('--password', 'password', [CompletionResultType]::ParameterName, 'password')
+            [CompletionResult]::new('-d', 'd', [CompletionResultType]::ParameterName, 'd')
+            [CompletionResult]::new('--database', 'database', [CompletionResultType]::ParameterName, 'database')
+            [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
+            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
+            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
+            break
+        }
+        'oomplay;init;postgres' {
+            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
+            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
+            [CompletionResult]::new('-u', 'u', [CompletionResultType]::ParameterName, 'u')
+            [CompletionResult]::new('--user', 'user', [CompletionResultType]::ParameterName, 'user')
+            [CompletionResult]::new('-p', 'p', [CompletionResultType]::ParameterName, 'p')
+            [CompletionResult]::new('--password', 'password', [CompletionResultType]::ParameterName, 'password')
+            [CompletionResult]::new('-d', 'd', [CompletionResultType]::ParameterName, 'd')
+            [CompletionResult]::new('--database', 'database', [CompletionResultType]::ParameterName, 'database')
+            [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
+            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
+            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
+            break
+        }
+        'oomplay;init;mysql' {
+            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
+            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
+            [CompletionResult]::new('-u', 'u', [CompletionResultType]::ParameterName, 'u')
+            [CompletionResult]::new('--user', 'user', [CompletionResultType]::ParameterName, 'user')
+            [CompletionResult]::new('-p', 'p', [CompletionResultType]::ParameterName, 'p')
+            [CompletionResult]::new('--password', 'password', [CompletionResultType]::ParameterName, 'password')
+            [CompletionResult]::new('-d', 'd', [CompletionResultType]::ParameterName, 'd')
+            [CompletionResult]::new('--database', 'database', [CompletionResultType]::ParameterName, 'database')
+            [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
+            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
+            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
+            break
+        }
+        'oomplay;init;help' {
+            [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
             break
         }
         'oomplay;stop' {
-            [CompletionResult]::new('-c', 'c', [CompletionResultType]::ParameterName, 'Config file path')
-            [CompletionResult]::new('--config', 'config', [CompletionResultType]::ParameterName, 'Config file path')
+            [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
+            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
+            [CompletionResult]::new('redis', 'redis', [CompletionResultType]::ParameterValue, 'redis')
+            [CompletionResult]::new('postgres', 'postgres', [CompletionResultType]::ParameterValue, 'postgres')
+            [CompletionResult]::new('mysql', 'mysql', [CompletionResultType]::ParameterValue, 'mysql')
+            [CompletionResult]::new('help', 'help', [CompletionResultType]::ParameterValue, 'Print this message or the help of the given subcommand(s)')
+            break
+        }
+        'oomplay;stop;redis' {
+            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
+            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
+            [CompletionResult]::new('-p', 'p', [CompletionResultType]::ParameterName, 'p')
+            [CompletionResult]::new('--password', 'password', [CompletionResultType]::ParameterName, 'password')
+            [CompletionResult]::new('-d', 'd', [CompletionResultType]::ParameterName, 'd')
+            [CompletionResult]::new('--database', 'database', [CompletionResultType]::ParameterName, 'database')
+            [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
+            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
+            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
+            break
+        }
+        'oomplay;stop;postgres' {
+            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
+            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
+            [CompletionResult]::new('-u', 'u', [CompletionResultType]::ParameterName, 'u')
+            [CompletionResult]::new('--user', 'user', [CompletionResultType]::ParameterName, 'user')
+            [CompletionResult]::new('-p', 'p', [CompletionResultType]::ParameterName, 'p')
+            [CompletionResult]::new('--password', 'password', [CompletionResultType]::ParameterName, 'password')
+            [CompletionResult]::new('-d', 'd', [CompletionResultType]::ParameterName, 'd')
+            [CompletionResult]::new('--database', 'database', [CompletionResultType]::ParameterName, 'database')
+            [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
+            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
+            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
+            break
+        }
+        'oomplay;stop;mysql' {
+            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
+            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
+            [CompletionResult]::new('-u', 'u', [CompletionResultType]::ParameterName, 'u')
+            [CompletionResult]::new('--user', 'user', [CompletionResultType]::ParameterName, 'user')
+            [CompletionResult]::new('-p', 'p', [CompletionResultType]::ParameterName, 'p')
+            [CompletionResult]::new('--password', 'password', [CompletionResultType]::ParameterName, 'password')
+            [CompletionResult]::new('-d', 'd', [CompletionResultType]::ParameterName, 'd')
+            [CompletionResult]::new('--database', 'database', [CompletionResultType]::ParameterName, 'database')
+            [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
+            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
+            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
+            break
+        }
+        'oomplay;stop;help' {
+            [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
             break

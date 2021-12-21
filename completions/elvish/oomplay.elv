@@ -28,14 +28,106 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand help 'Print this message or the help of the given subcommand(s)'
         }
         &'oomplay;init'= {
-            cand -c 'Config file path'
-            cand --config 'Config file path'
+            cand -f 'file path containing backends'
+            cand --file 'file path containing backends'
+            cand -h 'Print help information'
+            cand --help 'Print help information'
+            cand redis 'redis'
+            cand postgres 'postgres'
+            cand mysql 'mysql'
+            cand help 'Print this message or the help of the given subcommand(s)'
+        }
+        &'oomplay;init;redis'= {
+            cand -P 'P'
+            cand --port 'port'
+            cand -p 'p'
+            cand --password 'password'
+            cand -d 'd'
+            cand --database 'database'
+            cand --version 'Print version information'
+            cand -h 'Print help information'
+            cand --help 'Print help information'
+        }
+        &'oomplay;init;postgres'= {
+            cand -P 'P'
+            cand --port 'port'
+            cand -u 'u'
+            cand --user 'user'
+            cand -p 'p'
+            cand --password 'password'
+            cand -d 'd'
+            cand --database 'database'
+            cand --version 'Print version information'
+            cand -h 'Print help information'
+            cand --help 'Print help information'
+        }
+        &'oomplay;init;mysql'= {
+            cand -P 'P'
+            cand --port 'port'
+            cand -u 'u'
+            cand --user 'user'
+            cand -p 'p'
+            cand --password 'password'
+            cand -d 'd'
+            cand --database 'database'
+            cand --version 'Print version information'
+            cand -h 'Print help information'
+            cand --help 'Print help information'
+        }
+        &'oomplay;init;help'= {
+            cand --version 'Print version information'
             cand -h 'Print help information'
             cand --help 'Print help information'
         }
         &'oomplay;stop'= {
-            cand -c 'Config file path'
-            cand --config 'Config file path'
+            cand -f 'file path containing backends'
+            cand --file 'file path containing backends'
+            cand -h 'Print help information'
+            cand --help 'Print help information'
+            cand redis 'redis'
+            cand postgres 'postgres'
+            cand mysql 'mysql'
+            cand help 'Print this message or the help of the given subcommand(s)'
+        }
+        &'oomplay;stop;redis'= {
+            cand -P 'P'
+            cand --port 'port'
+            cand -p 'p'
+            cand --password 'password'
+            cand -d 'd'
+            cand --database 'database'
+            cand --version 'Print version information'
+            cand -h 'Print help information'
+            cand --help 'Print help information'
+        }
+        &'oomplay;stop;postgres'= {
+            cand -P 'P'
+            cand --port 'port'
+            cand -u 'u'
+            cand --user 'user'
+            cand -p 'p'
+            cand --password 'password'
+            cand -d 'd'
+            cand --database 'database'
+            cand --version 'Print version information'
+            cand -h 'Print help information'
+            cand --help 'Print help information'
+        }
+        &'oomplay;stop;mysql'= {
+            cand -P 'P'
+            cand --port 'port'
+            cand -u 'u'
+            cand --user 'user'
+            cand -p 'p'
+            cand --password 'password'
+            cand -d 'd'
+            cand --database 'database'
+            cand --version 'Print version information'
+            cand -h 'Print help information'
+            cand --help 'Print help information'
+        }
+        &'oomplay;stop;help'= {
+            cand --version 'Print version information'
             cand -h 'Print help information'
             cand --help 'Print help information'
         }

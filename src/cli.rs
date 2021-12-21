@@ -1,27 +1,27 @@
-use std::path::PathBuf;
+use std::{collections::HashMap, path::PathBuf};
 
-use clap::{Args, Parser};
+use clap::{AppSettings, Args, Parser};
 use clap_generate::Shell;
+use serde::{Deserialize, Serialize};
+use strum::Display;
 
 #[derive(Parser)]
 #[clap(about, version)]
+#[clap(global_setting(AppSettings::DeriveDisplayOrder))]
 pub enum App {
     /// Initialize playgrounds
-    #[clap(display_order = 4)]
     Init {
         #[clap(flatten)]
-        config: ConfigOpt,
+        backends: BackendOpt,
     },
 
     /// Stop playgrounds
-    #[clap(display_order = 2)]
     Stop {
         #[clap(flatten)]
-        config: ConfigOpt,
+        backends: BackendOpt,
     },
 
     /// Output shell completion code
-    #[clap(display_order = 100)]
     Completion {
         /// Target shell name
         #[clap(arg_enum)]
@@ -30,8 +30,56 @@ pub enum App {
 }
 
 #[derive(Debug, Args)]
-pub struct ConfigOpt {
-    /// Config file path
-    #[clap(short, long, display_order = 0)]
-    pub config: PathBuf,
+pub struct BackendOpt {
+    /// file path containing backends
+    #[clap(short, long)]
+    pub file: Option<PathBuf>,
+
+    /// Backend specified by cli
+    #[clap(subcommand)]
+    pub cli: Option<Backend>,
 }
+
+#[derive(Debug, Serialize, Deserialize, Display, Parser)]
+#[strum(serialize_all = "snake_case")]
+#[serde(rename_all(deserialize = "snake_case"))]
+pub enum Backend {
+    Redis {
+        #[clap(short = 'P', long, default_value = "6379")]
+        port: u16,
+
+        #[clap(short, long, default_value = "redis")]
+        password: String,
+
+        #[clap(short, long, default_value = "0")]
+        database: u32,
+    },
+    Postgres {
+        #[clap(short = 'P', long, default_value = "5432")]
+        port: u16,
+
+        #[clap(short, long, default_value = "postgres")]
+        user: String,
+
+        #[clap(short, long, default_value = "postgres")]
+        password: String,
+
+        #[clap(short, long, default_value = "oomplay")]
+        database: String,
+    },
+    Mysql {
+        #[clap(short = 'P', long, default_value = "3306")]
+        port: u16,
+
+        #[clap(short, long, default_value = "mysql")]
+        user: String,
+
+        #[clap(short, long, default_value = "mysql")]
+        password: String,
+
+        #[clap(short, long, default_value = "oomplay")]
+        database: String,
+    },
+}
+
+pub type BackendMap = HashMap<String, Backend>;

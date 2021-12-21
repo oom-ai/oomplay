@@ -3,7 +3,6 @@
 
 mod backend;
 mod cli;
-mod config;
 mod docker;
 mod store;
 mod util;
@@ -18,7 +17,7 @@ use cli::App;
 use docker::StoreRuntime;
 use std::io;
 
-use crate::config::{Backend, ConfigMap};
+use crate::cli::{Backend, BackendMap};
 
 #[tokio::main]
 async fn main() {
@@ -38,9 +37,9 @@ async fn main() {
 async fn try_main() -> Result<()> {
     let docker = Docker::connect_with_local_defaults()?;
     match App::parse() {
-        App::Init { config } => {
-            let config_map: ConfigMap = config.try_into()?;
-            for (name, backend) in config_map.into_iter() {
+        App::Init { backends } => {
+            let backends: BackendMap = backends.try_into()?;
+            for (name, backend) in backends.into_iter() {
                 info!("init {name}...");
                 match backend {
                     Backend::Postgres { port, user, password, database, .. } => {
@@ -55,9 +54,9 @@ async fn try_main() -> Result<()> {
                 }
             }
         }
-        App::Stop { config } => {
-            let config_map: ConfigMap = config.try_into()?;
-            for (name, backend) in config_map.into_iter() {
+        App::Stop { backends } => {
+            let backends: BackendMap = backends.try_into()?;
+            for (name, backend) in backends.into_iter() {
                 info!("stop {name}...");
                 match backend {
                     Backend::Postgres { port, user, password, database, .. } => {

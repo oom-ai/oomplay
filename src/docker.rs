@@ -1,6 +1,6 @@
 use anyhow::{anyhow, bail, Result};
 use async_trait::async_trait;
-use bollard::{container, exec, image, models, Docker};
+use bollard::{container, errors::Error::DockerResponseNotFoundError, exec, image, models, Docker};
 use futures::prelude::*;
 use std::time::Duration;
 
@@ -83,7 +83,13 @@ where
         self.start(store).await
     }
     async fn stop(&self, store: &T) -> Result<()> {
-        Ok(self.stop_container(&store.name(), None).await?)
+        self.stop_container(&store.name(), None).await.or_else(|e| match e {
+            DockerResponseNotFoundError { .. } => {
+                info!("{} already stopped", store.name());
+                Ok(())
+            }
+            _ => Err(e.into()),
+        })
     }
     async fn reset(&self, store: &T) -> Result<()> {
         exec(self, &store.name(), store.reset_cmd()).await

@@ -10,6 +10,15 @@ pub struct Mysql {
     pub database: String,
 }
 
+impl Mysql {
+    fn root_password(&self) -> &str {
+        match self.user.as_str() {
+            "root" => &self.password,
+            _ => "mysql",
+        }
+    }
+}
+
 impl Store for Mysql {
     fn name(&self) -> String {
         "oomstore-playground-mysql".to_string()
@@ -21,9 +30,9 @@ impl Store for Mysql {
 
     fn envs(&self) -> Vec<String> {
         match self.user.as_str() {
-            "root" => svec![format!("MYSQL_ROOT_PASSWORD={}", self.password)],
+            "root" => svec![format!("MYSQL_ROOT_PASSWORD={}", self.root_password())],
             _ => svec![
-                format!("MYSQL_ALLOW_EMPTY_PASSWORD={}", "yes"),
+                format!("MYSQL_ROOT_PASSWORD={}", self.root_password()),
                 format!("MYSQL_USER={}", self.user),
                 format!("MYSQL_PASSWORD={}", self.password),
             ],
@@ -37,15 +46,15 @@ impl Store for Mysql {
     fn reset_cmd(&self) -> Vec<String> {
         svec![
             "mysql",
-            "-u",
-            self.user,
-            format!("-p{}", self.password),
+            format!("-p{}", self.root_password()),
             "-e",
             format!("DROP DATABASE IF EXISTS {}", self.database)
         ]
     }
 
     fn ping_cmd(&self) -> Vec<String> {
-        svec!["mysqladmin", "-u", self.user, format!("-p{}", self.password), "ping",]
+        // sometimes reset_cmd fails even `ping` or `select 1` succeeded,
+        // so we use `show databases` to make sure the server is actually ready.
+        svec!["mysql", format!("-p{}", self.root_password()), "-e", "show databases"]
     }
 }

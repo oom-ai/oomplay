@@ -124,6 +124,10 @@ async fn exec(docker: &Docker, container: &str, cmd: Vec<String>) -> Result<i64>
         .await?
         .exit_code
         .ok_or_else(|| anyhow!("exit code is empty"))
+        .and_then(|code| match code {
+            0 => Ok(0),
+            _ => bail!("none-zero exit code: {}", code),
+        })
 }
 
 async fn pull(docker: &Docker, image: &str) -> Result<()> {

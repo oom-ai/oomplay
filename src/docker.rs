@@ -1,7 +1,7 @@
 use anyhow::{anyhow, bail, Result};
 use async_trait::async_trait;
 use bollard::{container, exec, image, models, Docker};
-use futures::{StreamExt, TryStreamExt};
+use futures::prelude::*;
 use std::time::Duration;
 
 use crate::store::{PortMap, Store};
@@ -15,32 +15,23 @@ where
     async fn create(&self, store: &T) -> Result<models::ContainerCreateResponse>;
     async fn run(&self, store: &T) -> Result<()>;
     async fn stop(&self, store: &T) -> Result<()>;
-    async fn reset(&self, store: &T) -> Result<i64>;
-    async fn ping(&self, store: &T) -> Result<i64>;
+    async fn reset(&self, store: &T) -> Result<()>;
+    async fn ping(&self, store: &T) -> Result<()>;
     async fn wait_ready(&self, store: &T) -> Result<()> {
-        loop {
+        while let Err(e) = self.ping(store).await {
+            debug!("docker exec failed: {}", e);
             tokio::time::sleep(Duration::SECOND).await;
-            match self.ping(store).await {
-                Ok(0) => return Ok(()),
-                Ok(n) => {
-                    debug!("ping exited with none-zero code {}", n);
-                    continue;
-                }
-                Err(e) => {
-                    debug!("docker exec failed: {}", e);
-                    continue;
-                }
-            }
         }
+        Ok(())
     }
     async fn init(&self, store: &T) -> Result<()> {
-        match self.reset(store).await {
-            Ok(0) => Ok(()),
-            _ => {
+        self.reset(store)
+            .or_else(async move |e| {
+                debug!("reset failed: {}", e);
                 self.run(store).await?;
                 self.wait_ready(store).await
-            }
-        }
+            })
+            .await
     }
 }
 
@@ -94,15 +85,15 @@ where
     async fn stop(&self, store: &T) -> Result<()> {
         Ok(self.stop_container(&store.name(), None).await?)
     }
-    async fn reset(&self, store: &T) -> Result<i64> {
+    async fn reset(&self, store: &T) -> Result<()> {
         exec(self, &store.name(), store.reset_cmd()).await
     }
-    async fn ping(&self, store: &T) -> Result<i64> {
+    async fn ping(&self, store: &T) -> Result<()> {
         exec(self, &store.name(), store.ping_cmd()).await
     }
 }
 
-async fn exec(docker: &Docker, container: &str, cmd: Vec<String>) -> Result<i64> {
+async fn exec(docker: &Docker, container: &str, cmd: Vec<String>) -> Result<()> {
     let id = docker
         .create_exec::<String>(container, exec::CreateExecOptions {
             attach_stdout: Some(true),
@@ -125,7 +116,7 @@ async fn exec(docker: &Docker, container: &str, cmd: Vec<String>) -> Result<i64>
         .exit_code
         .ok_or_else(|| anyhow!("exit code is empty"))
         .and_then(|code| match code {
-            0 => Ok(0),
+            0 => Ok(()),
             _ => bail!("none-zero exit code: {}", code),
         })
 }

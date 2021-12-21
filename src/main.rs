@@ -1,4 +1,5 @@
 #![feature(duration_constants)]
+#![feature(async_closure)]
 
 mod backend;
 mod cli;

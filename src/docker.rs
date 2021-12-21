@@ -9,7 +9,7 @@ use crate::store::{PortMap, Store};
 #[async_trait]
 pub trait StoreRuntime<T>
 where
-    T: Store + Sync,
+    T: Store + Sync + ?Sized,
 {
     async fn start(&self, store: &T) -> Result<()>;
     async fn create(&self, store: &T) -> Result<models::ContainerCreateResponse>;
@@ -38,7 +38,7 @@ where
 #[async_trait]
 impl<T> StoreRuntime<T> for Docker
 where
-    T: Store + Sync,
+    T: Store + Sync + ?Sized,
 {
     async fn start(&self, store: &T) -> Result<()> {
         Ok(self.start_container::<String>(&store.name(), None).await?)

@@ -25,17 +25,15 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand init 'Initialize playgrounds'
             cand stop 'Stop playgrounds'
             cand completion 'Output shell completion code'
-            cand help 'Print this message or the help of the given subcommand(s)'
         }
         &'oomplay;init'= {
             cand -f 'file path containing backends'
             cand --file 'file path containing backends'
             cand -h 'Print help information'
             cand --help 'Print help information'
-            cand redis 'redis'
-            cand postgres 'postgres'
-            cand mysql 'mysql'
-            cand help 'Print this message or the help of the given subcommand(s)'
+            cand redis 'Redis store'
+            cand postgres 'Postgres store'
+            cand mysql 'Mysql store'
         }
         &'oomplay;init;redis'= {
             cand -P 'P'
@@ -44,6 +42,8 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand --password 'password'
             cand -d 'd'
             cand --database 'database'
+            cand -f 'file path containing backends'
+            cand --file 'file path containing backends'
             cand --version 'Print version information'
             cand -h 'Print help information'
             cand --help 'Print help information'
@@ -57,6 +57,8 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand --password 'password'
             cand -d 'd'
             cand --database 'database'
+            cand -f 'file path containing backends'
+            cand --file 'file path containing backends'
             cand --version 'Print version information'
             cand -h 'Print help information'
             cand --help 'Print help information'
@@ -70,11 +72,8 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand --password 'password'
             cand -d 'd'
             cand --database 'database'
-            cand --version 'Print version information'
-            cand -h 'Print help information'
-            cand --help 'Print help information'
-        }
-        &'oomplay;init;help'= {
+            cand -f 'file path containing backends'
+            cand --file 'file path containing backends'
             cand --version 'Print version information'
             cand -h 'Print help information'
             cand --help 'Print help information'
@@ -84,10 +83,9 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand --file 'file path containing backends'
             cand -h 'Print help information'
             cand --help 'Print help information'
-            cand redis 'redis'
-            cand postgres 'postgres'
-            cand mysql 'mysql'
-            cand help 'Print this message or the help of the given subcommand(s)'
+            cand redis 'Redis store'
+            cand postgres 'Postgres store'
+            cand mysql 'Mysql store'
         }
         &'oomplay;stop;redis'= {
             cand -P 'P'
@@ -96,6 +94,8 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand --password 'password'
             cand -d 'd'
             cand --database 'database'
+            cand -f 'file path containing backends'
+            cand --file 'file path containing backends'
             cand --version 'Print version information'
             cand -h 'Print help information'
             cand --help 'Print help information'
@@ -109,6 +109,8 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand --password 'password'
             cand -d 'd'
             cand --database 'database'
+            cand -f 'file path containing backends'
+            cand --file 'file path containing backends'
             cand --version 'Print version information'
             cand -h 'Print help information'
             cand --help 'Print help information'
@@ -122,11 +124,8 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand --password 'password'
             cand -d 'd'
             cand --database 'database'
-            cand --version 'Print version information'
-            cand -h 'Print help information'
-            cand --help 'Print help information'
-        }
-        &'oomplay;stop;help'= {
+            cand -f 'file path containing backends'
+            cand --file 'file path containing backends'
             cand --version 'Print version information'
             cand -h 'Print help information'
             cand --help 'Print help information'
@@ -134,8 +133,6 @@ set edit:completion:arg-completer[oomplay] = [@words]{
         &'oomplay;completion'= {
             cand -h 'Print help information'
             cand --help 'Print help information'
-        }
-        &'oomplay;help'= {
         }
     ]
     $completions[$command]

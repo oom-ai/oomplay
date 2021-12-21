@@ -27,7 +27,6 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('init', 'init', [CompletionResultType]::ParameterValue, 'Initialize playgrounds')
             [CompletionResult]::new('stop', 'stop', [CompletionResultType]::ParameterValue, 'Stop playgrounds')
             [CompletionResult]::new('completion', 'completion', [CompletionResultType]::ParameterValue, 'Output shell completion code')
-            [CompletionResult]::new('help', 'help', [CompletionResultType]::ParameterValue, 'Print this message or the help of the given subcommand(s)')
             break
         }
         'oomplay;init' {
@@ -35,10 +34,9 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
-            [CompletionResult]::new('redis', 'redis', [CompletionResultType]::ParameterValue, 'redis')
-            [CompletionResult]::new('postgres', 'postgres', [CompletionResultType]::ParameterValue, 'postgres')
-            [CompletionResult]::new('mysql', 'mysql', [CompletionResultType]::ParameterValue, 'mysql')
-            [CompletionResult]::new('help', 'help', [CompletionResultType]::ParameterValue, 'Print this message or the help of the given subcommand(s)')
+            [CompletionResult]::new('redis', 'redis', [CompletionResultType]::ParameterValue, 'Redis store')
+            [CompletionResult]::new('postgres', 'postgres', [CompletionResultType]::ParameterValue, 'Postgres store')
+            [CompletionResult]::new('mysql', 'mysql', [CompletionResultType]::ParameterValue, 'Mysql store')
             break
         }
         'oomplay;init;redis' {
@@ -48,6 +46,8 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('--password', 'password', [CompletionResultType]::ParameterName, 'password')
             [CompletionResult]::new('-d', 'd', [CompletionResultType]::ParameterName, 'd')
             [CompletionResult]::new('--database', 'database', [CompletionResultType]::ParameterName, 'database')
+            [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
@@ -62,6 +62,8 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('--password', 'password', [CompletionResultType]::ParameterName, 'password')
             [CompletionResult]::new('-d', 'd', [CompletionResultType]::ParameterName, 'd')
             [CompletionResult]::new('--database', 'database', [CompletionResultType]::ParameterName, 'database')
+            [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
@@ -76,12 +78,8 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('--password', 'password', [CompletionResultType]::ParameterName, 'password')
             [CompletionResult]::new('-d', 'd', [CompletionResultType]::ParameterName, 'd')
             [CompletionResult]::new('--database', 'database', [CompletionResultType]::ParameterName, 'database')
-            [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
-            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
-            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
-            break
-        }
-        'oomplay;init;help' {
+            [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
@@ -92,10 +90,9 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
-            [CompletionResult]::new('redis', 'redis', [CompletionResultType]::ParameterValue, 'redis')
-            [CompletionResult]::new('postgres', 'postgres', [CompletionResultType]::ParameterValue, 'postgres')
-            [CompletionResult]::new('mysql', 'mysql', [CompletionResultType]::ParameterValue, 'mysql')
-            [CompletionResult]::new('help', 'help', [CompletionResultType]::ParameterValue, 'Print this message or the help of the given subcommand(s)')
+            [CompletionResult]::new('redis', 'redis', [CompletionResultType]::ParameterValue, 'Redis store')
+            [CompletionResult]::new('postgres', 'postgres', [CompletionResultType]::ParameterValue, 'Postgres store')
+            [CompletionResult]::new('mysql', 'mysql', [CompletionResultType]::ParameterValue, 'Mysql store')
             break
         }
         'oomplay;stop;redis' {
@@ -105,6 +102,8 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('--password', 'password', [CompletionResultType]::ParameterName, 'password')
             [CompletionResult]::new('-d', 'd', [CompletionResultType]::ParameterName, 'd')
             [CompletionResult]::new('--database', 'database', [CompletionResultType]::ParameterName, 'database')
+            [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
@@ -119,6 +118,8 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('--password', 'password', [CompletionResultType]::ParameterName, 'password')
             [CompletionResult]::new('-d', 'd', [CompletionResultType]::ParameterName, 'd')
             [CompletionResult]::new('--database', 'database', [CompletionResultType]::ParameterName, 'database')
+            [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
@@ -133,12 +134,8 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('--password', 'password', [CompletionResultType]::ParameterName, 'password')
             [CompletionResult]::new('-d', 'd', [CompletionResultType]::ParameterName, 'd')
             [CompletionResult]::new('--database', 'database', [CompletionResultType]::ParameterName, 'database')
-            [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
-            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
-            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
-            break
-        }
-        'oomplay;stop;help' {
+            [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
@@ -147,9 +144,6 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
         'oomplay;completion' {
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
-            break
-        }
-        'oomplay;help' {
             break
         }
     })

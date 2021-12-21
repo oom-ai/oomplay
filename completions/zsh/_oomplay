@@ -52,6 +52,8 @@ _arguments "${_arguments_options[@]}" \
 '--password=[]:PASSWORD: ' \
 '-d+[]:DATABASE: ' \
 '--database=[]:DATABASE: ' \
+'-f+[file path containing backends]:FILE: ' \
+'--file=[file path containing backends]:FILE: ' \
 '--version[Print version information]' \
 '-h[Print help information]' \
 '--help[Print help information]' \
@@ -67,6 +69,8 @@ _arguments "${_arguments_options[@]}" \
 '--password=[]:PASSWORD: ' \
 '-d+[]:DATABASE: ' \
 '--database=[]:DATABASE: ' \
+'-f+[file path containing backends]:FILE: ' \
+'--file=[file path containing backends]:FILE: ' \
 '--version[Print version information]' \
 '-h[Print help information]' \
 '--help[Print help information]' \
@@ -82,13 +86,8 @@ _arguments "${_arguments_options[@]}" \
 '--password=[]:PASSWORD: ' \
 '-d+[]:DATABASE: ' \
 '--database=[]:DATABASE: ' \
-'--version[Print version information]' \
-'-h[Print help information]' \
-'--help[Print help information]' \
-&& ret=0
-;;
-(help)
-_arguments "${_arguments_options[@]}" \
+'-f+[file path containing backends]:FILE: ' \
+'--file=[file path containing backends]:FILE: ' \
 '--version[Print version information]' \
 '-h[Print help information]' \
 '--help[Print help information]' \
@@ -122,6 +121,8 @@ _arguments "${_arguments_options[@]}" \
 '--password=[]:PASSWORD: ' \
 '-d+[]:DATABASE: ' \
 '--database=[]:DATABASE: ' \
+'-f+[file path containing backends]:FILE: ' \
+'--file=[file path containing backends]:FILE: ' \
 '--version[Print version information]' \
 '-h[Print help information]' \
 '--help[Print help information]' \
@@ -137,6 +138,8 @@ _arguments "${_arguments_options[@]}" \
 '--password=[]:PASSWORD: ' \
 '-d+[]:DATABASE: ' \
 '--database=[]:DATABASE: ' \
+'-f+[file path containing backends]:FILE: ' \
+'--file=[file path containing backends]:FILE: ' \
 '--version[Print version information]' \
 '-h[Print help information]' \
 '--help[Print help information]' \
@@ -152,13 +155,8 @@ _arguments "${_arguments_options[@]}" \
 '--password=[]:PASSWORD: ' \
 '-d+[]:DATABASE: ' \
 '--database=[]:DATABASE: ' \
-'--version[Print version information]' \
-'-h[Print help information]' \
-'--help[Print help information]' \
-&& ret=0
-;;
-(help)
-_arguments "${_arguments_options[@]}" \
+'-f+[file path containing backends]:FILE: ' \
+'--file=[file path containing backends]:FILE: ' \
 '--version[Print version information]' \
 '-h[Print help information]' \
 '--help[Print help information]' \
@@ -175,10 +173,6 @@ _arguments "${_arguments_options[@]}" \
 ':shell -- Target shell name:(bash elvish fish powershell zsh)' \
 && ret=0
 ;;
-(help)
-_arguments "${_arguments_options[@]}" \
-&& ret=0
-;;
         esac
     ;;
 esac
@@ -190,7 +184,6 @@ _oomplay_commands() {
 'init:Initialize playgrounds' \
 'stop:Stop playgrounds' \
 'completion:Output shell completion code' \
-'help:Print this message or the help of the given subcommand(s)' \
     )
     _describe -t commands 'oomplay commands' commands "$@"
 }
@@ -199,28 +192,12 @@ _oomplay__completion_commands() {
     local commands; commands=()
     _describe -t commands 'oomplay completion commands' commands "$@"
 }
-(( $+functions[_oomplay__help_commands] )) ||
-_oomplay__help_commands() {
-    local commands; commands=()
-    _describe -t commands 'oomplay help commands' commands "$@"
-}
-(( $+functions[_oomplay__init__help_commands] )) ||
-_oomplay__init__help_commands() {
-    local commands; commands=()
-    _describe -t commands 'oomplay init help commands' commands "$@"
-}
-(( $+functions[_oomplay__stop__help_commands] )) ||
-_oomplay__stop__help_commands() {
-    local commands; commands=()
-    _describe -t commands 'oomplay stop help commands' commands "$@"
-}
 (( $+functions[_oomplay__init_commands] )) ||
 _oomplay__init_commands() {
     local commands; commands=(
-'redis:' \
-'postgres:' \
-'mysql:' \
-'help:Print this message or the help of the given subcommand(s)' \
+'redis:Redis store' \
+'postgres:Postgres store' \
+'mysql:Mysql store' \
     )
     _describe -t commands 'oomplay init commands' commands "$@"
 }
@@ -257,10 +234,9 @@ _oomplay__stop__redis_commands() {
 (( $+functions[_oomplay__stop_commands] )) ||
 _oomplay__stop_commands() {
     local commands; commands=(
-'redis:' \
-'postgres:' \
-'mysql:' \
-'help:Print this message or the help of the given subcommand(s)' \
+'redis:Redis store' \
+'postgres:Postgres store' \
+'mysql:Mysql store' \
     )
     _describe -t commands 'oomplay stop commands' commands "$@"
 }

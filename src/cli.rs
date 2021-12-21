@@ -8,6 +8,7 @@ use strum::Display;
 #[derive(Parser)]
 #[clap(about, version)]
 #[clap(global_setting(AppSettings::DeriveDisplayOrder))]
+#[clap(global_setting(AppSettings::DisableHelpSubcommand))]
 pub enum App {
     /// Initialize playgrounds
     Init {
@@ -32,7 +33,7 @@ pub enum App {
 #[derive(Debug, Args)]
 pub struct BackendOpt {
     /// file path containing backends
-    #[clap(short, long)]
+    #[clap(short, long, global = true)]
     pub file: Option<PathBuf>,
 
     /// Backend specified by cli
@@ -44,6 +45,7 @@ pub struct BackendOpt {
 #[strum(serialize_all = "snake_case")]
 #[serde(rename_all(deserialize = "snake_case"))]
 pub enum Backend {
+    /// Redis store
     Redis {
         #[clap(short = 'P', long, default_value = "6379")]
         port: u16,
@@ -54,6 +56,7 @@ pub enum Backend {
         #[clap(short, long, default_value = "0")]
         database: u32,
     },
+    /// Postgres store
     Postgres {
         #[clap(short = 'P', long, default_value = "5432")]
         port: u16,
@@ -67,6 +70,7 @@ pub enum Backend {
         #[clap(short, long, default_value = "oomplay")]
         database: String,
     },
+    /// Mysql store
     Mysql {
         #[clap(short = 'P', long, default_value = "3306")]
         port: u16,

@@ -25,7 +25,6 @@ OPTIONS:
     init          Initialize playgrounds
     stop          Stop playgrounds
     completion    Output shell completion code
-    help          Print this message or the help of the given subcommand(s)
 ```
 
 ## Example

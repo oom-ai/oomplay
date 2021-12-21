@@ -24,7 +24,6 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand --version 'Print version information'
             cand start 'Start playgrounds'
             cand stop 'Stop playgrounds'
-            cand reset 'Reset playgrounds'
             cand init 'Start or reset playgrounds'
             cand completion 'Output shell completion code'
             cand help 'Print this message or the help of the given subcommand(s)'
@@ -36,12 +35,6 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand --help 'Print help information'
         }
         &'oomplay;stop'= {
-            cand -c 'Config file path'
-            cand --config 'Config file path'
-            cand -h 'Print help information'
-            cand --help 'Print help information'
-        }
-        &'oomplay;reset'= {
             cand -c 'Config file path'
             cand --config 'Config file path'
             cand -h 'Print help information'

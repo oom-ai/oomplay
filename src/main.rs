@@ -37,6 +37,25 @@ async fn main() {
 
 async fn try_main() -> Result<()> {
     let docker = Docker::connect_with_local_defaults()?;
+    macro_rules! docker_start {
+        ($store:expr) => {
+            let store = &$store;
+            docker.run(store).await?;
+            docker.wait_ready(store).await?;
+        };
+    }
+    macro_rules! docker_init {
+        ($store:expr) => {
+            let store = &$store;
+            docker.init(store).await?;
+        };
+    }
+    macro_rules! docker_stop {
+        ($store:expr) => {
+            let store = &$store;
+            docker.stop(store).await?;
+        };
+    }
     match App::parse() {
         App::Start { config } => {
             let config_map: ConfigMap = config.try_into()?;
@@ -44,59 +63,13 @@ async fn try_main() -> Result<()> {
                 info!("start {name}...");
                 match backend {
                     Backend::Postgres { port, user, password, database, .. } => {
-                        let store = Postgres { port, user, password, database };
-                        docker.run(&store).await?;
-                        docker.wait_ready(&store).await?;
+                        docker_start!(Postgres { port, user, password, database });
                     }
                     Backend::Mysql { port, user, password, database, .. } => {
-                        let store = Mysql { port, user, password, database };
-                        docker.run(&store).await?;
-                        docker.wait_ready(&store).await?;
+                        docker_start!(Mysql { port, user, password, database });
                     }
                     Backend::Redis { port, password, database, .. } => {
-                        let store = Redis { port, password, database };
-                        docker.run(&store).await?;
-                        docker.wait_ready(&store).await?;
-                    }
-                }
-            }
-        }
-        App::Stop { config } => {
-            let config_map: ConfigMap = config.try_into()?;
-            for (name, backend) in config_map.into_iter() {
-                info!("stop {name}...");
-                match backend {
-                    Backend::Postgres { port, user, password, database, .. } => {
-                        let store = Postgres { port, user, password, database };
-                        docker.stop(&store).await?
-                    }
-                    Backend::Mysql { port, user, password, database, .. } => {
-                        let store = Mysql { port, user, password, database };
-                        docker.stop(&store).await?
-                    }
-                    Backend::Redis { port, password, database, .. } => {
-                        let store = Redis { port, password, database };
-                        docker.stop(&store).await?
-                    }
-                }
-            }
-        }
-        App::Reset { config } => {
-            let config_map: ConfigMap = config.try_into()?;
-            for (name, backend) in config_map.into_iter() {
-                info!("reset {name}...");
-                match backend {
-                    Backend::Postgres { port, user, password, database, .. } => {
-                        let store = Postgres { port, user, password, database };
-                        docker.reset(&store).await?;
-                    }
-                    Backend::Mysql { port, user, password, database, .. } => {
-                        let store = Mysql { port, user, password, database };
-                        docker.reset(&store).await?;
-                    }
-                    Backend::Redis { port, password, database, .. } => {
-                        let store = Redis { port, password, database };
-                        docker.reset(&store).await?;
+                        docker_start!(Redis { port, password, database });
                     }
                 }
             }
@@ -107,16 +80,30 @@ async fn try_main() -> Result<()> {
                 info!("init {name}...");
                 match backend {
                     Backend::Postgres { port, user, password, database, .. } => {
-                        let store = Postgres { port, user, password, database };
-                        docker.init(&store).await?;
+                        docker_init!(Postgres { port, user, password, database });
                     }
                     Backend::Mysql { port, user, password, database, .. } => {
-                        let store = Mysql { port, user, password, database };
-                        docker.init(&store).await?;
+                        docker_init!(Mysql { port, user, password, database });
                     }
                     Backend::Redis { port, password, database, .. } => {
-                        let store = Redis { port, password, database };
-                        docker.init(&store).await?;
+                        docker_init!(Redis { port, password, database });
+                    }
+                }
+            }
+        }
+        App::Stop { config } => {
+            let config_map: ConfigMap = config.try_into()?;
+            for (name, backend) in config_map.into_iter() {
+                info!("stop {name}...");
+                match backend {
+                    Backend::Postgres { port, user, password, database, .. } => {
+                        docker_stop!(Postgres { port, user, password, database });
+                    }
+                    Backend::Mysql { port, user, password, database, .. } => {
+                        docker_stop!(Mysql { port, user, password, database });
+                    }
+                    Backend::Redis { port, password, database, .. } => {
+                        docker_stop!(Redis { port, password, database });
                     }
                 }
             }

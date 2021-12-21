@@ -21,9 +21,6 @@ _oomplay() {
             init)
                 cmd+="__init"
                 ;;
-            reset)
-                cmd+="__reset"
-                ;;
             start)
                 cmd+="__start"
                 ;;
@@ -37,7 +34,7 @@ _oomplay() {
 
     case "${cmd}" in
         oomplay)
-            opts="-h -V --help --version start stop reset init completion help"
+            opts="-h -V --help --version start stop init completion help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 1 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -79,28 +76,6 @@ _oomplay() {
             return 0
             ;;
         oomplay__init)
-            opts="-c -h --config --help"
-            if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
-                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-                return 0
-            fi
-            case "${prev}" in
-                --config)
-                    COMPREPLY=($(compgen -f "${cur}"))
-                    return 0
-                    ;;
-                -c)
-                    COMPREPLY=($(compgen -f "${cur}"))
-                    return 0
-                    ;;
-                *)
-                    COMPREPLY=()
-                    ;;
-            esac
-            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
-            return 0
-            ;;
-        oomplay__reset)
             opts="-c -h --config --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )

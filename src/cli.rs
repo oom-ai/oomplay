@@ -20,13 +20,6 @@ pub enum App {
         config: ConfigOpt,
     },
 
-    /// Reset playgrounds
-    #[clap(display_order = 3)]
-    Reset {
-        #[clap(flatten)]
-        config: ConfigOpt,
-    },
-
     /// Start or reset playgrounds
     #[clap(display_order = 4)]
     Init {

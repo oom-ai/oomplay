@@ -12,7 +12,8 @@ Playground manager for [oomstore](https://github.com/oom-ai/oomstore).
 
 ```
 $ oomplay --help
-oomplay 0.1.0
+oomplay 0.1.2
+
 Playground manager for oomstore
 
 USAGE:
@@ -23,10 +24,8 @@ OPTIONS:
     -V, --version    Print version information
 
 SUBCOMMANDS:
-    start         Start playground
-    stop          Stop playground
-    reset         Reset playground
-    init          Start or reset playground
+    stop          Stop playgrounds
+    init          Initialize playgrounds
     completion    Output shell completion code
     help          Print this message or the help of the given subcommand(s)
 ```
@@ -34,10 +33,10 @@ SUBCOMMANDS:
 ## Example
 
 ```
-$ oomplay start -c config.yaml
-[*] start offline-store...
-[*] start online-store...
-[*] start metadata-store...
+$ oomplay init -c config.yaml
+[*] init offline-store...
+[*] init online-store...
+[*] init metadata-store...
 ```
 
 The `config.yaml` used above:

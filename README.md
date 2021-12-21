@@ -97,6 +97,15 @@ Run `oomplay --help` to get detailed usage.
 
 ## Installation
 
+### On macOS
+
+You can install `oomplay` with Homebrew:
+
+```
+brew tap oom-ai/oomplay
+brew install oomplay
+```
+
 ### From binaries
 
 Pre-built versions of `oomplay` for various architectures are available at [Github release page](https://github.com/oom-ai/oomplay/releases).

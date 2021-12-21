@@ -40,7 +40,7 @@ async fn try_main() -> Result<()> {
         App::Init { backends } => {
             let backends: BackendMap = backends.try_into()?;
             for (name, backend) in backends.into_iter() {
-                info!("🎮 initializing playground '{name}' ...");
+                info!("🎮 Initializing playground '{name}' ...");
                 match backend {
                     Backend::Postgres { port, user, password, database, .. } => {
                         docker.init(&Postgres { port, user, password, database }).await?;
@@ -58,7 +58,7 @@ async fn try_main() -> Result<()> {
         App::Stop { backends } => {
             let backends: BackendMap = backends.try_into()?;
             for (name, backend) in backends.into_iter() {
-                info!("🔌 stopping playground '{name}' ...");
+                info!("🔌 Stopping playground '{name}' ...");
                 match backend {
                     Backend::Postgres { port, user, password, database, .. } => {
                         docker.stop(&Postgres { port, user, password, database }).await?;

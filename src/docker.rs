@@ -31,7 +31,7 @@ where
                 debug!("reset failed: {}", e);
                 self.run(store).await?;
                 self.wait_ready(store).await?;
-                info!("❇️ store is ready");
+                info!("❇️ Store is ready");
                 Ok(())
             })
             .await

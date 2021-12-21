@@ -59,7 +59,7 @@ _oomplay() {
             return 0
             ;;
         oomplay__help)
-            opts="-h --help"
+            opts=""
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0

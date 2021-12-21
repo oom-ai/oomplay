@@ -9,4 +9,3 @@ complete -c oomplay -n "__fish_seen_subcommand_from init" -s h -l help -d 'Print
 complete -c oomplay -n "__fish_seen_subcommand_from stop" -s c -l config -d 'Config file path' -r
 complete -c oomplay -n "__fish_seen_subcommand_from stop" -s h -l help -d 'Print help information'
 complete -c oomplay -n "__fish_seen_subcommand_from completion" -s h -l help -d 'Print help information'
-complete -c oomplay -n "__fish_seen_subcommand_from help" -s h -l help -d 'Print help information'

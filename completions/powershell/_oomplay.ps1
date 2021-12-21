@@ -50,8 +50,6 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             break
         }
         'oomplay;help' {
-            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
-            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
             break
         }
     })

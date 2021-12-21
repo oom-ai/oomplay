@@ -44,8 +44,6 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand --help 'Print help information'
         }
         &'oomplay;help'= {
-            cand -h 'Print help information'
-            cand --help 'Print help information'
         }
     ]
     $completions[$command]

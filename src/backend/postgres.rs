@@ -12,7 +12,7 @@ pub struct Postgres {
 
 impl Store for Postgres {
     fn name(&self) -> String {
-        "oomstore-playground-postgres".to_string()
+        "oomplay-postgres".to_string()
     }
 
     fn image(&self) -> String {

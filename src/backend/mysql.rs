@@ -21,7 +21,7 @@ impl Mysql {
 
 impl Store for Mysql {
     fn name(&self) -> String {
-        "oomstore-playground-mysql".to_string()
+        "oomplay-mysql".to_string()
     }
 
     fn image(&self) -> String {

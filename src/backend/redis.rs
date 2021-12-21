@@ -11,7 +11,7 @@ pub struct Redis {
 
 impl Store for Redis {
     fn name(&self) -> String {
-        "oomstore-playground-redis".to_string()
+        "oomplay-redis".to_string()
     }
 
     fn image(&self) -> String {

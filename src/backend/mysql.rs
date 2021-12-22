@@ -48,7 +48,20 @@ impl Store for Mysql {
             "mysql",
             format!("-p{}", self.root_password()),
             "-e",
-            format!("DROP DATABASE IF EXISTS {}", self.database)
+            format!("DROP DATABASE IF EXISTS `{}`", self.database)
+        ]
+    }
+
+    fn recreate_cmd(&self) -> Vec<String> {
+        svec![
+            "mysql",
+            format!("-p{}", self.root_password()),
+            "-e",
+            [
+                format!("DROP DATABASE IF EXISTS `{}`", self.database),
+                format!("CREATE DATABASE `{}`", self.database)
+            ]
+            .join(";")
         ]
     }
 

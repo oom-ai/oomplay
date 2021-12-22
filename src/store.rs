@@ -10,6 +10,7 @@ pub trait Store {
     fn port_map(&self) -> Vec<PortMap>;
     fn reset_cmd(&self) -> Vec<String>;
     fn ping_cmd(&self) -> Vec<String>;
+    fn recreate_cmd(&self) -> Vec<String>;
 
     fn envs(&self) -> Vec<String> {
         vec![]

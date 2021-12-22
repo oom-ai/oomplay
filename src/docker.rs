@@ -36,6 +36,14 @@ where
             })
             .await
     }
+    async fn clear(&self, store: &T, recreate: bool) -> Result<()> {
+        if recreate {
+            self.recreate(store).await
+        } else {
+            self.reset(store).await
+        }
+    }
+    async fn recreate(&self, store: &T) -> Result<()>;
 }
 
 #[async_trait]
@@ -102,6 +110,9 @@ where
     }
     async fn ping(&self, store: &T) -> Result<()> {
         exec(self, &store.name(), store.ping_cmd()).await
+    }
+    async fn recreate(&self, store: &T) -> Result<()> {
+        exec(self, &store.name(), store.recreate_cmd()).await
     }
 }
 

@@ -34,6 +34,10 @@ impl Store for Redis {
         svec!["redis-cli", "-n", self.database, "flushdb"]
     }
 
+    fn recreate_cmd(&self) -> Vec<String> {
+        self.reset_cmd()
+    }
+
     fn ping_cmd(&self) -> Vec<String> {
         svec!["redis-cli", "-c", "ping"]
     }

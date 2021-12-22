@@ -55,6 +55,28 @@ async fn try_main() -> Result<()> {
             }
             info!("✨ All playgrounds initialized successfully!");
         }
+        App::Clear { backends, recreate } => {
+            let backends: BackendMap = backends.try_into()?;
+            for (name, backend) in backends.into_iter() {
+                info!("🔌 Stopping playground '{name}' ...");
+                match backend {
+                    Backend::Postgres { port, user, password, database, .. } => {
+                        docker
+                            .clear(&Postgres { port, user, password, database }, recreate)
+                            .await?;
+                    }
+                    Backend::Mysql { port, user, password, database, .. } => {
+                        docker
+                            .clear(&Mysql { port, user, password, database }, recreate)
+                            .await?;
+                    }
+                    Backend::Redis { port, password, database, .. } => {
+                        docker.clear(&Redis { port, password, database }, recreate).await?;
+                    }
+                }
+            }
+            info!("🛑 All playgrounds stopped");
+        }
         App::Stop { backends } => {
             let backends: BackendMap = backends.try_into()?;
             for (name, backend) in backends.into_iter() {

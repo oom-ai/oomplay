@@ -32,7 +32,19 @@ impl Store for Postgres {
     }
 
     fn reset_cmd(&self) -> Vec<String> {
-        svec!["psql", "-c", format!("DROP DATABASE IF EXISTS {}", self.database)]
+        svec!["psql", "-c", format!(r#"DROP DATABASE IF EXISTS "{}""#, self.database)]
+    }
+
+    fn recreate_cmd(&self) -> Vec<String> {
+        svec![
+            "psql",
+            "-c",
+            [
+                format!(r#"DROP DATABASE IF EXISTS "{}""#, self.database),
+                format!(r#"CREATE DATABASE "{}""#, self.database)
+            ]
+            .join(";")
+        ]
     }
 
     fn ping_cmd(&self) -> Vec<String> {

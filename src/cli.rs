@@ -22,6 +22,16 @@ pub enum App {
         backends: BackendOpt,
     },
 
+    /// Clear playgrounds
+    Clear {
+        #[clap(flatten)]
+        backends: BackendOpt,
+
+        /// Drop database
+        #[clap(short, long, global = true)]
+        recreate: bool,
+    },
+
     /// Output shell completion code
     Completion {
         /// Target shell name

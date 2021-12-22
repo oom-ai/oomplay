@@ -29,7 +29,7 @@ async fn main() {
                 std::process::exit(0);
             }
         }
-        error!("{}", e);
+        error!("❗ {}", e.to_string().trim());
         std::process::exit(1)
     }
 }

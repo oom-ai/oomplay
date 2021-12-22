@@ -12,32 +12,20 @@ where
     T: Store + Sync + ?Sized,
 {
     async fn start(&self, store: &T) -> Result<()>;
-    async fn create(&self, store: &T) -> Result<models::ContainerCreateResponse>;
+    async fn create(&self, store: &T) -> Result<()>;
     async fn run(&self, store: &T) -> Result<()>;
     async fn stop(&self, store: &T) -> Result<()>;
     async fn destory(&self, store: &T) -> Result<()>;
     async fn recreate(&self, store: &T) -> Result<()>;
-    async fn ping(&self, store: &T) -> Result<()>;
+    async fn check_health(&self, store: &T) -> Result<()>;
 
     async fn wait_ready(&self, store: &T) -> Result<()> {
-        while let Err(e) = self.ping(store).await {
+        while let Err(e) = self.check_health(store).await {
             info!("⏳ Wait for the store to be ready ...");
-            debug!("ping failed: {}", e);
+            debug!("check health failed: {}", e);
             tokio::time::sleep(Duration::SECOND * 2).await;
         }
         Ok(())
-    }
-
-    async fn init(&self, store: &T) -> Result<()> {
-        self.destory(store)
-            .or_else(async move |e| {
-                debug!("reset failed: {}", e);
-                self.run(store).await?;
-                self.wait_ready(store).await?;
-                info!("❇️ Store is ready");
-                Ok(())
-            })
-            .await
     }
 
     async fn clear(&self, store: &T, recreate: bool) -> Result<()> {
@@ -55,12 +43,12 @@ where
     T: Store + Sync + ?Sized,
 {
     async fn start(&self, store: &T) -> Result<()> {
-        info!("🕹️ Starting container '{}' ...", store.name());
+        info!("💫 Starting container '{}' ...", store.name());
         Ok(self.start_container::<String>(&store.name(), None).await?)
     }
 
-    async fn create(&self, store: &T) -> Result<models::ContainerCreateResponse> {
-        info!("🛠️ Creating container '{}' ...", store.name());
+    async fn create(&self, store: &T) -> Result<()> {
+        info!("📦 Creating container '{}' ...", store.name());
         let config = container::Config {
             image: Some(store.image()),
             env: Some(store.envs()),
@@ -88,17 +76,21 @@ where
             ..Default::default()
         };
 
-        Ok(self
-            .create_container(Some(container::CreateContainerOptions { name: store.name() }), config)
-            .await?)
+        self.create_container(Some(container::CreateContainerOptions { name: store.name() }), config)
+            .await?;
+        Ok(())
     }
 
     async fn run(&self, store: &T) -> Result<()> {
         if self.inspect_image(&store.image()).await.is_err() {
             pull(self, &store.image()).await?
         };
-        self.create(store).await?;
-        self.start(store).await
+        match self.create(store).and_then(|_| self.start(store)).await {
+            Ok(_) => self.wait_ready(store).await?,
+            _ => self.check_health(store).await?,
+        }
+        info!("🔰 Store is ready");
+        Ok(())
     }
 
     async fn stop(&self, store: &T) -> Result<()> {
@@ -121,7 +113,7 @@ where
         exec(self, &store.name(), store.recreate_cmd()).await
     }
 
-    async fn ping(&self, store: &T) -> Result<()> {
+    async fn check_health(&self, store: &T) -> Result<()> {
         exec(self, &store.name(), store.ping_cmd()).await
     }
 }
@@ -155,7 +147,7 @@ async fn exec(docker: &Docker, container: &str, cmd: Vec<String>) -> Result<()> 
 }
 
 async fn pull(docker: &Docker, image: &str) -> Result<()> {
-    info!("📦 Pulling image '{}' ...", image);
+    info!("🚚 Pulling image '{}' ...", image);
     docker
         .create_image(
             Some(image::CreateImageOptions { from_image: image, ..Default::default() }),

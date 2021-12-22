@@ -24,13 +24,13 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
             [CompletionResult]::new('-V', 'V', [CompletionResultType]::ParameterName, 'Print version information')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
-            [CompletionResult]::new('init', 'init', [CompletionResultType]::ParameterValue, 'Initialize playgrounds')
+            [CompletionResult]::new('start', 'start', [CompletionResultType]::ParameterValue, 'Start playgrounds')
             [CompletionResult]::new('stop', 'stop', [CompletionResultType]::ParameterValue, 'Stop playgrounds')
             [CompletionResult]::new('clear', 'clear', [CompletionResultType]::ParameterValue, 'Clear playgrounds')
             [CompletionResult]::new('completion', 'completion', [CompletionResultType]::ParameterValue, 'Output shell completion code')
             break
         }
-        'oomplay;init' {
+        'oomplay;start' {
             [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
@@ -40,7 +40,7 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('mysql', 'mysql', [CompletionResultType]::ParameterValue, 'Mysql store')
             break
         }
-        'oomplay;init;redis' {
+        'oomplay;start;redis' {
             [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
             [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
             [CompletionResult]::new('-p', 'p', [CompletionResultType]::ParameterName, 'p')
@@ -54,7 +54,7 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
             break
         }
-        'oomplay;init;postgres' {
+        'oomplay;start;postgres' {
             [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
             [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
             [CompletionResult]::new('-u', 'u', [CompletionResultType]::ParameterName, 'u')
@@ -70,7 +70,7 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
             break
         }
-        'oomplay;init;mysql' {
+        'oomplay;start;mysql' {
             [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
             [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
             [CompletionResult]::new('-u', 'u', [CompletionResultType]::ParameterName, 'u')

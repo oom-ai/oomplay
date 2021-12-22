@@ -37,19 +37,19 @@ async fn main() {
 async fn try_main() -> Result<()> {
     let docker = Docker::connect_with_local_defaults()?;
     match App::parse() {
-        App::Init { backends } => {
+        App::Start { backends } => {
             let backends: BackendMap = backends.try_into()?;
             for (name, backend) in backends.into_iter() {
-                info!("🎮 Initializing playground '{name}' ...");
+                info!("🎮 Starting playground '{name}' ...");
                 match backend {
                     Backend::Postgres { port, user, password, database, .. } => {
-                        docker.init(&Postgres { port, user, password, database }).await?;
+                        docker.run(&Postgres { port, user, password, database }).await?;
                     }
                     Backend::Mysql { port, user, password, database, .. } => {
-                        docker.init(&Mysql { port, user, password, database }).await?;
+                        docker.run(&Mysql { port, user, password, database }).await?;
                     }
                     Backend::Redis { port, password, database, .. } => {
-                        docker.init(&Redis { port, password, database }).await?;
+                        docker.run(&Redis { port, password, database }).await?;
                     }
                 }
             }
@@ -58,7 +58,7 @@ async fn try_main() -> Result<()> {
         App::Clear { backends, recreate } => {
             let backends: BackendMap = backends.try_into()?;
             for (name, backend) in backends.into_iter() {
-                info!("🔌 Stopping playground '{name}' ...");
+                info!("🧹 Clearing playground '{name}' ...");
                 match backend {
                     Backend::Postgres { port, user, password, database, .. } => {
                         docker
@@ -75,7 +75,7 @@ async fn try_main() -> Result<()> {
                     }
                 }
             }
-            info!("🛑 All playgrounds stopped");
+            info!("✨ All playgrounds cleared.");
         }
         App::Stop { backends } => {
             let backends: BackendMap = backends.try_into()?;
@@ -93,7 +93,7 @@ async fn try_main() -> Result<()> {
                     }
                 }
             }
-            info!("🛑 All playgrounds stopped");
+            info!("🛑 All playgrounds stopped.");
         }
         App::Completion { shell } => {
             let app = &mut App::into_app();

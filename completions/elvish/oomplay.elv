@@ -22,12 +22,12 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand --help 'Print help information'
             cand -V 'Print version information'
             cand --version 'Print version information'
-            cand init 'Initialize playgrounds'
+            cand start 'Start playgrounds'
             cand stop 'Stop playgrounds'
             cand clear 'Clear playgrounds'
             cand completion 'Output shell completion code'
         }
-        &'oomplay;init'= {
+        &'oomplay;start'= {
             cand -f 'file path containing backends'
             cand --file 'file path containing backends'
             cand -h 'Print help information'
@@ -36,7 +36,7 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand postgres 'Postgres store'
             cand mysql 'Mysql store'
         }
-        &'oomplay;init;redis'= {
+        &'oomplay;start;redis'= {
             cand -P 'P'
             cand --port 'port'
             cand -p 'p'
@@ -49,7 +49,7 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand -h 'Print help information'
             cand --help 'Print help information'
         }
-        &'oomplay;init;postgres'= {
+        &'oomplay;start;postgres'= {
             cand -P 'P'
             cand --port 'port'
             cand -u 'u'
@@ -64,7 +64,7 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand -h 'Print help information'
             cand --help 'Print help information'
         }
-        &'oomplay;init;mysql'= {
+        &'oomplay;start;mysql'= {
             cand -P 'P'
             cand --port 'port'
             cand -u 'u'

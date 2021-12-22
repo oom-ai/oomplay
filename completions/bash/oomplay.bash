@@ -18,9 +18,6 @@ _oomplay() {
             completion)
                 cmd+="__completion"
                 ;;
-            init)
-                cmd+="__init"
-                ;;
             mysql)
                 cmd+="__mysql"
                 ;;
@@ -29,6 +26,9 @@ _oomplay() {
                 ;;
             redis)
                 cmd+="__redis"
+                ;;
+            start)
+                cmd+="__start"
                 ;;
             stop)
                 cmd+="__stop"
@@ -40,7 +40,7 @@ _oomplay() {
 
     case "${cmd}" in
         oomplay)
-            opts="-h -V --help --version init stop clear completion"
+            opts="-h -V --help --version start stop clear completion"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 1 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -243,7 +243,7 @@ _oomplay() {
             COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
             return 0
             ;;
-        oomplay__init)
+        oomplay__start)
             opts="-f -h --file --help redis postgres mysql"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
@@ -265,7 +265,7 @@ _oomplay() {
             COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
             return 0
             ;;
-        oomplay__init__mysql)
+        oomplay__start__mysql)
             opts="-P -u -p -d -f -h --version --port --user --password --database --file --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
@@ -319,7 +319,7 @@ _oomplay() {
             COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
             return 0
             ;;
-        oomplay__init__postgres)
+        oomplay__start__postgres)
             opts="-P -u -p -d -f -h --version --port --user --password --database --file --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
@@ -373,7 +373,7 @@ _oomplay() {
             COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
             return 0
             ;;
-        oomplay__init__redis)
+        oomplay__start__redis)
             opts="-P -p -d -f -h --version --port --password --database --file --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )

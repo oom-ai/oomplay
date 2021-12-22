@@ -10,8 +10,8 @@ use strum::Display;
 #[clap(global_setting(AppSettings::DeriveDisplayOrder))]
 #[clap(global_setting(AppSettings::DisableHelpSubcommand))]
 pub enum App {
-    /// Initialize playgrounds
-    Init {
+    /// Start playgrounds
+    Start {
         #[clap(flatten)]
         backends: BackendOpt,
     },

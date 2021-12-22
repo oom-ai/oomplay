@@ -30,12 +30,12 @@ impl Store for Redis {
         Some(svec!["redis-server", "--requirepass", self.password])
     }
 
-    fn reset_cmd(&self) -> Vec<String> {
+    fn destory_cmd(&self) -> Vec<String> {
         svec!["redis-cli", "-n", self.database, "flushdb"]
     }
 
     fn recreate_cmd(&self) -> Vec<String> {
-        self.reset_cmd()
+        self.destory_cmd()
     }
 
     fn ping_cmd(&self) -> Vec<String> {

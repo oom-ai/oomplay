@@ -43,7 +43,7 @@ impl Store for Mysql {
         vec![PortMap::Tcp(3306, self.port)]
     }
 
-    fn reset_cmd(&self) -> Vec<String> {
+    fn destory_cmd(&self) -> Vec<String> {
         svec![
             "mysql",
             format!("-p{}", self.root_password()),
@@ -58,10 +58,10 @@ impl Store for Mysql {
             format!("-p{}", self.root_password()),
             "-e",
             [
-                format!("DROP DATABASE IF EXISTS `{}`", self.database),
-                format!("CREATE DATABASE `{}`", self.database)
+                format!("DROP DATABASE IF EXISTS {}", self.database),
+                format!("CREATE DATABASE {}", self.database)
             ]
-            .join(";")
+            .join("; ")
         ]
     }
 

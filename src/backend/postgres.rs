@@ -31,7 +31,7 @@ impl Store for Postgres {
         vec![PortMap::Tcp(5432, self.port)]
     }
 
-    fn reset_cmd(&self) -> Vec<String> {
+    fn destory_cmd(&self) -> Vec<String> {
         svec!["psql", "-c", format!(r#"DROP DATABASE IF EXISTS "{}""#, self.database)]
     }
 
@@ -39,11 +39,12 @@ impl Store for Postgres {
         svec![
             "psql",
             "-c",
-            [
-                format!(r#"DROP DATABASE IF EXISTS "{}""#, self.database),
-                format!(r#"CREATE DATABASE "{}""#, self.database)
+            svec![
+                r#"\set autocommit on"#,
+                format!("DROP DATABASE IF EXISTS {}", self.database),
+                format!("CREATE DATABASE {}", self.database)
             ]
-            .join(";")
+            .join("\n")
         ]
     }
 

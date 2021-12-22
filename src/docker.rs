@@ -15,8 +15,10 @@ where
     async fn create(&self, store: &T) -> Result<models::ContainerCreateResponse>;
     async fn run(&self, store: &T) -> Result<()>;
     async fn stop(&self, store: &T) -> Result<()>;
-    async fn reset(&self, store: &T) -> Result<()>;
+    async fn destory(&self, store: &T) -> Result<()>;
+    async fn recreate(&self, store: &T) -> Result<()>;
     async fn ping(&self, store: &T) -> Result<()>;
+
     async fn wait_ready(&self, store: &T) -> Result<()> {
         while let Err(e) = self.ping(store).await {
             info!("⏳ Wait for the store to be ready ...");
@@ -25,8 +27,9 @@ where
         }
         Ok(())
     }
+
     async fn init(&self, store: &T) -> Result<()> {
-        self.reset(store)
+        self.destory(store)
             .or_else(async move |e| {
                 debug!("reset failed: {}", e);
                 self.run(store).await?;
@@ -36,14 +39,14 @@ where
             })
             .await
     }
+
     async fn clear(&self, store: &T, recreate: bool) -> Result<()> {
         if recreate {
             self.recreate(store).await
         } else {
-            self.reset(store).await
+            self.destory(store).await
         }
     }
-    async fn recreate(&self, store: &T) -> Result<()>;
 }
 
 #[async_trait]
@@ -55,6 +58,7 @@ where
         info!("🕹️ Starting container '{}' ...", store.name());
         Ok(self.start_container::<String>(&store.name(), None).await?)
     }
+
     async fn create(&self, store: &T) -> Result<models::ContainerCreateResponse> {
         info!("🛠️ Creating container '{}' ...", store.name());
         let config = container::Config {
@@ -88,6 +92,7 @@ where
             .create_container(Some(container::CreateContainerOptions { name: store.name() }), config)
             .await?)
     }
+
     async fn run(&self, store: &T) -> Result<()> {
         if self.inspect_image(&store.image()).await.is_err() {
             pull(self, &store.image()).await?
@@ -95,6 +100,7 @@ where
         self.create(store).await?;
         self.start(store).await
     }
+
     async fn stop(&self, store: &T) -> Result<()> {
         self.stop_container(&store.name(), None).await.or_else(|e| match e {
             DockerResponseNotFoundError { .. } => {
@@ -104,15 +110,19 @@ where
             _ => Err(e.into()),
         })
     }
-    async fn reset(&self, store: &T) -> Result<()> {
-        info!("♻️ Reseting store ...");
-        exec(self, &store.name(), store.reset_cmd()).await
+
+    async fn destory(&self, store: &T) -> Result<()> {
+        info!("🔥 Destroy database ...");
+        exec(self, &store.name(), store.destory_cmd()).await
     }
+
+    async fn recreate(&self, store: &T) -> Result<()> {
+        info!("🌀 Recreating database ...");
+        exec(self, &store.name(), store.recreate_cmd()).await
+    }
+
     async fn ping(&self, store: &T) -> Result<()> {
         exec(self, &store.name(), store.ping_cmd()).await
-    }
-    async fn recreate(&self, store: &T) -> Result<()> {
-        exec(self, &store.name(), store.recreate_cmd()).await
     }
 }
 

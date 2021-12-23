@@ -24,13 +24,13 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
             [CompletionResult]::new('-V', 'V', [CompletionResultType]::ParameterName, 'Print version information')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
-            [CompletionResult]::new('start', 'start', [CompletionResultType]::ParameterValue, 'Start playgrounds')
+            [CompletionResult]::new('init', 'init', [CompletionResultType]::ParameterValue, 'Initialize playgrounds')
+            [CompletionResult]::new('clear', 'clear', [CompletionResultType]::ParameterValue, 'Clean up playgrounds')
             [CompletionResult]::new('stop', 'stop', [CompletionResultType]::ParameterValue, 'Stop playgrounds')
-            [CompletionResult]::new('clear', 'clear', [CompletionResultType]::ParameterValue, 'Clear playgrounds')
             [CompletionResult]::new('completion', 'completion', [CompletionResultType]::ParameterValue, 'Output shell completion code')
             break
         }
-        'oomplay;start' {
+        'oomplay;init' {
             [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
@@ -40,7 +40,7 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('mysql', 'mysql', [CompletionResultType]::ParameterValue, 'Mysql store')
             break
         }
-        'oomplay;start;redis' {
+        'oomplay;init;redis' {
             [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
             [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
             [CompletionResult]::new('-p', 'p', [CompletionResultType]::ParameterName, 'p')
@@ -54,7 +54,7 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
             break
         }
-        'oomplay;start;postgres' {
+        'oomplay;init;postgres' {
             [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
             [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
             [CompletionResult]::new('-u', 'u', [CompletionResultType]::ParameterName, 'u')
@@ -70,7 +70,63 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
             break
         }
-        'oomplay;start;mysql' {
+        'oomplay;init;mysql' {
+            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
+            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
+            [CompletionResult]::new('-u', 'u', [CompletionResultType]::ParameterName, 'u')
+            [CompletionResult]::new('--user', 'user', [CompletionResultType]::ParameterName, 'user')
+            [CompletionResult]::new('-p', 'p', [CompletionResultType]::ParameterName, 'p')
+            [CompletionResult]::new('--password', 'password', [CompletionResultType]::ParameterName, 'password')
+            [CompletionResult]::new('-d', 'd', [CompletionResultType]::ParameterName, 'd')
+            [CompletionResult]::new('--database', 'database', [CompletionResultType]::ParameterName, 'database')
+            [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
+            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
+            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
+            break
+        }
+        'oomplay;clear' {
+            [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
+            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
+            [CompletionResult]::new('redis', 'redis', [CompletionResultType]::ParameterValue, 'Redis store')
+            [CompletionResult]::new('postgres', 'postgres', [CompletionResultType]::ParameterValue, 'Postgres store')
+            [CompletionResult]::new('mysql', 'mysql', [CompletionResultType]::ParameterValue, 'Mysql store')
+            break
+        }
+        'oomplay;clear;redis' {
+            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
+            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
+            [CompletionResult]::new('-p', 'p', [CompletionResultType]::ParameterName, 'p')
+            [CompletionResult]::new('--password', 'password', [CompletionResultType]::ParameterName, 'password')
+            [CompletionResult]::new('-d', 'd', [CompletionResultType]::ParameterName, 'd')
+            [CompletionResult]::new('--database', 'database', [CompletionResultType]::ParameterName, 'database')
+            [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
+            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
+            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
+            break
+        }
+        'oomplay;clear;postgres' {
+            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
+            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
+            [CompletionResult]::new('-u', 'u', [CompletionResultType]::ParameterName, 'u')
+            [CompletionResult]::new('--user', 'user', [CompletionResultType]::ParameterName, 'user')
+            [CompletionResult]::new('-p', 'p', [CompletionResultType]::ParameterName, 'p')
+            [CompletionResult]::new('--password', 'password', [CompletionResultType]::ParameterName, 'password')
+            [CompletionResult]::new('-d', 'd', [CompletionResultType]::ParameterName, 'd')
+            [CompletionResult]::new('--database', 'database', [CompletionResultType]::ParameterName, 'database')
+            [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
+            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
+            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
+            break
+        }
+        'oomplay;clear;mysql' {
             [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
             [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
             [CompletionResult]::new('-u', 'u', [CompletionResultType]::ParameterName, 'u')
@@ -138,70 +194,6 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
-            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
-            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
-            break
-        }
-        'oomplay;clear' {
-            [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
-            [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
-            [CompletionResult]::new('-r', 'r', [CompletionResultType]::ParameterName, 'Drop database')
-            [CompletionResult]::new('--recreate', 'recreate', [CompletionResultType]::ParameterName, 'Drop database')
-            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
-            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
-            [CompletionResult]::new('redis', 'redis', [CompletionResultType]::ParameterValue, 'Redis store')
-            [CompletionResult]::new('postgres', 'postgres', [CompletionResultType]::ParameterValue, 'Postgres store')
-            [CompletionResult]::new('mysql', 'mysql', [CompletionResultType]::ParameterValue, 'Mysql store')
-            break
-        }
-        'oomplay;clear;redis' {
-            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
-            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
-            [CompletionResult]::new('-p', 'p', [CompletionResultType]::ParameterName, 'p')
-            [CompletionResult]::new('--password', 'password', [CompletionResultType]::ParameterName, 'password')
-            [CompletionResult]::new('-d', 'd', [CompletionResultType]::ParameterName, 'd')
-            [CompletionResult]::new('--database', 'database', [CompletionResultType]::ParameterName, 'database')
-            [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
-            [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
-            [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
-            [CompletionResult]::new('-r', 'r', [CompletionResultType]::ParameterName, 'Drop database')
-            [CompletionResult]::new('--recreate', 'recreate', [CompletionResultType]::ParameterName, 'Drop database')
-            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
-            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
-            break
-        }
-        'oomplay;clear;postgres' {
-            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
-            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
-            [CompletionResult]::new('-u', 'u', [CompletionResultType]::ParameterName, 'u')
-            [CompletionResult]::new('--user', 'user', [CompletionResultType]::ParameterName, 'user')
-            [CompletionResult]::new('-p', 'p', [CompletionResultType]::ParameterName, 'p')
-            [CompletionResult]::new('--password', 'password', [CompletionResultType]::ParameterName, 'password')
-            [CompletionResult]::new('-d', 'd', [CompletionResultType]::ParameterName, 'd')
-            [CompletionResult]::new('--database', 'database', [CompletionResultType]::ParameterName, 'database')
-            [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
-            [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
-            [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
-            [CompletionResult]::new('-r', 'r', [CompletionResultType]::ParameterName, 'Drop database')
-            [CompletionResult]::new('--recreate', 'recreate', [CompletionResultType]::ParameterName, 'Drop database')
-            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
-            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
-            break
-        }
-        'oomplay;clear;mysql' {
-            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
-            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
-            [CompletionResult]::new('-u', 'u', [CompletionResultType]::ParameterName, 'u')
-            [CompletionResult]::new('--user', 'user', [CompletionResultType]::ParameterName, 'user')
-            [CompletionResult]::new('-p', 'p', [CompletionResultType]::ParameterName, 'p')
-            [CompletionResult]::new('--password', 'password', [CompletionResultType]::ParameterName, 'password')
-            [CompletionResult]::new('-d', 'd', [CompletionResultType]::ParameterName, 'd')
-            [CompletionResult]::new('--database', 'database', [CompletionResultType]::ParameterName, 'database')
-            [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
-            [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
-            [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
-            [CompletionResult]::new('-r', 'r', [CompletionResultType]::ParameterName, 'Drop database')
-            [CompletionResult]::new('--recreate', 'recreate', [CompletionResultType]::ParameterName, 'Drop database')
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
             break

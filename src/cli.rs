@@ -10,8 +10,14 @@ use strum::Display;
 #[clap(global_setting(AppSettings::DeriveDisplayOrder))]
 #[clap(global_setting(AppSettings::DisableHelpSubcommand))]
 pub enum App {
-    /// Start playgrounds
-    Start {
+    /// Initialize playgrounds
+    Init {
+        #[clap(flatten)]
+        backends: BackendOpt,
+    },
+
+    /// Clean up playgrounds
+    Clear {
         #[clap(flatten)]
         backends: BackendOpt,
     },
@@ -20,16 +26,6 @@ pub enum App {
     Stop {
         #[clap(flatten)]
         backends: BackendOpt,
-    },
-
-    /// Clear playgrounds
-    Clear {
-        #[clap(flatten)]
-        backends: BackendOpt,
-
-        /// Drop database
-        #[clap(short, long, global = true)]
-        recreate: bool,
     },
 
     /// Output shell completion code
@@ -63,7 +59,7 @@ pub enum Backend {
         #[clap(short, long, default_value = "redis")]
         password: String,
 
-        #[clap(short, long, default_value = "0")]
+        #[clap(short, long, default_value = "oomplay")]
         database: u32,
     },
     /// Postgres store

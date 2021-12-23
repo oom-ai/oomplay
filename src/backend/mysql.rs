@@ -29,21 +29,14 @@ impl Store for Mysql {
     }
 
     fn envs(&self) -> Vec<String> {
-        match self.user.as_str() {
-            "root" => svec![format!("MYSQL_ROOT_PASSWORD={}", self.root_password())],
-            _ => svec![
-                format!("MYSQL_ROOT_PASSWORD={}", self.root_password()),
-                format!("MYSQL_USER={}", self.user),
-                format!("MYSQL_PASSWORD={}", self.password),
-            ],
-        }
+        svec![format!("MYSQL_ROOT_PASSWORD={}", self.root_password())]
     }
 
     fn port_map(&self) -> Vec<PortMap> {
         vec![PortMap::Tcp(3306, self.port)]
     }
 
-    fn destory_cmd(&self) -> Vec<String> {
+    fn drop_cmd(&self) -> Vec<String> {
         svec![
             "mysql",
             format!("-p{}", self.root_password()),
@@ -52,16 +45,22 @@ impl Store for Mysql {
         ]
     }
 
-    fn recreate_cmd(&self) -> Vec<String> {
+    fn init_db_cmd(&self) -> Vec<String> {
         svec![
             "mysql",
             format!("-p{}", self.root_password()),
             "-e",
-            [
-                format!("DROP DATABASE IF EXISTS {}", self.database),
-                format!("CREATE DATABASE {}", self.database)
-            ]
-            .join("; ")
+            format!(
+                r#"
+                    CREATE USER IF NOT EXISTS '{user}'@'%' IDENTIFIED BY '{password}';
+                    GRANT ALL PRIVILEGES ON *.* TO '{user}'@'%' WITH GRANT OPTION;
+                    DROP DATABASE IF EXISTS {database};
+                    CREATE DATABASE {database};
+                "#,
+                user = self.user,
+                password = self.password,
+                database = self.database,
+            ),
         ]
     }
 

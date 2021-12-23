@@ -9,8 +9,8 @@ pub trait Store {
     fn image(&self) -> String;
     fn port_map(&self) -> Vec<PortMap>;
     fn ping_cmd(&self) -> Vec<String>;
-    fn destory_cmd(&self) -> Vec<String>;
-    fn recreate_cmd(&self) -> Vec<String>;
+    fn drop_cmd(&self) -> Vec<String>;
+    fn init_db_cmd(&self) -> Vec<String>;
 
     fn envs(&self) -> Vec<String> {
         vec![]

@@ -13,10 +13,10 @@ where
 {
     async fn start(&self, store: &T) -> Result<()>;
     async fn create(&self, store: &T) -> Result<()>;
-    async fn run(&self, store: &T) -> Result<()>;
+    async fn init(&self, store: &T) -> Result<()>;
     async fn stop(&self, store: &T) -> Result<()>;
     async fn destory(&self, store: &T) -> Result<()>;
-    async fn recreate(&self, store: &T) -> Result<()>;
+    async fn init_db(&self, store: &T) -> Result<()>;
     async fn check_health(&self, store: &T) -> Result<()>;
 
     async fn wait_ready(&self, store: &T) -> Result<()> {
@@ -26,14 +26,6 @@ where
             tokio::time::sleep(Duration::SECOND * 2).await;
         }
         Ok(())
-    }
-
-    async fn clear(&self, store: &T, recreate: bool) -> Result<()> {
-        if recreate {
-            self.recreate(store).await
-        } else {
-            self.destory(store).await
-        }
     }
 }
 
@@ -81,9 +73,12 @@ where
         Ok(())
     }
 
-    async fn run(&self, store: &T) -> Result<()> {
+    async fn init(&self, store: &T) -> Result<()> {
         match self.check_health(store).await {
-            Ok(_) => info!("🔰 Store is already running"),
+            Ok(_) => {
+                info!("🔰 Store is already running");
+                self.init_db(store).await?;
+            }
             _ => {
                 self.inspect_image(&store.image())
                     .map_ok(|_| ())
@@ -94,6 +89,7 @@ where
                     .and_then(|_| self.create(store))
                     .and_then(|_| self.start(store))
                     .and_then(|_| self.wait_ready(store))
+                    .and_then(|_| self.init_db(store))
                     .await?;
                 info!("🔰 Store is ready");
             }
@@ -113,12 +109,12 @@ where
 
     async fn destory(&self, store: &T) -> Result<()> {
         info!("🔥 Destroy database ...");
-        exec(self, &store.name(), store.destory_cmd()).await
+        exec(self, &store.name(), store.drop_cmd()).await
     }
 
-    async fn recreate(&self, store: &T) -> Result<()> {
-        info!("🌀 Recreating database ...");
-        exec(self, &store.name(), store.recreate_cmd()).await
+    async fn init_db(&self, store: &T) -> Result<()> {
+        info!("🌀 Initializing database ...");
+        exec(self, &store.name(), store.init_db_cmd()).await
     }
 
     async fn check_health(&self, store: &T) -> Result<()> {

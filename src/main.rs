@@ -37,45 +37,41 @@ async fn main() {
 async fn try_main() -> Result<()> {
     let docker = Docker::connect_with_local_defaults()?;
     match App::parse() {
-        App::Start { backends } => {
+        App::Init { backends } => {
             let backends: BackendMap = backends.try_into()?;
             for (name, backend) in backends.into_iter() {
-                info!("🎮 Starting playground '{name}' ...");
+                info!("🎮 Initializing playground '{name}' ...");
                 match backend {
                     Backend::Postgres { port, user, password, database, .. } => {
-                        docker.run(&Postgres { port, user, password, database }).await?;
+                        docker.init(&Postgres { port, user, password, database }).await?;
                     }
                     Backend::Mysql { port, user, password, database, .. } => {
-                        docker.run(&Mysql { port, user, password, database }).await?;
+                        docker.init(&Mysql { port, user, password, database }).await?;
                     }
                     Backend::Redis { port, password, database, .. } => {
-                        docker.run(&Redis { port, password, database }).await?;
+                        docker.init(&Redis { port, password, database }).await?;
                     }
                 }
+                info!("✨ Initialized playground '{name}'");
             }
-            info!("✨ All playgrounds initialized successfully!");
         }
-        App::Clear { backends, recreate } => {
+        App::Clear { backends } => {
             let backends: BackendMap = backends.try_into()?;
             for (name, backend) in backends.into_iter() {
-                info!("🧹 Clearing playground '{name}' ...");
+                info!("🧹 Cleaning up playground '{name}' ...");
                 match backend {
                     Backend::Postgres { port, user, password, database, .. } => {
-                        docker
-                            .clear(&Postgres { port, user, password, database }, recreate)
-                            .await?;
+                        docker.destory(&Postgres { port, user, password, database }).await?;
                     }
                     Backend::Mysql { port, user, password, database, .. } => {
-                        docker
-                            .clear(&Mysql { port, user, password, database }, recreate)
-                            .await?;
+                        docker.destory(&Mysql { port, user, password, database }).await?;
                     }
                     Backend::Redis { port, password, database, .. } => {
-                        docker.clear(&Redis { port, password, database }, recreate).await?;
+                        docker.destory(&Redis { port, password, database }).await?;
                     }
                 }
+                info!("✨ Cleaned up playground '{name}'");
             }
-            info!("✨ All playgrounds cleared.");
         }
         App::Stop { backends } => {
             let backends: BackendMap = backends.try_into()?;
@@ -92,8 +88,8 @@ async fn try_main() -> Result<()> {
                         docker.stop(&Redis { port, password, database }).await?;
                     }
                 }
+                info!("🛑 Stopped playground '{name}'");
             }
-            info!("🛑 All playgrounds stopped.");
         }
         App::Completion { shell } => {
             let app = &mut App::into_app();

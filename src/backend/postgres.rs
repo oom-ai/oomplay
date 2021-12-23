@@ -21,9 +21,9 @@ impl Store for Postgres {
 
     fn envs(&self) -> Vec<String> {
         svec![
-            format!("POSTGRES_PASSWORD={}", self.password),
-            format!("POSTGRES_USER={}", self.user),
-            format!("PGUSER={}", self.user),
+            format!("POSTGRES_PASSWORD={}", "postgres"),
+            format!("POSTGRES_USER={}", "_root"),
+            format!("PGUSER={}", "_root"),
         ]
     }
 
@@ -31,20 +31,26 @@ impl Store for Postgres {
         vec![PortMap::Tcp(5432, self.port)]
     }
 
-    fn destory_cmd(&self) -> Vec<String> {
+    fn drop_cmd(&self) -> Vec<String> {
         svec!["psql", "-c", format!(r#"DROP DATABASE IF EXISTS "{}""#, self.database)]
     }
 
-    fn recreate_cmd(&self) -> Vec<String> {
+    fn init_db_cmd(&self) -> Vec<String> {
         svec![
-            "psql",
+            "sh",
             "-c",
-            svec![
-                r#"\set autocommit on"#,
-                format!("DROP DATABASE IF EXISTS {}", self.database),
-                format!("CREATE DATABASE {}", self.database)
-            ]
-            .join("\n")
+            format!(
+                r#"
+                    createdb {user};
+                    dropdb {database};
+                    createdb {database};
+                    dropuser {user};
+                    psql -c "CREATE ROLE {user} WITH LOGIN SUPERUSER PASSWORD '{password}'";
+                "#,
+                user = self.user,
+                password = self.password,
+                database = self.database,
+            ),
         ]
     }
 

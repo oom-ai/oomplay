@@ -82,14 +82,22 @@ where
     }
 
     async fn run(&self, store: &T) -> Result<()> {
-        if self.inspect_image(&store.image()).await.is_err() {
-            pull(self, &store.image()).await?
+        match self.check_health(store).await {
+            Ok(_) => info!("🔰 Store is already running"),
+            _ => {
+                self.inspect_image(&store.image())
+                    .map_ok(|_| ())
+                    .or_else(async move |_| {
+                        info!("🚚 Pulling image '{}' ...", store.image());
+                        pull(self, &store.image()).await
+                    })
+                    .and_then(|_| self.create(store))
+                    .and_then(|_| self.start(store))
+                    .and_then(|_| self.wait_ready(store))
+                    .await?;
+                info!("🔰 Store is ready");
+            }
         };
-        match self.create(store).and_then(|_| self.start(store)).await {
-            Ok(_) => self.wait_ready(store).await?,
-            _ => self.check_health(store).await?,
-        }
-        info!("🔰 Store is ready");
         Ok(())
     }
 
@@ -147,7 +155,6 @@ async fn exec(docker: &Docker, container: &str, cmd: Vec<String>) -> Result<()> 
 }
 
 async fn pull(docker: &Docker, image: &str) -> Result<()> {
-    info!("🚚 Pulling image '{}' ...", image);
     docker
         .create_image(
             Some(image::CreateImageOptions { from_image: image, ..Default::default() }),

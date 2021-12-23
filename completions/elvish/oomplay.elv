@@ -32,9 +32,9 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand --file 'file path containing backends'
             cand -h 'Print help information'
             cand --help 'Print help information'
-            cand redis 'Redis store'
-            cand postgres 'Postgres store'
-            cand mysql 'Mysql store'
+            cand redis 'Redis playground'
+            cand postgres 'Postgres playground'
+            cand mysql 'MySQL playground'
         }
         &'oomplay;init;redis'= {
             cand -P 'P'
@@ -84,9 +84,9 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand --file 'file path containing backends'
             cand -h 'Print help information'
             cand --help 'Print help information'
-            cand redis 'Redis store'
-            cand postgres 'Postgres store'
-            cand mysql 'Mysql store'
+            cand redis 'Redis playground'
+            cand postgres 'Postgres playground'
+            cand mysql 'MySQL playground'
         }
         &'oomplay;clear;redis'= {
             cand -P 'P'
@@ -136,9 +136,9 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand --file 'file path containing backends'
             cand -h 'Print help information'
             cand --help 'Print help information'
-            cand redis 'Redis store'
-            cand postgres 'Postgres store'
-            cand mysql 'Mysql store'
+            cand redis 'Redis playground'
+            cand postgres 'Postgres playground'
+            cand mysql 'MySQL playground'
         }
         &'oomplay;stop;redis'= {
             cand -P 'P'

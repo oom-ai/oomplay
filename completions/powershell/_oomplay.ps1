@@ -35,9 +35,9 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
-            [CompletionResult]::new('redis', 'redis', [CompletionResultType]::ParameterValue, 'Redis store')
-            [CompletionResult]::new('postgres', 'postgres', [CompletionResultType]::ParameterValue, 'Postgres store')
-            [CompletionResult]::new('mysql', 'mysql', [CompletionResultType]::ParameterValue, 'Mysql store')
+            [CompletionResult]::new('redis', 'redis', [CompletionResultType]::ParameterValue, 'Redis playground')
+            [CompletionResult]::new('postgres', 'postgres', [CompletionResultType]::ParameterValue, 'Postgres playground')
+            [CompletionResult]::new('mysql', 'mysql', [CompletionResultType]::ParameterValue, 'MySQL playground')
             break
         }
         'oomplay;init;redis' {
@@ -91,9 +91,9 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
-            [CompletionResult]::new('redis', 'redis', [CompletionResultType]::ParameterValue, 'Redis store')
-            [CompletionResult]::new('postgres', 'postgres', [CompletionResultType]::ParameterValue, 'Postgres store')
-            [CompletionResult]::new('mysql', 'mysql', [CompletionResultType]::ParameterValue, 'Mysql store')
+            [CompletionResult]::new('redis', 'redis', [CompletionResultType]::ParameterValue, 'Redis playground')
+            [CompletionResult]::new('postgres', 'postgres', [CompletionResultType]::ParameterValue, 'Postgres playground')
+            [CompletionResult]::new('mysql', 'mysql', [CompletionResultType]::ParameterValue, 'MySQL playground')
             break
         }
         'oomplay;clear;redis' {
@@ -147,9 +147,9 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
-            [CompletionResult]::new('redis', 'redis', [CompletionResultType]::ParameterValue, 'Redis store')
-            [CompletionResult]::new('postgres', 'postgres', [CompletionResultType]::ParameterValue, 'Postgres store')
-            [CompletionResult]::new('mysql', 'mysql', [CompletionResultType]::ParameterValue, 'Mysql store')
+            [CompletionResult]::new('redis', 'redis', [CompletionResultType]::ParameterValue, 'Redis playground')
+            [CompletionResult]::new('postgres', 'postgres', [CompletionResultType]::ParameterValue, 'Postgres playground')
+            [CompletionResult]::new('mysql', 'mysql', [CompletionResultType]::ParameterValue, 'MySQL playground')
             break
         }
         'oomplay;stop;redis' {

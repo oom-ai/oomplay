@@ -260,9 +260,9 @@ _oomplay_commands() {
 (( $+functions[_oomplay__clear_commands] )) ||
 _oomplay__clear_commands() {
     local commands; commands=(
-'redis:Redis store' \
-'postgres:Postgres store' \
-'mysql:Mysql store' \
+'redis:Redis playground' \
+'postgres:Postgres playground' \
+'mysql:MySQL playground' \
     )
     _describe -t commands 'oomplay clear commands' commands "$@"
 }
@@ -274,9 +274,9 @@ _oomplay__completion_commands() {
 (( $+functions[_oomplay__init_commands] )) ||
 _oomplay__init_commands() {
     local commands; commands=(
-'redis:Redis store' \
-'postgres:Postgres store' \
-'mysql:Mysql store' \
+'redis:Redis playground' \
+'postgres:Postgres playground' \
+'mysql:MySQL playground' \
     )
     _describe -t commands 'oomplay init commands' commands "$@"
 }
@@ -328,9 +328,9 @@ _oomplay__stop__redis_commands() {
 (( $+functions[_oomplay__stop_commands] )) ||
 _oomplay__stop_commands() {
     local commands; commands=(
-'redis:Redis store' \
-'postgres:Postgres store' \
-'mysql:Mysql store' \
+'redis:Redis playground' \
+'postgres:Postgres playground' \
+'mysql:MySQL playground' \
     )
     _describe -t commands 'oomplay stop commands' commands "$@"
 }

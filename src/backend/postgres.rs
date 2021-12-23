@@ -44,7 +44,7 @@ impl Store for Postgres {
                     createdb {user};
                     dropdb {database};
                     createdb {database};
-                    dropuser {user};
+                    psql -tc '\du {user}' | grep {user} && exit
                     psql -c "CREATE ROLE {user} WITH LOGIN SUPERUSER PASSWORD '{password}'";
                 "#,
                 user = self.user,

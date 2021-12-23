@@ -35,6 +35,7 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand redis 'Redis playground'
             cand postgres 'Postgres playground'
             cand mysql 'MySQL playground'
+            cand dynamodb 'DynamoDB playground'
         }
         &'oomplay;init;redis'= {
             cand -P 'P'
@@ -79,6 +80,15 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand -h 'Print help information'
             cand --help 'Print help information'
         }
+        &'oomplay;init;dynamodb'= {
+            cand -P 'P'
+            cand --port 'port'
+            cand -f 'file path containing backends'
+            cand --file 'file path containing backends'
+            cand --version 'Print version information'
+            cand -h 'Print help information'
+            cand --help 'Print help information'
+        }
         &'oomplay;clear'= {
             cand -f 'file path containing backends'
             cand --file 'file path containing backends'
@@ -87,6 +97,7 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand redis 'Redis playground'
             cand postgres 'Postgres playground'
             cand mysql 'MySQL playground'
+            cand dynamodb 'DynamoDB playground'
         }
         &'oomplay;clear;redis'= {
             cand -P 'P'
@@ -131,6 +142,15 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand -h 'Print help information'
             cand --help 'Print help information'
         }
+        &'oomplay;clear;dynamodb'= {
+            cand -P 'P'
+            cand --port 'port'
+            cand -f 'file path containing backends'
+            cand --file 'file path containing backends'
+            cand --version 'Print version information'
+            cand -h 'Print help information'
+            cand --help 'Print help information'
+        }
         &'oomplay;stop'= {
             cand -f 'file path containing backends'
             cand --file 'file path containing backends'
@@ -139,6 +159,7 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand redis 'Redis playground'
             cand postgres 'Postgres playground'
             cand mysql 'MySQL playground'
+            cand dynamodb 'DynamoDB playground'
         }
         &'oomplay;stop;redis'= {
             cand -P 'P'
@@ -177,6 +198,15 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand --password 'password'
             cand -d 'd'
             cand --database 'database'
+            cand -f 'file path containing backends'
+            cand --file 'file path containing backends'
+            cand --version 'Print version information'
+            cand -h 'Print help information'
+            cand --help 'Print help information'
+        }
+        &'oomplay;stop;dynamodb'= {
+            cand -P 'P'
+            cand --port 'port'
             cand -f 'file path containing backends'
             cand --file 'file path containing backends'
             cand --version 'Print version information'

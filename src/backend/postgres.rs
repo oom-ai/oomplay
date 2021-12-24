@@ -55,6 +55,7 @@ impl Store for Postgres {
     }
 
     fn ping_cmd(&self) -> Vec<String> {
-        svec!["pg_isready"]
+        // `createdb` may fail even `pg_isready`succeeded
+        svec!["psql", "-c", "SELECT 1"]
     }
 }

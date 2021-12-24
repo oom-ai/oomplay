@@ -95,6 +95,14 @@ pub enum Backend {
         #[clap(short = 'P', long, default_value = "4566")]
         port: u16,
     },
+    /// Cassandra
+    Cassandra {
+        #[clap(short = 'P', long, default_value = "9042")]
+        port: u16,
+
+        #[clap(short, long, default_value = "oomplay")]
+        keyspace: String,
+    },
 }
 
 pub type BackendMap = HashMap<String, Backend>;

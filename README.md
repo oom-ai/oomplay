@@ -110,8 +110,6 @@ brew install oomplay
 
 Pre-built versions of `oomplay` for various architectures are available at [Github release page](https://github.com/oom-ai/oomplay/releases).
 
-*Note that you can try the `musl` version (which is statically-linked) if runs into dependency related errors.*
-
 ### From source
 
 `oomplay` is also published on [crates.io](https://crates.io). If you have Rust toolchains (nightly) installed you can use `cargo` to install it from source:

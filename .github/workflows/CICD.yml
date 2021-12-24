@@ -16,7 +16,6 @@ jobs:
       fail-fast: false
       matrix:
         job:
-          - { os: ubuntu-latest  , target: x86_64-unknown-linux-gnu    , use-cross: use-cross }
           - { os: ubuntu-latest  , target: x86_64-unknown-linux-musl   , use-cross: use-cross }
           - { os: macos-latest   , target: x86_64-apple-darwin                                }
           - { os: windows-latest , target: x86_64-pc-windows-msvc                             }

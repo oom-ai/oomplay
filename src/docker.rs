@@ -21,7 +21,6 @@ where
 
     async fn wait_ready(&self, store: &T) -> Result<()> {
         while let Err(e) = self.check_health(store).await {
-            info!("⏳ Wait for the store to be ready ...");
             debug!("check health failed: {}", e);
             tokio::time::sleep(Duration::SECOND * 2).await;
         }
@@ -118,6 +117,7 @@ where
     }
 
     async fn check_health(&self, store: &T) -> Result<()> {
+        info!("⚡ Checking health ...");
         exec(self, &store.name(), store.ping_cmd()).await
     }
 }

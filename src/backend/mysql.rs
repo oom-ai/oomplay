@@ -45,7 +45,7 @@ impl Store for Mysql {
         ]
     }
 
-    fn init_db_cmd(&self) -> Vec<String> {
+    fn init_cmd(&self) -> Vec<String> {
         svec![
             "mysql",
             format!("-p{}", self.root_password()),
@@ -65,8 +65,7 @@ impl Store for Mysql {
     }
 
     fn ping_cmd(&self) -> Vec<String> {
-        // sometimes reset_cmd fails even `ping` or `select 1` succeeded,
-        // so we use `show databases` to make sure the server is actually ready.
+        // `init_cmd` may fail even `ping` or `select 1` succeeded,
         svec!["mysql", format!("-p{}", self.root_password()), "-e", "show databases"]
     }
 }

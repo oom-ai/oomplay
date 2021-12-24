@@ -37,7 +37,7 @@ impl Store for DynamoDB {
         ]
     }
 
-    fn init_db_cmd(&self) -> Vec<String> {
+    fn init_cmd(&self) -> Vec<String> {
         self.drop_cmd()
     }
 

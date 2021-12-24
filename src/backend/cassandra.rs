@@ -17,10 +17,6 @@ impl Store for Cassandra {
         "cassandra:4.0".to_string()
     }
 
-    fn envs(&self) -> Vec<String> {
-        svec![]
-    }
-
     fn port_map(&self) -> Vec<PortMap> {
         vec![PortMap::Tcp(9042, self.port)]
     }
@@ -29,7 +25,7 @@ impl Store for Cassandra {
         svec!["cqlsh", "-e", format!("DROP KEYSPACE IF EXISTS {}", self.keyspace)]
     }
 
-    fn init_db_cmd(&self) -> Vec<String> {
+    fn init_cmd(&self) -> Vec<String> {
         svec![
             "cqlsh",
             "-e",
@@ -47,8 +43,6 @@ impl Store for Cassandra {
     }
 
     fn ping_cmd(&self) -> Vec<String> {
-        // sometimes reset_cmd fails even `ping` or `select 1` succeeded,
-        // so we use `describe keyspaces` to make sure the server is actually ready.
         svec!["cqlsh", "-e", "describe keyspaces"]
     }
 }

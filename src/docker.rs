@@ -44,7 +44,7 @@ where
         let config = container::Config {
             image: Some(store.image()),
             env: Some(store.envs()),
-            cmd: store.cmd(),
+            cmd: store.entry_cmd(),
             host_config: Some(models::HostConfig {
                 auto_remove: Some(true),
                 port_bindings: Some(
@@ -114,7 +114,7 @@ where
 
     async fn init_db(&self, store: &T) -> Result<()> {
         info!("🌀 Initializing database ...");
-        exec(self, &store.name(), store.init_db_cmd()).await
+        exec(self, &store.name(), store.init_cmd()).await
     }
 
     async fn check_health(&self, store: &T) -> Result<()> {

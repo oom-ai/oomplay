@@ -104,6 +104,19 @@ _arguments "${_arguments_options[@]}" \
 '--help[Print help information]' \
 && ret=0
 ;;
+(cassandra)
+_arguments "${_arguments_options[@]}" \
+'-P+[]:PORT: ' \
+'--port=[]:PORT: ' \
+'-k+[]:KEYSPACE: ' \
+'--keyspace=[]:KEYSPACE: ' \
+'-f+[file path containing backends]:FILE: ' \
+'--file=[file path containing backends]:FILE: ' \
+'--version[Print version information]' \
+'-h[Print help information]' \
+'--help[Print help information]' \
+&& ret=0
+;;
         esac
     ;;
 esac
@@ -177,6 +190,19 @@ _arguments "${_arguments_options[@]}" \
 _arguments "${_arguments_options[@]}" \
 '-P+[]:PORT: ' \
 '--port=[]:PORT: ' \
+'-f+[file path containing backends]:FILE: ' \
+'--file=[file path containing backends]:FILE: ' \
+'--version[Print version information]' \
+'-h[Print help information]' \
+'--help[Print help information]' \
+&& ret=0
+;;
+(cassandra)
+_arguments "${_arguments_options[@]}" \
+'-P+[]:PORT: ' \
+'--port=[]:PORT: ' \
+'-k+[]:KEYSPACE: ' \
+'--keyspace=[]:KEYSPACE: ' \
 '-f+[file path containing backends]:FILE: ' \
 '--file=[file path containing backends]:FILE: ' \
 '--version[Print version information]' \
@@ -264,6 +290,19 @@ _arguments "${_arguments_options[@]}" \
 '--help[Print help information]' \
 && ret=0
 ;;
+(cassandra)
+_arguments "${_arguments_options[@]}" \
+'-P+[]:PORT: ' \
+'--port=[]:PORT: ' \
+'-k+[]:KEYSPACE: ' \
+'--keyspace=[]:KEYSPACE: ' \
+'-f+[file path containing backends]:FILE: ' \
+'--file=[file path containing backends]:FILE: ' \
+'--version[Print version information]' \
+'-h[Print help information]' \
+'--help[Print help information]' \
+&& ret=0
+;;
         esac
     ;;
 esac
@@ -290,6 +329,21 @@ _oomplay_commands() {
     )
     _describe -t commands 'oomplay commands' commands "$@"
 }
+(( $+functions[_oomplay__clear__cassandra_commands] )) ||
+_oomplay__clear__cassandra_commands() {
+    local commands; commands=()
+    _describe -t commands 'oomplay clear cassandra commands' commands "$@"
+}
+(( $+functions[_oomplay__init__cassandra_commands] )) ||
+_oomplay__init__cassandra_commands() {
+    local commands; commands=()
+    _describe -t commands 'oomplay init cassandra commands' commands "$@"
+}
+(( $+functions[_oomplay__stop__cassandra_commands] )) ||
+_oomplay__stop__cassandra_commands() {
+    local commands; commands=()
+    _describe -t commands 'oomplay stop cassandra commands' commands "$@"
+}
 (( $+functions[_oomplay__clear_commands] )) ||
 _oomplay__clear_commands() {
     local commands; commands=(
@@ -297,6 +351,7 @@ _oomplay__clear_commands() {
 'postgres:Postgres playground' \
 'mysql:MySQL playground' \
 'dynamodb:DynamoDB playground' \
+'cassandra:Cassandra' \
     )
     _describe -t commands 'oomplay clear commands' commands "$@"
 }
@@ -327,6 +382,7 @@ _oomplay__init_commands() {
 'postgres:Postgres playground' \
 'mysql:MySQL playground' \
 'dynamodb:DynamoDB playground' \
+'cassandra:Cassandra' \
     )
     _describe -t commands 'oomplay init commands' commands "$@"
 }
@@ -382,6 +438,7 @@ _oomplay__stop_commands() {
 'postgres:Postgres playground' \
 'mysql:MySQL playground' \
 'dynamodb:DynamoDB playground' \
+'cassandra:Cassandra' \
     )
     _describe -t commands 'oomplay stop commands' commands "$@"
 }

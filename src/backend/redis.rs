@@ -26,7 +26,7 @@ impl Store for Redis {
         vec![PortMap::Tcp(6379, self.port)]
     }
 
-    fn cmd(&self) -> Option<Vec<String>> {
+    fn entry_cmd(&self) -> Option<Vec<String>> {
         Some(svec!["redis-server", "--requirepass", self.password])
     }
 
@@ -34,7 +34,7 @@ impl Store for Redis {
         svec!["redis-cli", "-n", self.database, "flushdb"]
     }
 
-    fn init_db_cmd(&self) -> Vec<String> {
+    fn init_cmd(&self) -> Vec<String> {
         self.drop_cmd()
     }
 

@@ -90,6 +90,11 @@ pub enum Backend {
         #[clap(short, long, default_value = "oomplay")]
         database: String,
     },
+    /// DynamoDB playground
+    Dynamodb {
+        #[clap(short = 'P', long, default_value = "4566")]
+        port: u16,
+    },
 }
 
 pub type BackendMap = HashMap<String, Backend>;

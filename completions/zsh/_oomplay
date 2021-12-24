@@ -93,6 +93,17 @@ _arguments "${_arguments_options[@]}" \
 '--help[Print help information]' \
 && ret=0
 ;;
+(dynamodb)
+_arguments "${_arguments_options[@]}" \
+'-P+[]:PORT: ' \
+'--port=[]:PORT: ' \
+'-f+[file path containing backends]:FILE: ' \
+'--file=[file path containing backends]:FILE: ' \
+'--version[Print version information]' \
+'-h[Print help information]' \
+'--help[Print help information]' \
+&& ret=0
+;;
         esac
     ;;
 esac
@@ -155,6 +166,17 @@ _arguments "${_arguments_options[@]}" \
 '--password=[]:PASSWORD: ' \
 '-d+[]:DATABASE: ' \
 '--database=[]:DATABASE: ' \
+'-f+[file path containing backends]:FILE: ' \
+'--file=[file path containing backends]:FILE: ' \
+'--version[Print version information]' \
+'-h[Print help information]' \
+'--help[Print help information]' \
+&& ret=0
+;;
+(dynamodb)
+_arguments "${_arguments_options[@]}" \
+'-P+[]:PORT: ' \
+'--port=[]:PORT: ' \
 '-f+[file path containing backends]:FILE: ' \
 '--file=[file path containing backends]:FILE: ' \
 '--version[Print version information]' \
@@ -231,6 +253,17 @@ _arguments "${_arguments_options[@]}" \
 '--help[Print help information]' \
 && ret=0
 ;;
+(dynamodb)
+_arguments "${_arguments_options[@]}" \
+'-P+[]:PORT: ' \
+'--port=[]:PORT: ' \
+'-f+[file path containing backends]:FILE: ' \
+'--file=[file path containing backends]:FILE: ' \
+'--version[Print version information]' \
+'-h[Print help information]' \
+'--help[Print help information]' \
+&& ret=0
+;;
         esac
     ;;
 esac
@@ -263,6 +296,7 @@ _oomplay__clear_commands() {
 'redis:Redis playground' \
 'postgres:Postgres playground' \
 'mysql:MySQL playground' \
+'dynamodb:DynamoDB playground' \
     )
     _describe -t commands 'oomplay clear commands' commands "$@"
 }
@@ -271,12 +305,28 @@ _oomplay__completion_commands() {
     local commands; commands=()
     _describe -t commands 'oomplay completion commands' commands "$@"
 }
+(( $+functions[_oomplay__clear__dynamodb_commands] )) ||
+_oomplay__clear__dynamodb_commands() {
+    local commands; commands=()
+    _describe -t commands 'oomplay clear dynamodb commands' commands "$@"
+}
+(( $+functions[_oomplay__init__dynamodb_commands] )) ||
+_oomplay__init__dynamodb_commands() {
+    local commands; commands=()
+    _describe -t commands 'oomplay init dynamodb commands' commands "$@"
+}
+(( $+functions[_oomplay__stop__dynamodb_commands] )) ||
+_oomplay__stop__dynamodb_commands() {
+    local commands; commands=()
+    _describe -t commands 'oomplay stop dynamodb commands' commands "$@"
+}
 (( $+functions[_oomplay__init_commands] )) ||
 _oomplay__init_commands() {
     local commands; commands=(
 'redis:Redis playground' \
 'postgres:Postgres playground' \
 'mysql:MySQL playground' \
+'dynamodb:DynamoDB playground' \
     )
     _describe -t commands 'oomplay init commands' commands "$@"
 }
@@ -331,6 +381,7 @@ _oomplay__stop_commands() {
 'redis:Redis playground' \
 'postgres:Postgres playground' \
 'mysql:MySQL playground' \
+'dynamodb:DynamoDB playground' \
     )
     _describe -t commands 'oomplay stop commands' commands "$@"
 }

@@ -38,6 +38,7 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('redis', 'redis', [CompletionResultType]::ParameterValue, 'Redis playground')
             [CompletionResult]::new('postgres', 'postgres', [CompletionResultType]::ParameterValue, 'Postgres playground')
             [CompletionResult]::new('mysql', 'mysql', [CompletionResultType]::ParameterValue, 'MySQL playground')
+            [CompletionResult]::new('dynamodb', 'dynamodb', [CompletionResultType]::ParameterValue, 'DynamoDB playground')
             break
         }
         'oomplay;init;redis' {
@@ -86,6 +87,16 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
             break
         }
+        'oomplay;init;dynamodb' {
+            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
+            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
+            [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
+            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
+            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
+            break
+        }
         'oomplay;clear' {
             [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
@@ -94,6 +105,7 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('redis', 'redis', [CompletionResultType]::ParameterValue, 'Redis playground')
             [CompletionResult]::new('postgres', 'postgres', [CompletionResultType]::ParameterValue, 'Postgres playground')
             [CompletionResult]::new('mysql', 'mysql', [CompletionResultType]::ParameterValue, 'MySQL playground')
+            [CompletionResult]::new('dynamodb', 'dynamodb', [CompletionResultType]::ParameterValue, 'DynamoDB playground')
             break
         }
         'oomplay;clear;redis' {
@@ -142,6 +154,16 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
             break
         }
+        'oomplay;clear;dynamodb' {
+            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
+            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
+            [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
+            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
+            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
+            break
+        }
         'oomplay;stop' {
             [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
@@ -150,6 +172,7 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('redis', 'redis', [CompletionResultType]::ParameterValue, 'Redis playground')
             [CompletionResult]::new('postgres', 'postgres', [CompletionResultType]::ParameterValue, 'Postgres playground')
             [CompletionResult]::new('mysql', 'mysql', [CompletionResultType]::ParameterValue, 'MySQL playground')
+            [CompletionResult]::new('dynamodb', 'dynamodb', [CompletionResultType]::ParameterValue, 'DynamoDB playground')
             break
         }
         'oomplay;stop;redis' {
@@ -191,6 +214,16 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('--password', 'password', [CompletionResultType]::ParameterName, 'password')
             [CompletionResult]::new('-d', 'd', [CompletionResultType]::ParameterName, 'd')
             [CompletionResult]::new('--database', 'database', [CompletionResultType]::ParameterName, 'database')
+            [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
+            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
+            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
+            break
+        }
+        'oomplay;stop;dynamodb' {
+            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
+            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
             [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')

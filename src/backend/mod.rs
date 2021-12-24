@@ -1,7 +1,9 @@
+pub mod dynamodb;
 pub mod mysql;
 pub mod postgres;
 pub mod redis;
 
+pub use dynamodb::DynamoDB;
 pub use mysql::Mysql;
 pub use postgres::Postgres;
 pub use redis::Redis;

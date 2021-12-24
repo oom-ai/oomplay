@@ -51,6 +51,9 @@ async fn try_main() -> Result<()> {
                     Backend::Redis { port, password, database, .. } => {
                         docker.init(&Redis { port, password, database }).await?;
                     }
+                    Backend::Dynamodb { port } => {
+                        docker.init(&DynamoDB { port }).await?;
+                    }
                 }
                 info!("✨ Initialized playground '{name}'");
             }
@@ -69,6 +72,9 @@ async fn try_main() -> Result<()> {
                     Backend::Redis { port, password, database, .. } => {
                         docker.destory(&Redis { port, password, database }).await?;
                     }
+                    Backend::Dynamodb { port } => {
+                        docker.destory(&DynamoDB { port }).await?;
+                    }
                 }
                 info!("✨ Cleaned up playground '{name}'");
             }
@@ -86,6 +92,9 @@ async fn try_main() -> Result<()> {
                     }
                     Backend::Redis { port, password, database, .. } => {
                         docker.stop(&Redis { port, password, database }).await?;
+                    }
+                    Backend::Dynamodb { port } => {
+                        docker.stop(&DynamoDB { port }).await?;
                     }
                 }
                 info!("🛑 Stopped playground '{name}'");

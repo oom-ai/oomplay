@@ -10,12 +10,11 @@ pub trait Store {
     fn port_map(&self) -> Vec<PortMap>;
     fn ping_cmd(&self) -> Vec<String>;
     fn drop_cmd(&self) -> Vec<String>;
-    fn init_db_cmd(&self) -> Vec<String>;
-
-    fn envs(&self) -> Vec<String> {
-        vec![]
-    }
-    fn cmd(&self) -> Option<Vec<String>> {
+    fn init_cmd(&self) -> Vec<String>;
+    fn entry_cmd(&self) -> Option<Vec<String>> {
         None
+    }
+    fn envs(&self) -> Vec<String> {
+        Vec::new()
     }
 }

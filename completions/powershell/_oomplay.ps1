@@ -39,6 +39,7 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('postgres', 'postgres', [CompletionResultType]::ParameterValue, 'Postgres playground')
             [CompletionResult]::new('mysql', 'mysql', [CompletionResultType]::ParameterValue, 'MySQL playground')
             [CompletionResult]::new('dynamodb', 'dynamodb', [CompletionResultType]::ParameterValue, 'DynamoDB playground')
+            [CompletionResult]::new('cassandra', 'cassandra', [CompletionResultType]::ParameterValue, 'Cassandra')
             break
         }
         'oomplay;init;redis' {
@@ -97,6 +98,18 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
             break
         }
+        'oomplay;init;cassandra' {
+            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
+            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
+            [CompletionResult]::new('-k', 'k', [CompletionResultType]::ParameterName, 'k')
+            [CompletionResult]::new('--keyspace', 'keyspace', [CompletionResultType]::ParameterName, 'keyspace')
+            [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
+            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
+            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
+            break
+        }
         'oomplay;clear' {
             [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
@@ -106,6 +119,7 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('postgres', 'postgres', [CompletionResultType]::ParameterValue, 'Postgres playground')
             [CompletionResult]::new('mysql', 'mysql', [CompletionResultType]::ParameterValue, 'MySQL playground')
             [CompletionResult]::new('dynamodb', 'dynamodb', [CompletionResultType]::ParameterValue, 'DynamoDB playground')
+            [CompletionResult]::new('cassandra', 'cassandra', [CompletionResultType]::ParameterValue, 'Cassandra')
             break
         }
         'oomplay;clear;redis' {
@@ -164,6 +178,18 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
             break
         }
+        'oomplay;clear;cassandra' {
+            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
+            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
+            [CompletionResult]::new('-k', 'k', [CompletionResultType]::ParameterName, 'k')
+            [CompletionResult]::new('--keyspace', 'keyspace', [CompletionResultType]::ParameterName, 'keyspace')
+            [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
+            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
+            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
+            break
+        }
         'oomplay;stop' {
             [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
@@ -173,6 +199,7 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('postgres', 'postgres', [CompletionResultType]::ParameterValue, 'Postgres playground')
             [CompletionResult]::new('mysql', 'mysql', [CompletionResultType]::ParameterValue, 'MySQL playground')
             [CompletionResult]::new('dynamodb', 'dynamodb', [CompletionResultType]::ParameterValue, 'DynamoDB playground')
+            [CompletionResult]::new('cassandra', 'cassandra', [CompletionResultType]::ParameterValue, 'Cassandra')
             break
         }
         'oomplay;stop;redis' {
@@ -224,6 +251,18 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
         'oomplay;stop;dynamodb' {
             [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
             [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
+            [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
+            [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
+            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
+            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
+            break
+        }
+        'oomplay;stop;cassandra' {
+            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
+            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
+            [CompletionResult]::new('-k', 'k', [CompletionResultType]::ParameterName, 'k')
+            [CompletionResult]::new('--keyspace', 'keyspace', [CompletionResultType]::ParameterName, 'keyspace')
             [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')

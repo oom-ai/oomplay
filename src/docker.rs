@@ -21,7 +21,6 @@ where
 
     async fn wait_ready(&self, store: &T) -> Result<()> {
         while let Err(e) = self.check_health(store).await {
-            info!("⏳ Wait for the store to be ready ...");
             debug!("check health failed: {}", e);
             tokio::time::sleep(Duration::SECOND * 2).await;
         }
@@ -44,7 +43,7 @@ where
         let config = container::Config {
             image: Some(store.image()),
             env: Some(store.envs()),
-            cmd: store.cmd(),
+            cmd: store.entry_cmd(),
             host_config: Some(models::HostConfig {
                 auto_remove: Some(true),
                 port_bindings: Some(
@@ -114,10 +113,11 @@ where
 
     async fn init_db(&self, store: &T) -> Result<()> {
         info!("🌀 Initializing database ...");
-        exec(self, &store.name(), store.init_db_cmd()).await
+        exec(self, &store.name(), store.init_cmd()).await
     }
 
     async fn check_health(&self, store: &T) -> Result<()> {
+        info!("⚡ Checking health ...");
         exec(self, &store.name(), store.ping_cmd()).await
     }
 }

@@ -56,51 +56,55 @@ pub enum Backend {
         #[clap(short = 'P', long, default_value = "6379")]
         port: u16,
 
-        #[clap(short, long, default_value = "redis")]
+        #[clap(short, long, default_value = "test")]
         password: String,
 
-        #[clap(short, long, default_value = "oomplay")]
+        #[clap(short, long, default_value = "0")]
         database: u32,
     },
+
     /// Postgres playground
     Postgres {
         #[clap(short = 'P', long, default_value = "5432")]
         port: u16,
 
-        #[clap(short, long, default_value = "postgres")]
+        #[clap(short, long, default_value = "test")]
         user: String,
 
-        #[clap(short, long, default_value = "postgres")]
+        #[clap(short, long, default_value = "test")]
         password: String,
 
-        #[clap(short, long, default_value = "oomplay")]
+        #[clap(short, long, default_value = "test")]
         database: String,
     },
+
     /// MySQL playground
     Mysql {
         #[clap(short = 'P', long, default_value = "3306")]
         port: u16,
 
-        #[clap(short, long, default_value = "mysql")]
+        #[clap(short, long, default_value = "test")]
         user: String,
 
-        #[clap(short, long, default_value = "mysql")]
+        #[clap(short, long, default_value = "test")]
         password: String,
 
-        #[clap(short, long, default_value = "oomplay")]
+        #[clap(short, long, default_value = "test")]
         database: String,
     },
+
     /// DynamoDB playground
     Dynamodb {
         #[clap(short = 'P', long, default_value = "4566")]
         port: u16,
     },
+
     /// Cassandra
     Cassandra {
         #[clap(short = 'P', long, default_value = "9042")]
         port: u16,
 
-        #[clap(short, long, default_value = "oomplay")]
+        #[clap(short, long, default_value = "test")]
         keyspace: String,
     },
 }

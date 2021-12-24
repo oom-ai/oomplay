@@ -35,7 +35,7 @@ impl Store for Postgres {
         svec!["psql", "-c", format!(r#"DROP DATABASE IF EXISTS "{}""#, self.database)]
     }
 
-    fn init_db_cmd(&self) -> Vec<String> {
+    fn init_cmd(&self) -> Vec<String> {
         svec![
             "sh",
             "-c",
@@ -55,7 +55,7 @@ impl Store for Postgres {
     }
 
     fn ping_cmd(&self) -> Vec<String> {
-        // `createdb` may fail even `pg_isready`succeeded
+        // `init_cmd` may fail even `pg_isready`succeeded
         svec!["psql", "-c", "SELECT 1"]
     }
 }

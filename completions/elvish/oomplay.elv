@@ -36,6 +36,7 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand postgres 'Postgres playground'
             cand mysql 'MySQL playground'
             cand dynamodb 'DynamoDB playground'
+            cand cassandra 'Cassandra'
         }
         &'oomplay;init;redis'= {
             cand -P 'P'
@@ -89,6 +90,17 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand -h 'Print help information'
             cand --help 'Print help information'
         }
+        &'oomplay;init;cassandra'= {
+            cand -P 'P'
+            cand --port 'port'
+            cand -k 'k'
+            cand --keyspace 'keyspace'
+            cand -f 'file path containing backends'
+            cand --file 'file path containing backends'
+            cand --version 'Print version information'
+            cand -h 'Print help information'
+            cand --help 'Print help information'
+        }
         &'oomplay;clear'= {
             cand -f 'file path containing backends'
             cand --file 'file path containing backends'
@@ -98,6 +110,7 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand postgres 'Postgres playground'
             cand mysql 'MySQL playground'
             cand dynamodb 'DynamoDB playground'
+            cand cassandra 'Cassandra'
         }
         &'oomplay;clear;redis'= {
             cand -P 'P'
@@ -151,6 +164,17 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand -h 'Print help information'
             cand --help 'Print help information'
         }
+        &'oomplay;clear;cassandra'= {
+            cand -P 'P'
+            cand --port 'port'
+            cand -k 'k'
+            cand --keyspace 'keyspace'
+            cand -f 'file path containing backends'
+            cand --file 'file path containing backends'
+            cand --version 'Print version information'
+            cand -h 'Print help information'
+            cand --help 'Print help information'
+        }
         &'oomplay;stop'= {
             cand -f 'file path containing backends'
             cand --file 'file path containing backends'
@@ -160,6 +184,7 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand postgres 'Postgres playground'
             cand mysql 'MySQL playground'
             cand dynamodb 'DynamoDB playground'
+            cand cassandra 'Cassandra'
         }
         &'oomplay;stop;redis'= {
             cand -P 'P'
@@ -207,6 +232,17 @@ set edit:completion:arg-completer[oomplay] = [@words]{
         &'oomplay;stop;dynamodb'= {
             cand -P 'P'
             cand --port 'port'
+            cand -f 'file path containing backends'
+            cand --file 'file path containing backends'
+            cand --version 'Print version information'
+            cand -h 'Print help information'
+            cand --help 'Print help information'
+        }
+        &'oomplay;stop;cassandra'= {
+            cand -P 'P'
+            cand --port 'port'
+            cand -k 'k'
+            cand --keyspace 'keyspace'
             cand -f 'file path containing backends'
             cand --file 'file path containing backends'
             cand --version 'Print version information'

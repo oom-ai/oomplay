@@ -13,7 +13,7 @@ impl Store for DynamoDB {
     }
 
     fn image(&self) -> String {
-        "localstack/localstack:latest".to_string()
+        "localstack/localstack:0.12.2".to_string()
     }
 
     fn envs(&self) -> Vec<String> {

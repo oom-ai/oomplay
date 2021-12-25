@@ -61,14 +61,6 @@ _arguments "${_arguments_options[@]}" \
 ;;
 (postgres)
 _arguments "${_arguments_options[@]}" \
-'-P+[]:PORT: ' \
-'--port=[]:PORT: ' \
-'-u+[]:USER: ' \
-'--user=[]:USER: ' \
-'-p+[]:PASSWORD: ' \
-'--password=[]:PASSWORD: ' \
-'-d+[]:DATABASE: ' \
-'--database=[]:DATABASE: ' \
 '-f+[file path containing backends]:FILE: ' \
 '--file=[file path containing backends]:FILE: ' \
 '--version[Print version information]' \
@@ -146,14 +138,6 @@ _arguments "${_arguments_options[@]}" \
 ;;
 (postgres)
 _arguments "${_arguments_options[@]}" \
-'-P+[]:PORT: ' \
-'--port=[]:PORT: ' \
-'-u+[]:USER: ' \
-'--user=[]:USER: ' \
-'-p+[]:PASSWORD: ' \
-'--password=[]:PASSWORD: ' \
-'-d+[]:DATABASE: ' \
-'--database=[]:DATABASE: ' \
 '-f+[file path containing backends]:FILE: ' \
 '--file=[file path containing backends]:FILE: ' \
 '--version[Print version information]' \
@@ -231,14 +215,6 @@ _arguments "${_arguments_options[@]}" \
 ;;
 (postgres)
 _arguments "${_arguments_options[@]}" \
-'-P+[]:PORT: ' \
-'--port=[]:PORT: ' \
-'-u+[]:USER: ' \
-'--user=[]:USER: ' \
-'-p+[]:PASSWORD: ' \
-'--password=[]:PASSWORD: ' \
-'-d+[]:DATABASE: ' \
-'--database=[]:DATABASE: ' \
 '-f+[file path containing backends]:FILE: ' \
 '--file=[file path containing backends]:FILE: ' \
 '--version[Print version information]' \

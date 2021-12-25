@@ -64,19 +64,7 @@ pub enum Backend {
     },
 
     /// Postgres playground
-    Postgres {
-        #[clap(short = 'P', long, default_value = "5432")]
-        port: u16,
-
-        #[clap(short, long, default_value = "test")]
-        user: String,
-
-        #[clap(short, long, default_value = "test")]
-        password: String,
-
-        #[clap(short, long, default_value = "test")]
-        database: String,
-    },
+    Postgres,
 
     /// MySQL playground
     Mysql,

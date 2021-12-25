@@ -52,14 +52,6 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand --help 'Print help information'
         }
         &'oomplay;init;postgres'= {
-            cand -P 'P'
-            cand --port 'port'
-            cand -u 'u'
-            cand --user 'user'
-            cand -p 'p'
-            cand --password 'password'
-            cand -d 'd'
-            cand --database 'database'
             cand -f 'file path containing backends'
             cand --file 'file path containing backends'
             cand --version 'Print version information'
@@ -118,14 +110,6 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand --help 'Print help information'
         }
         &'oomplay;clear;postgres'= {
-            cand -P 'P'
-            cand --port 'port'
-            cand -u 'u'
-            cand --user 'user'
-            cand -p 'p'
-            cand --password 'password'
-            cand -d 'd'
-            cand --database 'database'
             cand -f 'file path containing backends'
             cand --file 'file path containing backends'
             cand --version 'Print version information'
@@ -184,14 +168,6 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand --help 'Print help information'
         }
         &'oomplay;stop;postgres'= {
-            cand -P 'P'
-            cand --port 'port'
-            cand -u 'u'
-            cand --user 'user'
-            cand -p 'p'
-            cand --password 'password'
-            cand -d 'd'
-            cand --database 'database'
             cand -f 'file path containing backends'
             cand --file 'file path containing backends'
             cand --version 'Print version information'

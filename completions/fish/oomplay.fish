@@ -17,10 +17,6 @@ complete -c oomplay -n "__fish_seen_subcommand_from init; and __fish_seen_subcom
 complete -c oomplay -n "__fish_seen_subcommand_from init; and __fish_seen_subcommand_from redis" -s f -l file -d 'file path containing backends' -r
 complete -c oomplay -n "__fish_seen_subcommand_from init; and __fish_seen_subcommand_from redis" -l version -d 'Print version information'
 complete -c oomplay -n "__fish_seen_subcommand_from init; and __fish_seen_subcommand_from redis" -s h -l help -d 'Print help information'
-complete -c oomplay -n "__fish_seen_subcommand_from init; and __fish_seen_subcommand_from postgres" -s P -l port -r
-complete -c oomplay -n "__fish_seen_subcommand_from init; and __fish_seen_subcommand_from postgres" -s u -l user -r
-complete -c oomplay -n "__fish_seen_subcommand_from init; and __fish_seen_subcommand_from postgres" -s p -l password -r
-complete -c oomplay -n "__fish_seen_subcommand_from init; and __fish_seen_subcommand_from postgres" -s d -l database -r
 complete -c oomplay -n "__fish_seen_subcommand_from init; and __fish_seen_subcommand_from postgres" -s f -l file -d 'file path containing backends' -r
 complete -c oomplay -n "__fish_seen_subcommand_from init; and __fish_seen_subcommand_from postgres" -l version -d 'Print version information'
 complete -c oomplay -n "__fish_seen_subcommand_from init; and __fish_seen_subcommand_from postgres" -s h -l help -d 'Print help information'
@@ -49,10 +45,6 @@ complete -c oomplay -n "__fish_seen_subcommand_from clear; and __fish_seen_subco
 complete -c oomplay -n "__fish_seen_subcommand_from clear; and __fish_seen_subcommand_from redis" -s f -l file -d 'file path containing backends' -r
 complete -c oomplay -n "__fish_seen_subcommand_from clear; and __fish_seen_subcommand_from redis" -l version -d 'Print version information'
 complete -c oomplay -n "__fish_seen_subcommand_from clear; and __fish_seen_subcommand_from redis" -s h -l help -d 'Print help information'
-complete -c oomplay -n "__fish_seen_subcommand_from clear; and __fish_seen_subcommand_from postgres" -s P -l port -r
-complete -c oomplay -n "__fish_seen_subcommand_from clear; and __fish_seen_subcommand_from postgres" -s u -l user -r
-complete -c oomplay -n "__fish_seen_subcommand_from clear; and __fish_seen_subcommand_from postgres" -s p -l password -r
-complete -c oomplay -n "__fish_seen_subcommand_from clear; and __fish_seen_subcommand_from postgres" -s d -l database -r
 complete -c oomplay -n "__fish_seen_subcommand_from clear; and __fish_seen_subcommand_from postgres" -s f -l file -d 'file path containing backends' -r
 complete -c oomplay -n "__fish_seen_subcommand_from clear; and __fish_seen_subcommand_from postgres" -l version -d 'Print version information'
 complete -c oomplay -n "__fish_seen_subcommand_from clear; and __fish_seen_subcommand_from postgres" -s h -l help -d 'Print help information'
@@ -81,10 +73,6 @@ complete -c oomplay -n "__fish_seen_subcommand_from stop; and __fish_seen_subcom
 complete -c oomplay -n "__fish_seen_subcommand_from stop; and __fish_seen_subcommand_from redis" -s f -l file -d 'file path containing backends' -r
 complete -c oomplay -n "__fish_seen_subcommand_from stop; and __fish_seen_subcommand_from redis" -l version -d 'Print version information'
 complete -c oomplay -n "__fish_seen_subcommand_from stop; and __fish_seen_subcommand_from redis" -s h -l help -d 'Print help information'
-complete -c oomplay -n "__fish_seen_subcommand_from stop; and __fish_seen_subcommand_from postgres" -s P -l port -r
-complete -c oomplay -n "__fish_seen_subcommand_from stop; and __fish_seen_subcommand_from postgres" -s u -l user -r
-complete -c oomplay -n "__fish_seen_subcommand_from stop; and __fish_seen_subcommand_from postgres" -s p -l password -r
-complete -c oomplay -n "__fish_seen_subcommand_from stop; and __fish_seen_subcommand_from postgres" -s d -l database -r
 complete -c oomplay -n "__fish_seen_subcommand_from stop; and __fish_seen_subcommand_from postgres" -s f -l file -d 'file path containing backends' -r
 complete -c oomplay -n "__fish_seen_subcommand_from stop; and __fish_seen_subcommand_from postgres" -l version -d 'Print version information'
 complete -c oomplay -n "__fish_seen_subcommand_from stop; and __fish_seen_subcommand_from postgres" -s h -l help -d 'Print help information'

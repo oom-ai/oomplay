@@ -42,8 +42,8 @@ async fn try_main() -> Result<()> {
             for (name, backend) in backends.into_iter() {
                 info!("🎮 Initializing playground '{name}' ...");
                 match backend {
-                    Backend::Postgres { port, user, password, database, .. } => {
-                        docker.init(&Postgres { port, user, password, database }).await?;
+                    Backend::Postgres => {
+                        docker.init(&Postgres).await?;
                     }
                     Backend::Mysql => {
                         docker.init(&Mysql).await?;
@@ -66,8 +66,8 @@ async fn try_main() -> Result<()> {
             for (name, backend) in backends.into_iter() {
                 info!("🧹 Cleaning up playground '{name}' ...");
                 match backend {
-                    Backend::Postgres { port, user, password, database, .. } => {
-                        docker.destory(&Postgres { port, user, password, database }).await?;
+                    Backend::Postgres => {
+                        docker.destory(&Postgres).await?;
                     }
                     Backend::Mysql => {
                         docker.destory(&Mysql).await?;
@@ -90,8 +90,8 @@ async fn try_main() -> Result<()> {
             for (name, backend) in backends.into_iter() {
                 info!("🔌 Stopping playground '{name}' ...");
                 match backend {
-                    Backend::Postgres { port, user, password, database, .. } => {
-                        docker.stop(&Postgres { port, user, password, database }).await?;
+                    Backend::Postgres => {
+                        docker.stop(&Postgres).await?;
                     }
                     Backend::Mysql => {
                         docker.stop(&Mysql).await?;

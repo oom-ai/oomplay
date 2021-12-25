@@ -10,8 +10,9 @@ Playground manager for [oomstore](https://github.com/oom-ai/oomstore).
 
 ## Usage
 
-```
+```help
 $ oomplay --help
+oomplay 0.3.2
 Playground manager for oomstore
 
 USAGE:
@@ -21,7 +22,7 @@ OPTIONS:
     -h, --help       Print help information
     -V, --version    Print version information
 
-[SUBCOMMANDS](SUBCOMMANDS):
+SUBCOMMANDS:
     init          Initialize playgrounds
     stop          Stop playgrounds
     completion    Output shell completion code
@@ -30,64 +31,32 @@ OPTIONS:
 ## Example
 
 ```
-$ oomplay init redis
-[*] 🎮 Initializing playground 'redis' ...
-[*] ⚡ Checking health ...
-[*] 🚚 Pulling image 'redis:alpine' ...
-[*] 📦 Creating container 'oomplay-redis' ...
-[*] 💫 Starting container 'oomplay-redis' ...
-[*] ⚡ Checking health ...
-[*] 🌀 Initializing database ...
-[*] 🔰 Store is ready
-[*] ✨ Initialized playground 'redis'
+$ oomplay init redis postgres
+[*] 🎮 Initializing oomplay-redis ...
+[*] 📡 Pinging database ...
+[*] 📦 Creating container ...
+[*] 🚀 Starting container ...
+[*] 📡 Pinging database ...
+[*] 💫 Initializing database ...
+[*] 🟢 Store is ready.
+[*] 🎮 Initializing oomplay-postgres ...
+[*] 📡 Pinging database ...
+[*] 📦 Creating container ...
+[*] 🚀 Starting container ...
+[*] 📡 Pinging database ...
+[*] 📡 Pinging database ...
+[*] 📡 Pinging database ...
+[*] 💫 Initializing database ...
+[*] 🟢 Store is ready.
 ```
 
 ```
-$ oomplay init -f config.yaml
-[*] 🎮 Initializing playground 'online-store' ...
-[*] ⚡ Checking health ...
-[*] 🌀 Initializing database ...
-[*] 🔰 Store is ready
-[*] ✨ Initialized playground 'online-store'
-[*] 🎮 Initializing playground 'metadata-store' ...
-[*] ⚡ Checking health ...
-[*] 🔰 Store is already running
-[*] 🌀 Initializing database ...
-[*] ✨ Initialized playground 'metadata-store'
-[*] 🎮 Initializing playground 'offline-store' ...
-[*] ⚡ Checking health ...
-[*] 🔰 Store is already running
-[*] 🌀 Initializing database ...
-[*] ✨ Initialized playground 'offline-store'
+$ oomplay stop redis postgres
+[*] 🔌 Stopping oomplay-redis ...
+[*] 🔴 Stopped.
+[*] 🔌 Stopping oomplay-postgres ...
+[*] 🔴 Stopped.
 ```
-
-The `config.yaml` used above:
-```yaml
-online-store:
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    password: test
-    database: 0
-
-offline-store:
-  postgres:
-    host: 127.0.0.1
-    port: 5432
-    user: test
-    password: test
-    database: test
-
-metadata-store:
-  mysql:
-    host: 127.0.0.1
-    port: 3306
-    user: test
-    password: test
-    database: test
-```
-
-Run `oomplay --help` to get detailed usage.
 
 ## Supported playgrounds
 

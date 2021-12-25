@@ -46,12 +46,6 @@ _arguments "${_arguments_options[@]}" \
         case $line[1] in
             (redis)
 _arguments "${_arguments_options[@]}" \
-'-P+[]:PORT: ' \
-'--port=[]:PORT: ' \
-'-p+[]:PASSWORD: ' \
-'--password=[]:PASSWORD: ' \
-'-d+[]:DATABASE: ' \
-'--database=[]:DATABASE: ' \
 '-f+[file path containing backends]:FILE: ' \
 '--file=[file path containing backends]:FILE: ' \
 '--version[Print version information]' \
@@ -123,12 +117,6 @@ _arguments "${_arguments_options[@]}" \
         case $line[1] in
             (redis)
 _arguments "${_arguments_options[@]}" \
-'-P+[]:PORT: ' \
-'--port=[]:PORT: ' \
-'-p+[]:PASSWORD: ' \
-'--password=[]:PASSWORD: ' \
-'-d+[]:DATABASE: ' \
-'--database=[]:DATABASE: ' \
 '-f+[file path containing backends]:FILE: ' \
 '--file=[file path containing backends]:FILE: ' \
 '--version[Print version information]' \
@@ -200,12 +188,6 @@ _arguments "${_arguments_options[@]}" \
         case $line[1] in
             (redis)
 _arguments "${_arguments_options[@]}" \
-'-P+[]:PORT: ' \
-'--port=[]:PORT: ' \
-'-p+[]:PASSWORD: ' \
-'--password=[]:PASSWORD: ' \
-'-d+[]:DATABASE: ' \
-'--database=[]:DATABASE: ' \
 '-f+[file path containing backends]:FILE: ' \
 '--file=[file path containing backends]:FILE: ' \
 '--version[Print version information]' \

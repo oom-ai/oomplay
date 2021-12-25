@@ -52,16 +52,7 @@ pub struct BackendOpt {
 #[serde(rename_all(deserialize = "snake_case"))]
 pub enum Backend {
     /// Redis playground
-    Redis {
-        #[clap(short = 'P', long, default_value = "6379")]
-        port: u16,
-
-        #[clap(short, long, default_value = "test")]
-        password: String,
-
-        #[clap(short, long, default_value = "0")]
-        database: u32,
-    },
+    Redis,
 
     /// Postgres playground
     Postgres,

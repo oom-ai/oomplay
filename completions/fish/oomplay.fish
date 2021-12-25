@@ -11,9 +11,6 @@ complete -c oomplay -n "__fish_seen_subcommand_from init; and not __fish_seen_su
 complete -c oomplay -n "__fish_seen_subcommand_from init; and not __fish_seen_subcommand_from redis; and not __fish_seen_subcommand_from postgres; and not __fish_seen_subcommand_from mysql; and not __fish_seen_subcommand_from dynamodb; and not __fish_seen_subcommand_from cassandra" -f -a "mysql" -d 'MySQL playground'
 complete -c oomplay -n "__fish_seen_subcommand_from init; and not __fish_seen_subcommand_from redis; and not __fish_seen_subcommand_from postgres; and not __fish_seen_subcommand_from mysql; and not __fish_seen_subcommand_from dynamodb; and not __fish_seen_subcommand_from cassandra" -f -a "dynamodb" -d 'DynamoDB playground'
 complete -c oomplay -n "__fish_seen_subcommand_from init; and not __fish_seen_subcommand_from redis; and not __fish_seen_subcommand_from postgres; and not __fish_seen_subcommand_from mysql; and not __fish_seen_subcommand_from dynamodb; and not __fish_seen_subcommand_from cassandra" -f -a "cassandra" -d 'Cassandra'
-complete -c oomplay -n "__fish_seen_subcommand_from init; and __fish_seen_subcommand_from redis" -s P -l port -r
-complete -c oomplay -n "__fish_seen_subcommand_from init; and __fish_seen_subcommand_from redis" -s p -l password -r
-complete -c oomplay -n "__fish_seen_subcommand_from init; and __fish_seen_subcommand_from redis" -s d -l database -r
 complete -c oomplay -n "__fish_seen_subcommand_from init; and __fish_seen_subcommand_from redis" -s f -l file -d 'file path containing backends' -r
 complete -c oomplay -n "__fish_seen_subcommand_from init; and __fish_seen_subcommand_from redis" -l version -d 'Print version information'
 complete -c oomplay -n "__fish_seen_subcommand_from init; and __fish_seen_subcommand_from redis" -s h -l help -d 'Print help information'
@@ -39,9 +36,6 @@ complete -c oomplay -n "__fish_seen_subcommand_from clear; and not __fish_seen_s
 complete -c oomplay -n "__fish_seen_subcommand_from clear; and not __fish_seen_subcommand_from redis; and not __fish_seen_subcommand_from postgres; and not __fish_seen_subcommand_from mysql; and not __fish_seen_subcommand_from dynamodb; and not __fish_seen_subcommand_from cassandra" -f -a "mysql" -d 'MySQL playground'
 complete -c oomplay -n "__fish_seen_subcommand_from clear; and not __fish_seen_subcommand_from redis; and not __fish_seen_subcommand_from postgres; and not __fish_seen_subcommand_from mysql; and not __fish_seen_subcommand_from dynamodb; and not __fish_seen_subcommand_from cassandra" -f -a "dynamodb" -d 'DynamoDB playground'
 complete -c oomplay -n "__fish_seen_subcommand_from clear; and not __fish_seen_subcommand_from redis; and not __fish_seen_subcommand_from postgres; and not __fish_seen_subcommand_from mysql; and not __fish_seen_subcommand_from dynamodb; and not __fish_seen_subcommand_from cassandra" -f -a "cassandra" -d 'Cassandra'
-complete -c oomplay -n "__fish_seen_subcommand_from clear; and __fish_seen_subcommand_from redis" -s P -l port -r
-complete -c oomplay -n "__fish_seen_subcommand_from clear; and __fish_seen_subcommand_from redis" -s p -l password -r
-complete -c oomplay -n "__fish_seen_subcommand_from clear; and __fish_seen_subcommand_from redis" -s d -l database -r
 complete -c oomplay -n "__fish_seen_subcommand_from clear; and __fish_seen_subcommand_from redis" -s f -l file -d 'file path containing backends' -r
 complete -c oomplay -n "__fish_seen_subcommand_from clear; and __fish_seen_subcommand_from redis" -l version -d 'Print version information'
 complete -c oomplay -n "__fish_seen_subcommand_from clear; and __fish_seen_subcommand_from redis" -s h -l help -d 'Print help information'
@@ -67,9 +61,6 @@ complete -c oomplay -n "__fish_seen_subcommand_from stop; and not __fish_seen_su
 complete -c oomplay -n "__fish_seen_subcommand_from stop; and not __fish_seen_subcommand_from redis; and not __fish_seen_subcommand_from postgres; and not __fish_seen_subcommand_from mysql; and not __fish_seen_subcommand_from dynamodb; and not __fish_seen_subcommand_from cassandra" -f -a "mysql" -d 'MySQL playground'
 complete -c oomplay -n "__fish_seen_subcommand_from stop; and not __fish_seen_subcommand_from redis; and not __fish_seen_subcommand_from postgres; and not __fish_seen_subcommand_from mysql; and not __fish_seen_subcommand_from dynamodb; and not __fish_seen_subcommand_from cassandra" -f -a "dynamodb" -d 'DynamoDB playground'
 complete -c oomplay -n "__fish_seen_subcommand_from stop; and not __fish_seen_subcommand_from redis; and not __fish_seen_subcommand_from postgres; and not __fish_seen_subcommand_from mysql; and not __fish_seen_subcommand_from dynamodb; and not __fish_seen_subcommand_from cassandra" -f -a "cassandra" -d 'Cassandra'
-complete -c oomplay -n "__fish_seen_subcommand_from stop; and __fish_seen_subcommand_from redis" -s P -l port -r
-complete -c oomplay -n "__fish_seen_subcommand_from stop; and __fish_seen_subcommand_from redis" -s p -l password -r
-complete -c oomplay -n "__fish_seen_subcommand_from stop; and __fish_seen_subcommand_from redis" -s d -l database -r
 complete -c oomplay -n "__fish_seen_subcommand_from stop; and __fish_seen_subcommand_from redis" -s f -l file -d 'file path containing backends' -r
 complete -c oomplay -n "__fish_seen_subcommand_from stop; and __fish_seen_subcommand_from redis" -l version -d 'Print version information'
 complete -c oomplay -n "__fish_seen_subcommand_from stop; and __fish_seen_subcommand_from redis" -s h -l help -d 'Print help information'

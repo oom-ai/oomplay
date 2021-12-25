@@ -39,12 +39,6 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand cassandra 'Cassandra'
         }
         &'oomplay;init;redis'= {
-            cand -P 'P'
-            cand --port 'port'
-            cand -p 'p'
-            cand --password 'password'
-            cand -d 'd'
-            cand --database 'database'
             cand -f 'file path containing backends'
             cand --file 'file path containing backends'
             cand --version 'Print version information'
@@ -97,12 +91,6 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand cassandra 'Cassandra'
         }
         &'oomplay;clear;redis'= {
-            cand -P 'P'
-            cand --port 'port'
-            cand -p 'p'
-            cand --password 'password'
-            cand -d 'd'
-            cand --database 'database'
             cand -f 'file path containing backends'
             cand --file 'file path containing backends'
             cand --version 'Print version information'
@@ -155,12 +143,6 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand cassandra 'Cassandra'
         }
         &'oomplay;stop;redis'= {
-            cand -P 'P'
-            cand --port 'port'
-            cand -p 'p'
-            cand --password 'password'
-            cand -d 'd'
-            cand --database 'database'
             cand -f 'file path containing backends'
             cand --file 'file path containing backends'
             cand --version 'Print version information'

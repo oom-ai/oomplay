@@ -48,8 +48,8 @@ async fn try_main() -> Result<()> {
                     Backend::Mysql => {
                         docker.init(&Mysql).await?;
                     }
-                    Backend::Redis { port, password, database, .. } => {
-                        docker.init(&Redis { port, password, database }).await?;
+                    Backend::Redis => {
+                        docker.init(&Redis).await?;
                     }
                     Backend::Dynamodb { port } => {
                         docker.init(&DynamoDB { port }).await?;
@@ -72,8 +72,8 @@ async fn try_main() -> Result<()> {
                     Backend::Mysql => {
                         docker.destory(&Mysql).await?;
                     }
-                    Backend::Redis { port, password, database, .. } => {
-                        docker.destory(&Redis { port, password, database }).await?;
+                    Backend::Redis => {
+                        docker.destory(&Redis).await?;
                     }
                     Backend::Dynamodb { port } => {
                         docker.destory(&DynamoDB { port }).await?;
@@ -96,8 +96,8 @@ async fn try_main() -> Result<()> {
                     Backend::Mysql => {
                         docker.stop(&Mysql).await?;
                     }
-                    Backend::Redis { port, password, database, .. } => {
-                        docker.stop(&Redis { port, password, database }).await?;
+                    Backend::Redis => {
+                        docker.stop(&Redis).await?;
                     }
                     Backend::Dynamodb { port } => {
                         docker.stop(&DynamoDB { port }).await?;

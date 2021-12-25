@@ -678,6 +678,7 @@ dependencies = [
  "clap",
  "clap_generate",
  "colog",
+ "colored",
  "futures",
  "itertools",
  "log",

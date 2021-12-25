@@ -14,8 +14,8 @@ use anyhow::Result;
 use bollard::Docker;
 use clap::{IntoApp, Parser};
 use cli::App;
+use colored::Colorize;
 use docker::StoreRuntime;
-use itertools::Itertools;
 use std::io;
 
 #[tokio::main]
@@ -31,20 +31,17 @@ async fn main() {
 async fn try_main() -> Result<()> {
     let docker = Docker::connect_with_local_defaults()?;
     match App::parse() {
-        App::Init { backends } => {
-            let stores = backends.store_iter().collect_vec();
-            let n = stores.len();
-            for (i, store) in stores.into_iter().enumerate().map(|(i, s)| (i + 1, s)) {
-                info!("🎮 [{i}/{n}] Initializing playground {} ...", store.name());
+        App::Init { backends } =>
+            for store in backends.store_iter() {
+                info!("🎮 Initializing {} ...", store.name().blue().bold());
                 docker.init(store).await?;
-                info!("✨ [{i}/{n}] Initialized playground {}", store.name());
-            }
-        }
+                info!("🟢 {}", "Store is ready".bold());
+            },
         App::Stop { backends } =>
             for store in backends.store_iter() {
-                info!("🔌 Stopping playground '{}' ...", store.name());
+                info!("🔌 Stopping {} ...", store.name().blue().bold());
                 docker.stop(store).await?;
-                info!("🛑 Stopped playground '{}'", store.name());
+                info!("🔴 {}", "Stopped".bold());
             },
         App::Completion { shell } => {
             let app = &mut App::into_app();

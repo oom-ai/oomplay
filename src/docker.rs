@@ -89,7 +89,6 @@ where
                     .and_then(|_| self.wait_ready(store))
                     .and_then(|_| self.init_db(store))
                     .await?;
-                info!("🔰 Store is ready");
             }
         };
         Ok(())

@@ -33,12 +33,12 @@ where
     T: Store + Sync + ?Sized,
 {
     async fn start(&self, store: &T) -> Result<()> {
-        info!("🚀 Starting container '{}' ...", store.name());
+        info!("🚀 Starting container ...");
         Ok(self.start_container::<String>(&store.name(), None).await?)
     }
 
     async fn create(&self, store: &T) -> Result<()> {
-        info!("📦 Creating container '{}' ...", store.name());
+        info!("📦 Creating container ...",);
         let config = container::Config {
             image: Some(store.image()),
             env: Some(store.envs()),

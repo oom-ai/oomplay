@@ -35,13 +35,13 @@ async fn try_main() -> Result<()> {
             for store in backends.store_iter() {
                 info!("🎮 Initializing {} ...", store.name().blue().bold());
                 docker.init(store).await?;
-                info!("🟢 {}", "Store is ready".bold());
+                info!("🟢 {}", "Store is ready.".bold());
             },
         App::Stop { backends } =>
             for store in backends.store_iter() {
                 info!("🔌 Stopping {} ...", store.name().blue().bold());
                 docker.stop(store).await?;
-                info!("🔴 {}", "Stopped".bold());
+                info!("🔴 {}", "Stopped.".bold());
             },
         App::Completion { shell } => {
             let app = &mut App::into_app();

@@ -79,19 +79,7 @@ pub enum Backend {
     },
 
     /// MySQL playground
-    Mysql {
-        #[clap(short = 'P', long, default_value = "3306")]
-        port: u16,
-
-        #[clap(short, long, default_value = "test")]
-        user: String,
-
-        #[clap(short, long, default_value = "test")]
-        password: String,
-
-        #[clap(short, long, default_value = "test")]
-        database: String,
-    },
+    Mysql,
 
     /// DynamoDB playground
     Dynamodb {

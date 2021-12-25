@@ -73,14 +73,6 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             break
         }
         'oomplay;init;mysql' {
-            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
-            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
-            [CompletionResult]::new('-u', 'u', [CompletionResultType]::ParameterName, 'u')
-            [CompletionResult]::new('--user', 'user', [CompletionResultType]::ParameterName, 'user')
-            [CompletionResult]::new('-p', 'p', [CompletionResultType]::ParameterName, 'p')
-            [CompletionResult]::new('--password', 'password', [CompletionResultType]::ParameterName, 'password')
-            [CompletionResult]::new('-d', 'd', [CompletionResultType]::ParameterName, 'd')
-            [CompletionResult]::new('--database', 'database', [CompletionResultType]::ParameterName, 'database')
             [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
@@ -153,14 +145,6 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             break
         }
         'oomplay;clear;mysql' {
-            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
-            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
-            [CompletionResult]::new('-u', 'u', [CompletionResultType]::ParameterName, 'u')
-            [CompletionResult]::new('--user', 'user', [CompletionResultType]::ParameterName, 'user')
-            [CompletionResult]::new('-p', 'p', [CompletionResultType]::ParameterName, 'p')
-            [CompletionResult]::new('--password', 'password', [CompletionResultType]::ParameterName, 'password')
-            [CompletionResult]::new('-d', 'd', [CompletionResultType]::ParameterName, 'd')
-            [CompletionResult]::new('--database', 'database', [CompletionResultType]::ParameterName, 'database')
             [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
@@ -233,14 +217,6 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             break
         }
         'oomplay;stop;mysql' {
-            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
-            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
-            [CompletionResult]::new('-u', 'u', [CompletionResultType]::ParameterName, 'u')
-            [CompletionResult]::new('--user', 'user', [CompletionResultType]::ParameterName, 'user')
-            [CompletionResult]::new('-p', 'p', [CompletionResultType]::ParameterName, 'p')
-            [CompletionResult]::new('--password', 'password', [CompletionResultType]::ParameterName, 'password')
-            [CompletionResult]::new('-d', 'd', [CompletionResultType]::ParameterName, 'd')
-            [CompletionResult]::new('--database', 'database', [CompletionResultType]::ParameterName, 'database')
             [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')

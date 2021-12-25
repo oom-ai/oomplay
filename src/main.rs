@@ -45,8 +45,8 @@ async fn try_main() -> Result<()> {
                     Backend::Postgres { port, user, password, database, .. } => {
                         docker.init(&Postgres { port, user, password, database }).await?;
                     }
-                    Backend::Mysql { port, user, password, database, .. } => {
-                        docker.init(&Mysql { port, user, password, database }).await?;
+                    Backend::Mysql => {
+                        docker.init(&Mysql).await?;
                     }
                     Backend::Redis { port, password, database, .. } => {
                         docker.init(&Redis { port, password, database }).await?;
@@ -69,8 +69,8 @@ async fn try_main() -> Result<()> {
                     Backend::Postgres { port, user, password, database, .. } => {
                         docker.destory(&Postgres { port, user, password, database }).await?;
                     }
-                    Backend::Mysql { port, user, password, database, .. } => {
-                        docker.destory(&Mysql { port, user, password, database }).await?;
+                    Backend::Mysql => {
+                        docker.destory(&Mysql).await?;
                     }
                     Backend::Redis { port, password, database, .. } => {
                         docker.destory(&Redis { port, password, database }).await?;
@@ -93,8 +93,8 @@ async fn try_main() -> Result<()> {
                     Backend::Postgres { port, user, password, database, .. } => {
                         docker.stop(&Postgres { port, user, password, database }).await?;
                     }
-                    Backend::Mysql { port, user, password, database, .. } => {
-                        docker.stop(&Mysql { port, user, password, database }).await?;
+                    Backend::Mysql => {
+                        docker.stop(&Mysql).await?;
                     }
                     Backend::Redis { port, password, database, .. } => {
                         docker.stop(&Redis { port, password, database }).await?;

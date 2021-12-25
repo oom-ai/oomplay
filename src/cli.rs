@@ -1,9 +1,6 @@
-use std::{collections::HashMap, path::PathBuf};
-
 use clap::{AppSettings, Args, Parser};
 use clap_generate::Shell;
-use serde::{Deserialize, Serialize};
-use strum::Display;
+use strum::{Display, EnumString, EnumVariantNames, VariantNames};
 
 #[derive(Parser)]
 #[clap(about, version)]
@@ -38,33 +35,17 @@ pub enum App {
 
 #[derive(Debug, Args)]
 pub struct BackendOpt {
-    /// file path containing backends
-    #[clap(short, long, global = true)]
-    pub file: Option<PathBuf>,
-
-    /// Backend specified by cli
-    #[clap(subcommand)]
-    pub cli: Option<Backend>,
+    /// Backends
+    #[clap(possible_values = Backend::VARIANTS, required = true)]
+    pub backends: Vec<Backend>,
 }
 
-#[derive(Debug, Serialize, Deserialize, Display, Parser)]
+#[derive(Debug, Display, EnumString, EnumVariantNames, Parser)]
 #[strum(serialize_all = "snake_case")]
-#[serde(rename_all(deserialize = "snake_case"))]
 pub enum Backend {
-    /// Redis playground
     Redis,
-
-    /// Postgres playground
     Postgres,
-
-    /// MySQL playground
     Mysql,
-
-    /// DynamoDB playground
     Dynamodb,
-
-    /// Cassandra
     Cassandra,
 }
-
-pub type BackendMap = HashMap<String, Backend>;

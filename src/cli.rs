@@ -61,10 +61,7 @@ pub enum Backend {
     Mysql,
 
     /// DynamoDB playground
-    Dynamodb {
-        #[clap(short = 'P', long, default_value = "4566")]
-        port: u16,
-    },
+    Dynamodb,
 
     /// Cassandra
     Cassandra {

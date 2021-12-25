@@ -51,8 +51,8 @@ async fn try_main() -> Result<()> {
                     Backend::Redis => {
                         docker.init(&Redis).await?;
                     }
-                    Backend::Dynamodb { port } => {
-                        docker.init(&DynamoDB { port }).await?;
+                    Backend::Dynamodb => {
+                        docker.init(&DynamoDB).await?;
                     }
                     Backend::Cassandra { port, keyspace, .. } => {
                         docker.init(&Cassandra { port, keyspace }).await?;
@@ -75,8 +75,8 @@ async fn try_main() -> Result<()> {
                     Backend::Redis => {
                         docker.destory(&Redis).await?;
                     }
-                    Backend::Dynamodb { port } => {
-                        docker.destory(&DynamoDB { port }).await?;
+                    Backend::Dynamodb => {
+                        docker.destory(&DynamoDB).await?;
                     }
                     Backend::Cassandra { port, keyspace, .. } => {
                         docker.destory(&Cassandra { port, keyspace }).await?;
@@ -99,8 +99,8 @@ async fn try_main() -> Result<()> {
                     Backend::Redis => {
                         docker.stop(&Redis).await?;
                     }
-                    Backend::Dynamodb { port } => {
-                        docker.stop(&DynamoDB { port }).await?;
+                    Backend::Dynamodb => {
+                        docker.stop(&DynamoDB).await?;
                     }
                     Backend::Cassandra { port, keyspace, .. } => {
                         docker.stop(&Cassandra { port, keyspace }).await?;

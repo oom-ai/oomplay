@@ -67,8 +67,6 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             break
         }
         'oomplay;init;dynamodb' {
-            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
-            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
             [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
@@ -125,8 +123,6 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             break
         }
         'oomplay;clear;dynamodb' {
-            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
-            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
             [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
@@ -183,8 +179,6 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             break
         }
         'oomplay;stop;dynamodb' {
-            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
-            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
             [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')

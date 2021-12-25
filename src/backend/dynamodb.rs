@@ -3,9 +3,7 @@ use crate::{
     svec,
 };
 
-pub struct DynamoDB {
-    pub port: u16,
-}
+pub struct DynamoDB;
 
 impl Store for DynamoDB {
     fn name(&self) -> String {
@@ -21,7 +19,7 @@ impl Store for DynamoDB {
     }
 
     fn port_map(&self) -> Vec<PortMap> {
-        vec![PortMap::Tcp(4566, self.port)]
+        vec![PortMap::Tcp(24566, 4566)]
     }
 
     fn drop_cmd(&self) -> Vec<String> {

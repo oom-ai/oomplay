@@ -20,7 +20,6 @@ complete -c oomplay -n "__fish_seen_subcommand_from init; and __fish_seen_subcom
 complete -c oomplay -n "__fish_seen_subcommand_from init; and __fish_seen_subcommand_from mysql" -s f -l file -d 'file path containing backends' -r
 complete -c oomplay -n "__fish_seen_subcommand_from init; and __fish_seen_subcommand_from mysql" -l version -d 'Print version information'
 complete -c oomplay -n "__fish_seen_subcommand_from init; and __fish_seen_subcommand_from mysql" -s h -l help -d 'Print help information'
-complete -c oomplay -n "__fish_seen_subcommand_from init; and __fish_seen_subcommand_from dynamodb" -s P -l port -r
 complete -c oomplay -n "__fish_seen_subcommand_from init; and __fish_seen_subcommand_from dynamodb" -s f -l file -d 'file path containing backends' -r
 complete -c oomplay -n "__fish_seen_subcommand_from init; and __fish_seen_subcommand_from dynamodb" -l version -d 'Print version information'
 complete -c oomplay -n "__fish_seen_subcommand_from init; and __fish_seen_subcommand_from dynamodb" -s h -l help -d 'Print help information'
@@ -45,7 +44,6 @@ complete -c oomplay -n "__fish_seen_subcommand_from clear; and __fish_seen_subco
 complete -c oomplay -n "__fish_seen_subcommand_from clear; and __fish_seen_subcommand_from mysql" -s f -l file -d 'file path containing backends' -r
 complete -c oomplay -n "__fish_seen_subcommand_from clear; and __fish_seen_subcommand_from mysql" -l version -d 'Print version information'
 complete -c oomplay -n "__fish_seen_subcommand_from clear; and __fish_seen_subcommand_from mysql" -s h -l help -d 'Print help information'
-complete -c oomplay -n "__fish_seen_subcommand_from clear; and __fish_seen_subcommand_from dynamodb" -s P -l port -r
 complete -c oomplay -n "__fish_seen_subcommand_from clear; and __fish_seen_subcommand_from dynamodb" -s f -l file -d 'file path containing backends' -r
 complete -c oomplay -n "__fish_seen_subcommand_from clear; and __fish_seen_subcommand_from dynamodb" -l version -d 'Print version information'
 complete -c oomplay -n "__fish_seen_subcommand_from clear; and __fish_seen_subcommand_from dynamodb" -s h -l help -d 'Print help information'
@@ -70,7 +68,6 @@ complete -c oomplay -n "__fish_seen_subcommand_from stop; and __fish_seen_subcom
 complete -c oomplay -n "__fish_seen_subcommand_from stop; and __fish_seen_subcommand_from mysql" -s f -l file -d 'file path containing backends' -r
 complete -c oomplay -n "__fish_seen_subcommand_from stop; and __fish_seen_subcommand_from mysql" -l version -d 'Print version information'
 complete -c oomplay -n "__fish_seen_subcommand_from stop; and __fish_seen_subcommand_from mysql" -s h -l help -d 'Print help information'
-complete -c oomplay -n "__fish_seen_subcommand_from stop; and __fish_seen_subcommand_from dynamodb" -s P -l port -r
 complete -c oomplay -n "__fish_seen_subcommand_from stop; and __fish_seen_subcommand_from dynamodb" -s f -l file -d 'file path containing backends' -r
 complete -c oomplay -n "__fish_seen_subcommand_from stop; and __fish_seen_subcommand_from dynamodb" -l version -d 'Print version information'
 complete -c oomplay -n "__fish_seen_subcommand_from stop; and __fish_seen_subcommand_from dynamodb" -s h -l help -d 'Print help information'

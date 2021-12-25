@@ -60,8 +60,6 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand --help 'Print help information'
         }
         &'oomplay;init;dynamodb'= {
-            cand -P 'P'
-            cand --port 'port'
             cand -f 'file path containing backends'
             cand --file 'file path containing backends'
             cand --version 'Print version information'
@@ -112,8 +110,6 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand --help 'Print help information'
         }
         &'oomplay;clear;dynamodb'= {
-            cand -P 'P'
-            cand --port 'port'
             cand -f 'file path containing backends'
             cand --file 'file path containing backends'
             cand --version 'Print version information'
@@ -164,8 +160,6 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand --help 'Print help information'
         }
         &'oomplay;stop;dynamodb'= {
-            cand -P 'P'
-            cand --port 'port'
             cand -f 'file path containing backends'
             cand --file 'file path containing backends'
             cand --version 'Print version information'

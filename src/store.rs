@@ -9,7 +9,6 @@ pub trait Store {
     fn image(&self) -> String;
     fn port_map(&self) -> Vec<PortMap>;
     fn ping_cmd(&self) -> Vec<String>;
-    fn drop_cmd(&self) -> Vec<String>;
     fn init_cmd(&self) -> Vec<String>;
     fn entry_cmd(&self) -> Option<Vec<String>> {
         None

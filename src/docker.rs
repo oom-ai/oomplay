@@ -15,7 +15,6 @@ where
     async fn create(&self, store: &T) -> Result<()>;
     async fn init(&self, store: &T) -> Result<()>;
     async fn stop(&self, store: &T) -> Result<()>;
-    async fn destory(&self, store: &T) -> Result<()>;
     async fn init_db(&self, store: &T) -> Result<()>;
     async fn check_health(&self, store: &T) -> Result<()>;
 
@@ -34,7 +33,7 @@ where
     T: Store + Sync + ?Sized,
 {
     async fn start(&self, store: &T) -> Result<()> {
-        info!("💫 Starting container '{}' ...", store.name());
+        info!("🚀 Starting container '{}' ...", store.name());
         Ok(self.start_container::<String>(&store.name(), None).await?)
     }
 
@@ -90,7 +89,6 @@ where
                     .and_then(|_| self.wait_ready(store))
                     .and_then(|_| self.init_db(store))
                     .await?;
-                info!("🔰 Store is ready");
             }
         };
         Ok(())
@@ -106,18 +104,18 @@ where
         })
     }
 
-    async fn destory(&self, store: &T) -> Result<()> {
-        info!("🔥 Destroy database ...");
-        exec(self, &store.name(), store.drop_cmd()).await
-    }
-
     async fn init_db(&self, store: &T) -> Result<()> {
-        info!("🌀 Initializing database ...");
-        exec(self, &store.name(), store.init_cmd()).await
+        info!("💫 Initializing database ...");
+        // Sometimes `init_cmd` fails even after `ping_cmd` succeeded so we should retry here
+        while let Err(e) = exec(self, &store.name(), store.init_cmd()).await {
+            debug!("init database failed: {}", e);
+            tokio::time::sleep(Duration::SECOND).await;
+        }
+        Ok(())
     }
 
     async fn check_health(&self, store: &T) -> Result<()> {
-        info!("⚡ Checking health ...");
+        info!("📡 Pinging database ...");
         exec(self, &store.name(), store.ping_cmd()).await
     }
 }

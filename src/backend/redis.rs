@@ -3,11 +3,7 @@ use crate::{
     svec,
 };
 
-pub struct Redis {
-    pub port:     u16,
-    pub password: String,
-    pub database: u32,
-}
+pub struct Redis;
 
 impl Store for Redis {
     fn name(&self) -> String {
@@ -18,24 +14,12 @@ impl Store for Redis {
         "redis:alpine".to_string()
     }
 
-    fn envs(&self) -> Vec<String> {
-        svec![format!("REDISCLI_AUTH={}", self.password)]
-    }
-
     fn port_map(&self) -> Vec<PortMap> {
-        vec![PortMap::Tcp(6379, self.port)]
-    }
-
-    fn entry_cmd(&self) -> Option<Vec<String>> {
-        Some(svec!["redis-server", "--requirepass", self.password])
-    }
-
-    fn drop_cmd(&self) -> Vec<String> {
-        svec!["redis-cli", "-n", self.database, "flushdb"]
+        vec![PortMap::Tcp(6379, 26379)]
     }
 
     fn init_cmd(&self) -> Vec<String> {
-        self.drop_cmd()
+        svec!["redis-cli", "flushdb"]
     }
 
     fn ping_cmd(&self) -> Vec<String> {

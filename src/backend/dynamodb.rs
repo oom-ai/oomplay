@@ -3,9 +3,7 @@ use crate::{
     svec,
 };
 
-pub struct DynamoDB {
-    pub port: u16,
-}
+pub struct DynamoDB;
 
 impl Store for DynamoDB {
     fn name(&self) -> String {
@@ -21,10 +19,10 @@ impl Store for DynamoDB {
     }
 
     fn port_map(&self) -> Vec<PortMap> {
-        vec![PortMap::Tcp(4566, self.port)]
+        vec![PortMap::Tcp(4566, 24566)]
     }
 
-    fn drop_cmd(&self) -> Vec<String> {
+    fn init_cmd(&self) -> Vec<String> {
         svec![
             "bash",
             "-c",
@@ -35,10 +33,6 @@ impl Store for DynamoDB {
                 done
             "#,
         ]
-    }
-
-    fn init_cmd(&self) -> Vec<String> {
-        self.drop_cmd()
     }
 
     fn ping_cmd(&self) -> Vec<String> {

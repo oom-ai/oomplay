@@ -1,19 +1,20 @@
-use std::{fs::File, io::BufReader};
+use crate::{
+    backend::*,
+    cli::{BackendOpt, Database},
+    store::Store,
+};
+use itertools::Itertools;
 
-use crate::cli::{BackendMap, BackendOpt};
-use anyhow::Error;
+type StoreRef<'a> = &'a (dyn Store + Sync);
 
-impl TryFrom<BackendOpt> for BackendMap {
-    type Error = Error;
-
-    fn try_from(opt: BackendOpt) -> Result<Self, Self::Error> {
-        let mut map = match opt.file {
-            Some(file) => serde_yaml::from_reader(BufReader::new(File::open(file)?))?,
-            None => BackendMap::new(),
-        };
-        if let Some(backend) = opt.cli {
-            map.insert(backend.to_string(), backend);
-        }
-        Ok(map)
+impl BackendOpt {
+    pub fn store_iter(&self) -> impl Iterator<Item = StoreRef> {
+        self.database.iter().unique().map(|backend| match backend {
+            Database::Redis => &Redis as StoreRef,
+            Database::Postgres => &Postgres as StoreRef,
+            Database::Mysql => &Mysql as StoreRef,
+            Database::Dynamodb => &DynamoDB as StoreRef,
+            Database::Cassandra => &Cassandra as StoreRef,
+        })
     }
 }

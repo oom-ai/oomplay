@@ -30,282 +30,17 @@ _oomplay() {
         case $line[1] in
             (init)
 _arguments "${_arguments_options[@]}" \
-'-f+[file path containing backends]:FILE: ' \
-'--file=[file path containing backends]:FILE: ' \
 '-h[Print help information]' \
 '--help[Print help information]' \
-":: :_oomplay__init_commands" \
-"*::: :->init" \
+'*::database -- Databases:(redis postgres mysql dynamodb cassandra)' \
 && ret=0
-
-    case $state in
-    (init)
-        words=($line[1] "${words[@]}")
-        (( CURRENT += 1 ))
-        curcontext="${curcontext%:*:*}:oomplay-init-command-$line[1]:"
-        case $line[1] in
-            (redis)
-_arguments "${_arguments_options[@]}" \
-'-P+[]:PORT: ' \
-'--port=[]:PORT: ' \
-'-p+[]:PASSWORD: ' \
-'--password=[]:PASSWORD: ' \
-'-d+[]:DATABASE: ' \
-'--database=[]:DATABASE: ' \
-'-f+[file path containing backends]:FILE: ' \
-'--file=[file path containing backends]:FILE: ' \
-'--version[Print version information]' \
-'-h[Print help information]' \
-'--help[Print help information]' \
-&& ret=0
-;;
-(postgres)
-_arguments "${_arguments_options[@]}" \
-'-P+[]:PORT: ' \
-'--port=[]:PORT: ' \
-'-u+[]:USER: ' \
-'--user=[]:USER: ' \
-'-p+[]:PASSWORD: ' \
-'--password=[]:PASSWORD: ' \
-'-d+[]:DATABASE: ' \
-'--database=[]:DATABASE: ' \
-'-f+[file path containing backends]:FILE: ' \
-'--file=[file path containing backends]:FILE: ' \
-'--version[Print version information]' \
-'-h[Print help information]' \
-'--help[Print help information]' \
-&& ret=0
-;;
-(mysql)
-_arguments "${_arguments_options[@]}" \
-'-P+[]:PORT: ' \
-'--port=[]:PORT: ' \
-'-u+[]:USER: ' \
-'--user=[]:USER: ' \
-'-p+[]:PASSWORD: ' \
-'--password=[]:PASSWORD: ' \
-'-d+[]:DATABASE: ' \
-'--database=[]:DATABASE: ' \
-'-f+[file path containing backends]:FILE: ' \
-'--file=[file path containing backends]:FILE: ' \
-'--version[Print version information]' \
-'-h[Print help information]' \
-'--help[Print help information]' \
-&& ret=0
-;;
-(dynamodb)
-_arguments "${_arguments_options[@]}" \
-'-P+[]:PORT: ' \
-'--port=[]:PORT: ' \
-'-f+[file path containing backends]:FILE: ' \
-'--file=[file path containing backends]:FILE: ' \
-'--version[Print version information]' \
-'-h[Print help information]' \
-'--help[Print help information]' \
-&& ret=0
-;;
-(cassandra)
-_arguments "${_arguments_options[@]}" \
-'-P+[]:PORT: ' \
-'--port=[]:PORT: ' \
-'-k+[]:KEYSPACE: ' \
-'--keyspace=[]:KEYSPACE: ' \
-'-f+[file path containing backends]:FILE: ' \
-'--file=[file path containing backends]:FILE: ' \
-'--version[Print version information]' \
-'-h[Print help information]' \
-'--help[Print help information]' \
-&& ret=0
-;;
-        esac
-    ;;
-esac
-;;
-(clear)
-_arguments "${_arguments_options[@]}" \
-'-f+[file path containing backends]:FILE: ' \
-'--file=[file path containing backends]:FILE: ' \
-'-h[Print help information]' \
-'--help[Print help information]' \
-":: :_oomplay__clear_commands" \
-"*::: :->clear" \
-&& ret=0
-
-    case $state in
-    (clear)
-        words=($line[1] "${words[@]}")
-        (( CURRENT += 1 ))
-        curcontext="${curcontext%:*:*}:oomplay-clear-command-$line[1]:"
-        case $line[1] in
-            (redis)
-_arguments "${_arguments_options[@]}" \
-'-P+[]:PORT: ' \
-'--port=[]:PORT: ' \
-'-p+[]:PASSWORD: ' \
-'--password=[]:PASSWORD: ' \
-'-d+[]:DATABASE: ' \
-'--database=[]:DATABASE: ' \
-'-f+[file path containing backends]:FILE: ' \
-'--file=[file path containing backends]:FILE: ' \
-'--version[Print version information]' \
-'-h[Print help information]' \
-'--help[Print help information]' \
-&& ret=0
-;;
-(postgres)
-_arguments "${_arguments_options[@]}" \
-'-P+[]:PORT: ' \
-'--port=[]:PORT: ' \
-'-u+[]:USER: ' \
-'--user=[]:USER: ' \
-'-p+[]:PASSWORD: ' \
-'--password=[]:PASSWORD: ' \
-'-d+[]:DATABASE: ' \
-'--database=[]:DATABASE: ' \
-'-f+[file path containing backends]:FILE: ' \
-'--file=[file path containing backends]:FILE: ' \
-'--version[Print version information]' \
-'-h[Print help information]' \
-'--help[Print help information]' \
-&& ret=0
-;;
-(mysql)
-_arguments "${_arguments_options[@]}" \
-'-P+[]:PORT: ' \
-'--port=[]:PORT: ' \
-'-u+[]:USER: ' \
-'--user=[]:USER: ' \
-'-p+[]:PASSWORD: ' \
-'--password=[]:PASSWORD: ' \
-'-d+[]:DATABASE: ' \
-'--database=[]:DATABASE: ' \
-'-f+[file path containing backends]:FILE: ' \
-'--file=[file path containing backends]:FILE: ' \
-'--version[Print version information]' \
-'-h[Print help information]' \
-'--help[Print help information]' \
-&& ret=0
-;;
-(dynamodb)
-_arguments "${_arguments_options[@]}" \
-'-P+[]:PORT: ' \
-'--port=[]:PORT: ' \
-'-f+[file path containing backends]:FILE: ' \
-'--file=[file path containing backends]:FILE: ' \
-'--version[Print version information]' \
-'-h[Print help information]' \
-'--help[Print help information]' \
-&& ret=0
-;;
-(cassandra)
-_arguments "${_arguments_options[@]}" \
-'-P+[]:PORT: ' \
-'--port=[]:PORT: ' \
-'-k+[]:KEYSPACE: ' \
-'--keyspace=[]:KEYSPACE: ' \
-'-f+[file path containing backends]:FILE: ' \
-'--file=[file path containing backends]:FILE: ' \
-'--version[Print version information]' \
-'-h[Print help information]' \
-'--help[Print help information]' \
-&& ret=0
-;;
-        esac
-    ;;
-esac
 ;;
 (stop)
 _arguments "${_arguments_options[@]}" \
-'-f+[file path containing backends]:FILE: ' \
-'--file=[file path containing backends]:FILE: ' \
 '-h[Print help information]' \
 '--help[Print help information]' \
-":: :_oomplay__stop_commands" \
-"*::: :->stop" \
+'*::database -- Databases:(redis postgres mysql dynamodb cassandra)' \
 && ret=0
-
-    case $state in
-    (stop)
-        words=($line[1] "${words[@]}")
-        (( CURRENT += 1 ))
-        curcontext="${curcontext%:*:*}:oomplay-stop-command-$line[1]:"
-        case $line[1] in
-            (redis)
-_arguments "${_arguments_options[@]}" \
-'-P+[]:PORT: ' \
-'--port=[]:PORT: ' \
-'-p+[]:PASSWORD: ' \
-'--password=[]:PASSWORD: ' \
-'-d+[]:DATABASE: ' \
-'--database=[]:DATABASE: ' \
-'-f+[file path containing backends]:FILE: ' \
-'--file=[file path containing backends]:FILE: ' \
-'--version[Print version information]' \
-'-h[Print help information]' \
-'--help[Print help information]' \
-&& ret=0
-;;
-(postgres)
-_arguments "${_arguments_options[@]}" \
-'-P+[]:PORT: ' \
-'--port=[]:PORT: ' \
-'-u+[]:USER: ' \
-'--user=[]:USER: ' \
-'-p+[]:PASSWORD: ' \
-'--password=[]:PASSWORD: ' \
-'-d+[]:DATABASE: ' \
-'--database=[]:DATABASE: ' \
-'-f+[file path containing backends]:FILE: ' \
-'--file=[file path containing backends]:FILE: ' \
-'--version[Print version information]' \
-'-h[Print help information]' \
-'--help[Print help information]' \
-&& ret=0
-;;
-(mysql)
-_arguments "${_arguments_options[@]}" \
-'-P+[]:PORT: ' \
-'--port=[]:PORT: ' \
-'-u+[]:USER: ' \
-'--user=[]:USER: ' \
-'-p+[]:PASSWORD: ' \
-'--password=[]:PASSWORD: ' \
-'-d+[]:DATABASE: ' \
-'--database=[]:DATABASE: ' \
-'-f+[file path containing backends]:FILE: ' \
-'--file=[file path containing backends]:FILE: ' \
-'--version[Print version information]' \
-'-h[Print help information]' \
-'--help[Print help information]' \
-&& ret=0
-;;
-(dynamodb)
-_arguments "${_arguments_options[@]}" \
-'-P+[]:PORT: ' \
-'--port=[]:PORT: ' \
-'-f+[file path containing backends]:FILE: ' \
-'--file=[file path containing backends]:FILE: ' \
-'--version[Print version information]' \
-'-h[Print help information]' \
-'--help[Print help information]' \
-&& ret=0
-;;
-(cassandra)
-_arguments "${_arguments_options[@]}" \
-'-P+[]:PORT: ' \
-'--port=[]:PORT: ' \
-'-k+[]:KEYSPACE: ' \
-'--keyspace=[]:KEYSPACE: ' \
-'-f+[file path containing backends]:FILE: ' \
-'--file=[file path containing backends]:FILE: ' \
-'--version[Print version information]' \
-'-h[Print help information]' \
-'--help[Print help information]' \
-&& ret=0
-;;
-        esac
-    ;;
-esac
 ;;
 (completion)
 _arguments "${_arguments_options[@]}" \
@@ -323,123 +58,24 @@ esac
 _oomplay_commands() {
     local commands; commands=(
 'init:Initialize playgrounds' \
-'clear:Clean up playgrounds' \
 'stop:Stop playgrounds' \
 'completion:Output shell completion code' \
     )
     _describe -t commands 'oomplay commands' commands "$@"
-}
-(( $+functions[_oomplay__clear__cassandra_commands] )) ||
-_oomplay__clear__cassandra_commands() {
-    local commands; commands=()
-    _describe -t commands 'oomplay clear cassandra commands' commands "$@"
-}
-(( $+functions[_oomplay__init__cassandra_commands] )) ||
-_oomplay__init__cassandra_commands() {
-    local commands; commands=()
-    _describe -t commands 'oomplay init cassandra commands' commands "$@"
-}
-(( $+functions[_oomplay__stop__cassandra_commands] )) ||
-_oomplay__stop__cassandra_commands() {
-    local commands; commands=()
-    _describe -t commands 'oomplay stop cassandra commands' commands "$@"
-}
-(( $+functions[_oomplay__clear_commands] )) ||
-_oomplay__clear_commands() {
-    local commands; commands=(
-'redis:Redis playground' \
-'postgres:Postgres playground' \
-'mysql:MySQL playground' \
-'dynamodb:DynamoDB playground' \
-'cassandra:Cassandra' \
-    )
-    _describe -t commands 'oomplay clear commands' commands "$@"
 }
 (( $+functions[_oomplay__completion_commands] )) ||
 _oomplay__completion_commands() {
     local commands; commands=()
     _describe -t commands 'oomplay completion commands' commands "$@"
 }
-(( $+functions[_oomplay__clear__dynamodb_commands] )) ||
-_oomplay__clear__dynamodb_commands() {
-    local commands; commands=()
-    _describe -t commands 'oomplay clear dynamodb commands' commands "$@"
-}
-(( $+functions[_oomplay__init__dynamodb_commands] )) ||
-_oomplay__init__dynamodb_commands() {
-    local commands; commands=()
-    _describe -t commands 'oomplay init dynamodb commands' commands "$@"
-}
-(( $+functions[_oomplay__stop__dynamodb_commands] )) ||
-_oomplay__stop__dynamodb_commands() {
-    local commands; commands=()
-    _describe -t commands 'oomplay stop dynamodb commands' commands "$@"
-}
 (( $+functions[_oomplay__init_commands] )) ||
 _oomplay__init_commands() {
-    local commands; commands=(
-'redis:Redis playground' \
-'postgres:Postgres playground' \
-'mysql:MySQL playground' \
-'dynamodb:DynamoDB playground' \
-'cassandra:Cassandra' \
-    )
+    local commands; commands=()
     _describe -t commands 'oomplay init commands' commands "$@"
-}
-(( $+functions[_oomplay__clear__mysql_commands] )) ||
-_oomplay__clear__mysql_commands() {
-    local commands; commands=()
-    _describe -t commands 'oomplay clear mysql commands' commands "$@"
-}
-(( $+functions[_oomplay__init__mysql_commands] )) ||
-_oomplay__init__mysql_commands() {
-    local commands; commands=()
-    _describe -t commands 'oomplay init mysql commands' commands "$@"
-}
-(( $+functions[_oomplay__stop__mysql_commands] )) ||
-_oomplay__stop__mysql_commands() {
-    local commands; commands=()
-    _describe -t commands 'oomplay stop mysql commands' commands "$@"
-}
-(( $+functions[_oomplay__clear__postgres_commands] )) ||
-_oomplay__clear__postgres_commands() {
-    local commands; commands=()
-    _describe -t commands 'oomplay clear postgres commands' commands "$@"
-}
-(( $+functions[_oomplay__init__postgres_commands] )) ||
-_oomplay__init__postgres_commands() {
-    local commands; commands=()
-    _describe -t commands 'oomplay init postgres commands' commands "$@"
-}
-(( $+functions[_oomplay__stop__postgres_commands] )) ||
-_oomplay__stop__postgres_commands() {
-    local commands; commands=()
-    _describe -t commands 'oomplay stop postgres commands' commands "$@"
-}
-(( $+functions[_oomplay__clear__redis_commands] )) ||
-_oomplay__clear__redis_commands() {
-    local commands; commands=()
-    _describe -t commands 'oomplay clear redis commands' commands "$@"
-}
-(( $+functions[_oomplay__init__redis_commands] )) ||
-_oomplay__init__redis_commands() {
-    local commands; commands=()
-    _describe -t commands 'oomplay init redis commands' commands "$@"
-}
-(( $+functions[_oomplay__stop__redis_commands] )) ||
-_oomplay__stop__redis_commands() {
-    local commands; commands=()
-    _describe -t commands 'oomplay stop redis commands' commands "$@"
 }
 (( $+functions[_oomplay__stop_commands] )) ||
 _oomplay__stop_commands() {
-    local commands; commands=(
-'redis:Redis playground' \
-'postgres:Postgres playground' \
-'mysql:MySQL playground' \
-'dynamodb:DynamoDB playground' \
-'cassandra:Cassandra' \
-    )
+    local commands; commands=()
     _describe -t commands 'oomplay stop commands' commands "$@"
 }
 

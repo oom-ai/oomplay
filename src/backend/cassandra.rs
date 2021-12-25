@@ -3,10 +3,7 @@ use crate::{
     svec,
 };
 
-pub struct Cassandra {
-    pub port:     u16,
-    pub keyspace: String,
-}
+pub struct Cassandra;
 
 impl Store for Cassandra {
     fn name(&self) -> String {
@@ -18,27 +15,20 @@ impl Store for Cassandra {
     }
 
     fn port_map(&self) -> Vec<PortMap> {
-        vec![PortMap::Tcp(9042, self.port)]
-    }
-
-    fn drop_cmd(&self) -> Vec<String> {
-        svec!["cqlsh", "-e", format!("DROP KEYSPACE IF EXISTS {}", self.keyspace)]
+        vec![PortMap::Tcp(9042, 29042)]
     }
 
     fn init_cmd(&self) -> Vec<String> {
         svec![
             "cqlsh",
             "-e",
-            format!(
-                r#"
-                    DROP KEYSPACE IF EXISTS {keyspace};
-                    CREATE KEYSPACE IF NOT EXISTS {keyspace} WITH replication = {{
-                        'class' : 'SimpleStrategy',
-                        'replication_factor' : 1
-                    }}
-                "#,
-                keyspace = self.keyspace,
-            )
+            r#"
+                DROP KEYSPACE IF EXISTS oomplay;
+                CREATE KEYSPACE IF NOT EXISTS oomplay WITH replication = {
+                    'class': 'SimpleStrategy',
+                    'replication_factor': 1
+                }
+            "#,
         ]
     }
 

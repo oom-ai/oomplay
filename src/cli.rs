@@ -1,9 +1,6 @@
-use std::{collections::HashMap, path::PathBuf};
-
 use clap::{AppSettings, Args, Parser};
 use clap_generate::Shell;
-use serde::{Deserialize, Serialize};
-use strum::Display;
+use strum::{Display, EnumString, EnumVariantNames, VariantNames};
 
 #[derive(Parser)]
 #[clap(about, version)]
@@ -12,12 +9,6 @@ use strum::Display;
 pub enum App {
     /// Initialize playgrounds
     Init {
-        #[clap(flatten)]
-        backends: BackendOpt,
-    },
-
-    /// Clean up playgrounds
-    Clear {
         #[clap(flatten)]
         backends: BackendOpt,
     },
@@ -38,75 +29,17 @@ pub enum App {
 
 #[derive(Debug, Args)]
 pub struct BackendOpt {
-    /// file path containing backends
-    #[clap(short, long, global = true)]
-    pub file: Option<PathBuf>,
-
-    /// Backend specified by cli
-    #[clap(subcommand)]
-    pub cli: Option<Backend>,
+    /// Databases
+    #[clap(possible_values = Database::VARIANTS, required = true)]
+    pub database: Vec<Database>,
 }
 
-#[derive(Debug, Serialize, Deserialize, Display, Parser)]
+#[derive(Debug, Display, EnumString, EnumVariantNames, Parser, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[strum(serialize_all = "snake_case")]
-#[serde(rename_all(deserialize = "snake_case"))]
-pub enum Backend {
-    /// Redis playground
-    Redis {
-        #[clap(short = 'P', long, default_value = "6379")]
-        port: u16,
-
-        #[clap(short, long, default_value = "test")]
-        password: String,
-
-        #[clap(short, long, default_value = "0")]
-        database: u32,
-    },
-
-    /// Postgres playground
-    Postgres {
-        #[clap(short = 'P', long, default_value = "5432")]
-        port: u16,
-
-        #[clap(short, long, default_value = "test")]
-        user: String,
-
-        #[clap(short, long, default_value = "test")]
-        password: String,
-
-        #[clap(short, long, default_value = "test")]
-        database: String,
-    },
-
-    /// MySQL playground
-    Mysql {
-        #[clap(short = 'P', long, default_value = "3306")]
-        port: u16,
-
-        #[clap(short, long, default_value = "test")]
-        user: String,
-
-        #[clap(short, long, default_value = "test")]
-        password: String,
-
-        #[clap(short, long, default_value = "test")]
-        database: String,
-    },
-
-    /// DynamoDB playground
-    Dynamodb {
-        #[clap(short = 'P', long, default_value = "4566")]
-        port: u16,
-    },
-
-    /// Cassandra
-    Cassandra {
-        #[clap(short = 'P', long, default_value = "9042")]
-        port: u16,
-
-        #[clap(short, long, default_value = "test")]
-        keyspace: String,
-    },
+pub enum Database {
+    Redis,
+    Postgres,
+    Mysql,
+    Dynamodb,
+    Cassandra,
 }
-
-pub type BackendMap = HashMap<String, Backend>;

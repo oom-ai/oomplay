@@ -1,8 +1,8 @@
-pub mod cassandra;
-pub mod dynamodb;
-pub mod mysql;
-pub mod postgres;
-pub mod redis;
+mod cassandra;
+mod dynamodb;
+mod mysql;
+mod postgres;
+mod redis;
 
 pub use cassandra::Cassandra;
 pub use dynamodb::DynamoDB;

@@ -16,9 +16,9 @@ impl Store for Postgres {
 
     fn envs(&self) -> Vec<String> {
         svec![
-            format!("POSTGRES_PASSWORD={}", "postgres"),
-            format!("POSTGRES_USER={}", "postgres"),
-            format!("PGUSER={}", "postgres"),
+            "POSTGRES_PASSWORD=postgres",
+            "POSTGRES_USER=postgres",
+            "PGUSER=postgres",
         ]
     }
 
@@ -34,18 +34,13 @@ impl Store for Postgres {
         svec![
             "sh",
             "-c",
-            format!(
-                r#"
-                    createdb {user};
-                    dropdb {database};
-                    createdb {database};
-                    psql -tc '\du {user}' | grep {user} && exit
-                    psql -c "CREATE ROLE {user} WITH LOGIN SUPERUSER PASSWORD '{password}'";
-                "#,
-                user = "oomplay",
-                password = "oomplay",
-                database = "oomplay",
-            ),
+            r#"
+                createdb oomplay;
+                dropdb oomplay;
+                createdb oomplay;
+                psql -tc '\du oomplay' | grep oomplay && exit
+                psql -c "CREATE ROLE oomplay WITH LOGIN SUPERUSER PASSWORD 'oomplay'";
+            "#,
         ]
     }
 

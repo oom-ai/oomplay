@@ -30,17 +30,12 @@ impl Store for Mysql {
         svec![
             "mysql",
             "-e",
-            format!(
-                r#"
-                    CREATE USER IF NOT EXISTS '{user}'@'%' IDENTIFIED BY '{password}';
-                    GRANT ALL PRIVILEGES ON *.* TO '{user}'@'%' WITH GRANT OPTION;
-                    DROP DATABASE IF EXISTS {database};
-                    CREATE DATABASE {database};
-                "#,
-                user = "oomplay",
-                password = "oomplay",
-                database = "oomplay",
-            ),
+            r#"
+                CREATE USER IF NOT EXISTS 'oomplay'@'%' IDENTIFIED BY 'oomplay';
+                GRANT ALL PRIVILEGES ON *.* TO 'oomplay'@'%' WITH GRANT OPTION;
+                DROP DATABASE IF EXISTS oomplay;
+                CREATE DATABASE oomplay;
+            "#,
         ]
     }
 

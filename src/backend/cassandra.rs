@@ -26,16 +26,13 @@ impl Store for Cassandra {
         svec![
             "cqlsh",
             "-e",
-            format!(
-                r#"
-                    DROP KEYSPACE IF EXISTS {keyspace};
-                    CREATE KEYSPACE IF NOT EXISTS {keyspace} WITH replication = {{
-                        'class': 'SimpleStrategy',
-                        'replication_factor': 1
-                    }}
-                "#,
-                keyspace = "oomplay",
-            )
+            r#"
+                DROP KEYSPACE IF EXISTS oomplay;
+                CREATE KEYSPACE IF NOT EXISTS oomplay WITH replication = {
+                    'class': 'SimpleStrategy',
+                    'replication_factor': 1
+                }
+            "#,
         ]
     }
 

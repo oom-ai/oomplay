@@ -15,7 +15,7 @@ impl Store for Cassandra {
     }
 
     fn port_map(&self) -> Vec<PortMap> {
-        vec![PortMap::Tcp(29042, 9042)]
+        vec![PortMap::Tcp(9042, 29042)]
     }
 
     fn init_cmd(&self) -> Vec<String> {

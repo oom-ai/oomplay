@@ -19,7 +19,7 @@ impl Store for DynamoDB {
     }
 
     fn port_map(&self) -> Vec<PortMap> {
-        vec![PortMap::Tcp(24566, 4566)]
+        vec![PortMap::Tcp(4566, 24566)]
     }
 
     fn init_cmd(&self) -> Vec<String> {

@@ -15,7 +15,7 @@ impl Store for Redis {
     }
 
     fn port_map(&self) -> Vec<PortMap> {
-        vec![PortMap::Tcp(26379, 6379)]
+        vec![PortMap::Tcp(6379, 26379)]
     }
 
     fn init_cmd(&self) -> Vec<String> {

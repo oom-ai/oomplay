@@ -19,7 +19,7 @@ impl Store for Mysql {
     }
 
     fn port_map(&self) -> Vec<PortMap> {
-        vec![PortMap::Tcp(23306, 3306)]
+        vec![PortMap::Tcp(3306, 23306)]
     }
 
     fn init_cmd(&self) -> Vec<String> {
@@ -36,7 +36,6 @@ impl Store for Mysql {
     }
 
     fn ping_cmd(&self) -> Vec<String> {
-        // `init_cmd` may fail even `ping` or `select 1` succeeded,
-        svec!["mysql", "-e", "show databases"]
+        svec!["mysqladmin", "ping"]
     }
 }

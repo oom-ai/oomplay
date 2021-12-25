@@ -33,7 +33,7 @@ where
     T: Store + Sync + ?Sized,
 {
     async fn start(&self, store: &T) -> Result<()> {
-        info!("💫 Starting container '{}' ...", store.name());
+        info!("🚀 Starting container '{}' ...", store.name());
         Ok(self.start_container::<String>(&store.name(), None).await?)
     }
 
@@ -105,12 +105,17 @@ where
     }
 
     async fn init_db(&self, store: &T) -> Result<()> {
-        info!("🌀 Initializing database ...");
-        exec(self, &store.name(), store.init_cmd()).await
+        info!("💫 Initializing database ...");
+        // Sometimes `init_cmd` fails even after `ping_cmd` succeeded so we should retry here
+        while let Err(e) = exec(self, &store.name(), store.init_cmd()).await {
+            debug!("init database failed: {}", e);
+            tokio::time::sleep(Duration::SECOND).await;
+        }
+        Ok(())
     }
 
     async fn check_health(&self, store: &T) -> Result<()> {
-        info!("⚡ Checking health ...");
+        info!("📡 Pinging database ...");
         exec(self, &store.name(), store.ping_cmd()).await
     }
 }

@@ -23,7 +23,7 @@ impl Store for Postgres {
     }
 
     fn port_map(&self) -> Vec<PortMap> {
-        vec![PortMap::Tcp(25432, 5432)]
+        vec![PortMap::Tcp(5432, 25432)]
     }
 
     fn init_cmd(&self) -> Vec<String> {
@@ -31,9 +31,8 @@ impl Store for Postgres {
             "sh",
             "-c",
             r#"
-                createdb oomplay;
-                dropdb oomplay;
-                createdb oomplay;
+                psql -c 'drop database oomplay';
+                psql -c 'create database oomplay';
                 psql -tc '\du oomplay' | grep oomplay && exit
                 psql -c "CREATE ROLE oomplay WITH LOGIN SUPERUSER PASSWORD 'oomplay'";
             "#,
@@ -41,7 +40,6 @@ impl Store for Postgres {
     }
 
     fn ping_cmd(&self) -> Vec<String> {
-        // `init_cmd` may fail even `pg_isready`succeeded
-        svec!["psql", "-c", "SELECT 1"]
+        svec!["pg_isready"]
     }
 }

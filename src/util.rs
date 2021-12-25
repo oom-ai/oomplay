@@ -3,12 +3,13 @@ use crate::{
     cli::{Backend, BackendOpt},
     store::Store,
 };
+use itertools::Itertools;
 
 type StoreRef<'a> = &'a (dyn Store + Sync);
 
 impl BackendOpt {
     pub fn store_iter(&self) -> impl Iterator<Item = StoreRef> {
-        self.backends.iter().map(|backend| match backend {
+        self.backends.iter().unique().map(|backend| match backend {
             Backend::Redis => &Redis as StoreRef,
             Backend::Postgres => &Postgres as StoreRef,
             Backend::Mysql => &Mysql as StoreRef,

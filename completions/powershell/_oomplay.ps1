@@ -25,17 +25,11 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('-V', 'V', [CompletionResultType]::ParameterName, 'Print version information')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
             [CompletionResult]::new('init', 'init', [CompletionResultType]::ParameterValue, 'Initialize playgrounds')
-            [CompletionResult]::new('clear', 'clear', [CompletionResultType]::ParameterValue, 'Clean up playgrounds')
             [CompletionResult]::new('stop', 'stop', [CompletionResultType]::ParameterValue, 'Stop playgrounds')
             [CompletionResult]::new('completion', 'completion', [CompletionResultType]::ParameterValue, 'Output shell completion code')
             break
         }
         'oomplay;init' {
-            [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
-            [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
-            break
-        }
-        'oomplay;clear' {
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
             break

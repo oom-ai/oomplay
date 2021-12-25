@@ -18,10 +18,6 @@ impl Store for Cassandra {
         vec![PortMap::Tcp(29042, 9042)]
     }
 
-    fn drop_cmd(&self) -> Vec<String> {
-        svec!["cqlsh", "-e", "DROP KEYSPACE IF EXISTS oomplay"]
-    }
-
     fn init_cmd(&self) -> Vec<String> {
         svec![
             "cqlsh",

@@ -26,10 +26,6 @@ impl Store for Postgres {
         vec![PortMap::Tcp(25432, 5432)]
     }
 
-    fn drop_cmd(&self) -> Vec<String> {
-        svec!["psql", "-c", "DROP DATABASE IF EXISTS oomplay"]
-    }
-
     fn init_cmd(&self) -> Vec<String> {
         svec![
             "sh",

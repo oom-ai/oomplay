@@ -35,13 +35,6 @@ _arguments "${_arguments_options[@]}" \
 '*::database -- Databases:(redis postgres mysql dynamodb cassandra)' \
 && ret=0
 ;;
-(clear)
-_arguments "${_arguments_options[@]}" \
-'-h[Print help information]' \
-'--help[Print help information]' \
-'*::database -- Databases:(redis postgres mysql dynamodb cassandra)' \
-&& ret=0
-;;
 (stop)
 _arguments "${_arguments_options[@]}" \
 '-h[Print help information]' \
@@ -65,16 +58,10 @@ esac
 _oomplay_commands() {
     local commands; commands=(
 'init:Initialize playgrounds' \
-'clear:Clean up playgrounds' \
 'stop:Stop playgrounds' \
 'completion:Output shell completion code' \
     )
     _describe -t commands 'oomplay commands' commands "$@"
-}
-(( $+functions[_oomplay__clear_commands] )) ||
-_oomplay__clear_commands() {
-    local commands; commands=()
-    _describe -t commands 'oomplay clear commands' commands "$@"
 }
 (( $+functions[_oomplay__completion_commands] )) ||
 _oomplay__completion_commands() {

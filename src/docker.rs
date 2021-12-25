@@ -15,7 +15,6 @@ where
     async fn create(&self, store: &T) -> Result<()>;
     async fn init(&self, store: &T) -> Result<()>;
     async fn stop(&self, store: &T) -> Result<()>;
-    async fn destory(&self, store: &T) -> Result<()>;
     async fn init_db(&self, store: &T) -> Result<()>;
     async fn check_health(&self, store: &T) -> Result<()>;
 
@@ -104,11 +103,6 @@ where
             }
             _ => Err(e.into()),
         })
-    }
-
-    async fn destory(&self, store: &T) -> Result<()> {
-        info!("🔥 Destroy database ...");
-        exec(self, &store.name(), store.drop_cmd()).await
     }
 
     async fn init_db(&self, store: &T) -> Result<()> {

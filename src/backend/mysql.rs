@@ -22,10 +22,6 @@ impl Store for Mysql {
         vec![PortMap::Tcp(23306, 3306)]
     }
 
-    fn drop_cmd(&self) -> Vec<String> {
-        svec!["mysql", "-e", "DROP DATABASE IF EXISTS oomplay"]
-    }
-
     fn init_cmd(&self) -> Vec<String> {
         svec![
             "mysql",

@@ -13,12 +13,6 @@ pub enum App {
         backends: BackendOpt,
     },
 
-    /// Clean up playgrounds
-    Clear {
-        #[clap(flatten)]
-        backends: BackendOpt,
-    },
-
     /// Stop playgrounds
     Stop {
         #[clap(flatten)]

@@ -22,7 +22,7 @@ impl Store for DynamoDB {
         vec![PortMap::Tcp(24566, 4566)]
     }
 
-    fn drop_cmd(&self) -> Vec<String> {
+    fn init_cmd(&self) -> Vec<String> {
         svec![
             "bash",
             "-c",
@@ -33,10 +33,6 @@ impl Store for DynamoDB {
                 done
             "#,
         ]
-    }
-
-    fn init_cmd(&self) -> Vec<String> {
-        self.drop_cmd()
     }
 
     fn ping_cmd(&self) -> Vec<String> {

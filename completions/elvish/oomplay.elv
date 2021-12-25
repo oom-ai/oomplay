@@ -23,15 +23,10 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand -V 'Print version information'
             cand --version 'Print version information'
             cand init 'Initialize playgrounds'
-            cand clear 'Clean up playgrounds'
             cand stop 'Stop playgrounds'
             cand completion 'Output shell completion code'
         }
         &'oomplay;init'= {
-            cand -h 'Print help information'
-            cand --help 'Print help information'
-        }
-        &'oomplay;clear'= {
             cand -h 'Print help information'
             cand --help 'Print help information'
         }

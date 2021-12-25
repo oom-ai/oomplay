@@ -75,10 +75,6 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             break
         }
         'oomplay;init;cassandra' {
-            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
-            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
-            [CompletionResult]::new('-k', 'k', [CompletionResultType]::ParameterName, 'k')
-            [CompletionResult]::new('--keyspace', 'keyspace', [CompletionResultType]::ParameterName, 'keyspace')
             [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
@@ -131,10 +127,6 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             break
         }
         'oomplay;clear;cassandra' {
-            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
-            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
-            [CompletionResult]::new('-k', 'k', [CompletionResultType]::ParameterName, 'k')
-            [CompletionResult]::new('--keyspace', 'keyspace', [CompletionResultType]::ParameterName, 'keyspace')
             [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
@@ -187,10 +179,6 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             break
         }
         'oomplay;stop;cassandra' {
-            [CompletionResult]::new('-P', 'P', [CompletionResultType]::ParameterName, 'P')
-            [CompletionResult]::new('--port', 'port', [CompletionResultType]::ParameterName, 'port')
-            [CompletionResult]::new('-k', 'k', [CompletionResultType]::ParameterName, 'k')
-            [CompletionResult]::new('--keyspace', 'keyspace', [CompletionResultType]::ParameterName, 'keyspace')
             [CompletionResult]::new('-f', 'f', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--file', 'file', [CompletionResultType]::ParameterName, 'file path containing backends')
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')

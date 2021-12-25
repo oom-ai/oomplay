@@ -64,13 +64,7 @@ pub enum Backend {
     Dynamodb,
 
     /// Cassandra
-    Cassandra {
-        #[clap(short = 'P', long, default_value = "9042")]
-        port: u16,
-
-        #[clap(short, long, default_value = "test")]
-        keyspace: String,
-    },
+    Cassandra,
 }
 
 pub type BackendMap = HashMap<String, Backend>;

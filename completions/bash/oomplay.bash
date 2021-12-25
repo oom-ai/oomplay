@@ -82,28 +82,12 @@ _oomplay() {
             return 0
             ;;
         oomplay__clear__cassandra)
-            opts="-P -k -f -h --version --port --keyspace --file --help"
+            opts="-f -h --version --file --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
             fi
             case "${prev}" in
-                --port)
-                    COMPREPLY=($(compgen -f "${cur}"))
-                    return 0
-                    ;;
-                -P)
-                    COMPREPLY=($(compgen -f "${cur}"))
-                    return 0
-                    ;;
-                --keyspace)
-                    COMPREPLY=($(compgen -f "${cur}"))
-                    return 0
-                    ;;
-                -k)
-                    COMPREPLY=($(compgen -f "${cur}"))
-                    return 0
-                    ;;
                 --file)
                     COMPREPLY=($(compgen -f "${cur}"))
                     return 0
@@ -244,28 +228,12 @@ _oomplay() {
             return 0
             ;;
         oomplay__init__cassandra)
-            opts="-P -k -f -h --version --port --keyspace --file --help"
+            opts="-f -h --version --file --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
             fi
             case "${prev}" in
-                --port)
-                    COMPREPLY=($(compgen -f "${cur}"))
-                    return 0
-                    ;;
-                -P)
-                    COMPREPLY=($(compgen -f "${cur}"))
-                    return 0
-                    ;;
-                --keyspace)
-                    COMPREPLY=($(compgen -f "${cur}"))
-                    return 0
-                    ;;
-                -k)
-                    COMPREPLY=($(compgen -f "${cur}"))
-                    return 0
-                    ;;
                 --file)
                     COMPREPLY=($(compgen -f "${cur}"))
                     return 0
@@ -392,28 +360,12 @@ _oomplay() {
             return 0
             ;;
         oomplay__stop__cassandra)
-            opts="-P -k -f -h --version --port --keyspace --file --help"
+            opts="-f -h --version --file --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 3 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
             fi
             case "${prev}" in
-                --port)
-                    COMPREPLY=($(compgen -f "${cur}"))
-                    return 0
-                    ;;
-                -P)
-                    COMPREPLY=($(compgen -f "${cur}"))
-                    return 0
-                    ;;
-                --keyspace)
-                    COMPREPLY=($(compgen -f "${cur}"))
-                    return 0
-                    ;;
-                -k)
-                    COMPREPLY=($(compgen -f "${cur}"))
-                    return 0
-                    ;;
                 --file)
                     COMPREPLY=($(compgen -f "${cur}"))
                     return 0

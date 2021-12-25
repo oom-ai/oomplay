@@ -54,8 +54,8 @@ async fn try_main() -> Result<()> {
                     Backend::Dynamodb => {
                         docker.init(&DynamoDB).await?;
                     }
-                    Backend::Cassandra { port, keyspace, .. } => {
-                        docker.init(&Cassandra { port, keyspace }).await?;
+                    Backend::Cassandra => {
+                        docker.init(&Cassandra).await?;
                     }
                 }
                 info!("✨ Initialized playground '{name}'");
@@ -78,8 +78,8 @@ async fn try_main() -> Result<()> {
                     Backend::Dynamodb => {
                         docker.destory(&DynamoDB).await?;
                     }
-                    Backend::Cassandra { port, keyspace, .. } => {
-                        docker.destory(&Cassandra { port, keyspace }).await?;
+                    Backend::Cassandra => {
+                        docker.destory(&Cassandra).await?;
                     }
                 }
                 info!("✨ Cleaned up playground '{name}'");
@@ -102,8 +102,8 @@ async fn try_main() -> Result<()> {
                     Backend::Dynamodb => {
                         docker.stop(&DynamoDB).await?;
                     }
-                    Backend::Cassandra { port, keyspace, .. } => {
-                        docker.stop(&Cassandra { port, keyspace }).await?;
+                    Backend::Cassandra => {
+                        docker.stop(&Cassandra).await?;
                     }
                 }
                 info!("🛑 Stopped playground '{name}'");

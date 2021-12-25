@@ -82,10 +82,6 @@ _arguments "${_arguments_options[@]}" \
 ;;
 (cassandra)
 _arguments "${_arguments_options[@]}" \
-'-P+[]:PORT: ' \
-'--port=[]:PORT: ' \
-'-k+[]:KEYSPACE: ' \
-'--keyspace=[]:KEYSPACE: ' \
 '-f+[file path containing backends]:FILE: ' \
 '--file=[file path containing backends]:FILE: ' \
 '--version[Print version information]' \
@@ -151,10 +147,6 @@ _arguments "${_arguments_options[@]}" \
 ;;
 (cassandra)
 _arguments "${_arguments_options[@]}" \
-'-P+[]:PORT: ' \
-'--port=[]:PORT: ' \
-'-k+[]:KEYSPACE: ' \
-'--keyspace=[]:KEYSPACE: ' \
 '-f+[file path containing backends]:FILE: ' \
 '--file=[file path containing backends]:FILE: ' \
 '--version[Print version information]' \
@@ -220,10 +212,6 @@ _arguments "${_arguments_options[@]}" \
 ;;
 (cassandra)
 _arguments "${_arguments_options[@]}" \
-'-P+[]:PORT: ' \
-'--port=[]:PORT: ' \
-'-k+[]:KEYSPACE: ' \
-'--keyspace=[]:KEYSPACE: ' \
 '-f+[file path containing backends]:FILE: ' \
 '--file=[file path containing backends]:FILE: ' \
 '--version[Print version information]' \

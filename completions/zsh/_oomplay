@@ -32,21 +32,21 @@ _oomplay() {
 _arguments "${_arguments_options[@]}" \
 '-h[Print help information]' \
 '--help[Print help information]' \
-'*::backends -- Database backends:(redis postgres mysql dynamodb cassandra)' \
+'*::database -- Databases:(redis postgres mysql dynamodb cassandra)' \
 && ret=0
 ;;
 (clear)
 _arguments "${_arguments_options[@]}" \
 '-h[Print help information]' \
 '--help[Print help information]' \
-'*::backends -- Database backends:(redis postgres mysql dynamodb cassandra)' \
+'*::database -- Databases:(redis postgres mysql dynamodb cassandra)' \
 && ret=0
 ;;
 (stop)
 _arguments "${_arguments_options[@]}" \
 '-h[Print help information]' \
 '--help[Print help information]' \
-'*::backends -- Database backends:(redis postgres mysql dynamodb cassandra)' \
+'*::database -- Databases:(redis postgres mysql dynamodb cassandra)' \
 && ret=0
 ;;
 (completion)

@@ -35,14 +35,14 @@ pub enum App {
 
 #[derive(Debug, Args)]
 pub struct BackendOpt {
-    /// Database backends
-    #[clap(possible_values = Backend::VARIANTS, required = true)]
-    pub backends: Vec<Backend>,
+    /// Databases
+    #[clap(possible_values = Database::VARIANTS, required = true)]
+    pub database: Vec<Database>,
 }
 
 #[derive(Debug, Display, EnumString, EnumVariantNames, Parser, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[strum(serialize_all = "snake_case")]
-pub enum Backend {
+pub enum Database {
     Redis,
     Postgres,
     Mysql,

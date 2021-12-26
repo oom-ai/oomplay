@@ -29,7 +29,7 @@ pub enum App {
     },
 }
 
-#[derive(Debug, Display, EnumString, EnumVariantNames, Parser, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Display, EnumString, EnumVariantNames, Hash, Eq, PartialEq)]
 #[strum(serialize_all = "snake_case")]
 pub enum Database {
     Redis,

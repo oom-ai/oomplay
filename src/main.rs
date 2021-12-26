@@ -17,6 +17,7 @@ use cli::App;
 use colored::Colorize;
 use docker::StoreRuntime;
 use std::io;
+use util::unique_stores;
 
 #[tokio::main]
 async fn main() {
@@ -31,14 +32,14 @@ async fn main() {
 async fn try_main() -> Result<()> {
     let docker = Docker::connect_with_local_defaults()?;
     match App::parse() {
-        App::Init { backends } =>
-            for store in backends.store_iter() {
+        App::Init { database } =>
+            for store in unique_stores(&database) {
                 info!("🎮 Initializing {} ...", store.name().blue().bold());
                 docker.init(store).await?;
                 info!("🟢 {}", "Store is ready.".bold());
             },
-        App::Stop { backends } =>
-            for store in backends.store_iter() {
+        App::Stop { database } =>
+            for store in unique_stores(&database) {
                 info!("🔌 Stopping {} ...", store.name().blue().bold());
                 docker.stop(store).await?;
                 info!("🔴 {}", "Stopped.".bold());

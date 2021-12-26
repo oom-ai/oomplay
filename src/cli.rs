@@ -1,4 +1,4 @@
-use clap::{AppSettings, Args, Parser};
+use clap::{AppSettings, Parser};
 use clap_generate::Shell;
 use strum::{Display, EnumString, EnumVariantNames, VariantNames};
 
@@ -9,14 +9,16 @@ use strum::{Display, EnumString, EnumVariantNames, VariantNames};
 pub enum App {
     /// Initialize playgrounds
     Init {
-        #[clap(flatten)]
-        backends: BackendOpt,
+        /// Databases
+        #[clap(possible_values = Database::VARIANTS, required = true)]
+        database: Vec<Database>,
     },
 
     /// Stop playgrounds
     Stop {
-        #[clap(flatten)]
-        backends: BackendOpt,
+        /// Databases
+        #[clap(possible_values = Database::VARIANTS, default_values = Database::VARIANTS, hide_default_value = true)]
+        database: Vec<Database>,
     },
 
     /// Output shell completion code
@@ -25,13 +27,6 @@ pub enum App {
         #[clap(arg_enum)]
         shell: Shell,
     },
-}
-
-#[derive(Debug, Args)]
-pub struct BackendOpt {
-    /// Databases
-    #[clap(possible_values = Database::VARIANTS, required = true)]
-    pub database: Vec<Database>,
 }
 
 #[derive(Debug, Display, EnumString, EnumVariantNames, Parser, PartialEq, Eq, PartialOrd, Ord, Hash)]

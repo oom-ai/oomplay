@@ -1,6 +1,6 @@
 use anyhow::{anyhow, bail, Result};
 use async_trait::async_trait;
-use bollard::{container, errors::Error::DockerResponseNotFoundError, exec, image, models, Docker};
+use bollard::{container, errors, exec, image, models, Docker};
 use futures::prelude::*;
 use std::time::Duration;
 
@@ -34,7 +34,14 @@ where
 {
     async fn start(&self, store: &T) -> Result<()> {
         info!("🚀 Starting container ...");
-        Ok(self.start_container::<String>(&store.name(), None).await?)
+        match self.start_container::<String>(&store.name(), None).await {
+            Ok(_) => Ok(()),
+            Err(errors::Error::DockerResponseNotModifiedError { .. }) => {
+                debug!("container {} already started", store.name());
+                Ok(())
+            }
+            Err(e) => bail!(e),
+        }
     }
 
     async fn create(&self, store: &T) -> Result<()> {
@@ -65,10 +72,16 @@ where
             }),
             ..Default::default()
         };
+        let options = container::CreateContainerOptions { name: store.name() };
 
-        self.create_container(Some(container::CreateContainerOptions { name: store.name() }), config)
-            .await?;
-        Ok(())
+        match self.create_container(Some(options), config).await {
+            Ok(_) => Ok(()),
+            Err(errors::Error::DockerResponseConflictError { .. }) => {
+                debug!("container {} already exists", store.name());
+                Ok(())
+            }
+            Err(e) => bail!(e),
+        }
     }
 
     async fn init(&self, store: &T) -> Result<()> {
@@ -96,7 +109,7 @@ where
 
     async fn stop(&self, store: &T) -> Result<()> {
         self.stop_container(&store.name(), None).await.or_else(|e| match e {
-            DockerResponseNotFoundError { .. } => {
+            errors::Error::DockerResponseNotFoundError { .. } => {
                 debug!("'{}' already stopped", store.name());
                 Ok(())
             }

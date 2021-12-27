@@ -16,7 +16,8 @@ use clap::{IntoApp, Parser};
 use cli::App;
 use colored::Colorize;
 use docker::StoreRuntime;
-use std::io;
+use fslock::LockFile;
+use std::{env, io};
 use util::unique_stores;
 
 #[tokio::main]
@@ -31,6 +32,15 @@ async fn main() {
 
 async fn try_main() -> Result<()> {
     let docker = Docker::connect_with_local_defaults()?;
+
+    let mut flock = env::temp_dir();
+    flock.push("oomplay");
+    let mut flock = LockFile::open(&flock)?;
+    if !flock.try_lock()? {
+        warn!("⌛ {}", "Waiting for another instance to finished ...".bold());
+        flock.lock()?;
+    }
+
     match App::parse() {
         App::Init { database } =>
             for store in unique_stores(&database) {
@@ -49,5 +59,6 @@ async fn try_main() -> Result<()> {
             clap_generate::generate(shell, app, app.get_name().to_string(), &mut io::stdout())
         }
     }
+    flock.unlock()?;
     Ok(())
 }

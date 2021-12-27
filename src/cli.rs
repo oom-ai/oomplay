@@ -37,4 +37,5 @@ pub enum Database {
     Mysql,
     Dynamodb,
     Cassandra,
+    Tidb,
 }

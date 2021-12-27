@@ -56,7 +56,7 @@ _oomplay() {
             return 0
             ;;
         oomplay__init)
-            opts="-h --help redis postgres mysql dynamodb cassandra"
+            opts="-h --help redis postgres mysql dynamodb cassandra tidb"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -70,7 +70,7 @@ _oomplay() {
             return 0
             ;;
         oomplay__stop)
-            opts="-h --help redis postgres mysql dynamodb cassandra"
+            opts="-h --help redis postgres mysql dynamodb cassandra tidb"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0

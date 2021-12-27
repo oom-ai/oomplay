@@ -3,9 +3,9 @@ use crate::{
     svec,
 };
 
-pub struct Postgres;
+pub struct PostgreSQL;
 
-impl Store for Postgres {
+impl Store for PostgreSQL {
     fn name(&self) -> String {
         "oomplay-postgres".to_string()
     }

@@ -3,39 +3,39 @@ use crate::{
     svec,
 };
 
-pub struct MySQL;
+pub struct TiDB;
 
-impl Store for MySQL {
+impl Store for TiDB {
     fn name(&self) -> String {
-        "oomplay-mysql".to_string()
+        "oomplay-tidb".to_string()
     }
 
     fn image(&self) -> String {
-        "mysql:8.0".to_string()
-    }
-
-    fn envs(&self) -> Vec<String> {
-        svec!["MYSQL_ALLOW_EMPTY_PASSWORD=yes"]
+        "oomai/tiup:5.3.0".to_string()
     }
 
     fn port_map(&self) -> Vec<PortMap> {
-        vec![PortMap::Tcp(3306, 23306)]
+        vec![
+            PortMap::Tcp(4000, 24000), // TiDB
+            PortMap::Tcp(2379, 22379), // PD
+            PortMap::Tcp(9090, 29090), // Prometheus
+            PortMap::Tcp(3000, 23000), // Grafana
+        ]
     }
 
     fn init_cmd(&self) -> Vec<String> {
         svec![
-            "mysql",
-            "-e",
-            r#"
+            "sh",
+            "-c",
+            r#"mysql -h $(hostname -i) -P 4000 -e "
                 CREATE USER IF NOT EXISTS 'oomplay'@'%' IDENTIFIED BY 'oomplay';
                 GRANT ALL PRIVILEGES ON *.* TO 'oomplay'@'%' WITH GRANT OPTION;
                 DROP DATABASE IF EXISTS oomplay;
-                CREATE DATABASE oomplay;
-            "#,
+            ""#
         ]
     }
 
     fn ping_cmd(&self) -> Vec<String> {
-        svec!["mysqladmin", "ping"]
+        svec!["sh", "-c", "mysqladmin -h $(hostname -i) -P 4000 ping"]
     }
 }

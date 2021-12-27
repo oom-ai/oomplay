@@ -3,9 +3,9 @@ use crate::{
     svec,
 };
 
-pub struct Mysql;
+pub struct MySQL;
 
-impl Store for Mysql {
+impl Store for MySQL {
     fn name(&self) -> String {
         "oomplay-mysql".to_string()
     }

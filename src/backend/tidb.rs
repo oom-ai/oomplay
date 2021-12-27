@@ -3,9 +3,9 @@ use crate::{
     svec,
 };
 
-pub struct Tidb;
+pub struct TiDB;
 
-impl Store for Tidb {
+impl Store for TiDB {
     fn name(&self) -> String {
         "oomplay-tidb".to_string()
     }
@@ -23,10 +23,11 @@ impl Store for Tidb {
         ]
     }
 
-    #[rustfmt::skip]
     fn init_cmd(&self) -> Vec<String> {
         svec![
-            "sh", "-c", r#"mysql -h $(hostname -i) -P 4000 -e "
+            "sh",
+            "-c",
+            r#"mysql -h $(hostname -i) -P 4000 -e "
                 CREATE USER IF NOT EXISTS 'oomplay'@'%' IDENTIFIED BY 'oomplay';
                 GRANT ALL PRIVILEGES ON *.* TO 'oomplay'@'%' WITH GRANT OPTION;
                 DROP DATABASE IF EXISTS oomplay;

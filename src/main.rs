@@ -19,6 +19,8 @@ use docker::StoreRuntime;
 use std::io;
 use util::unique_stores;
 
+use crate::util::with_flock;
+
 #[tokio::main]
 async fn main() {
     colog::init();
@@ -30,18 +32,18 @@ async fn main() {
 }
 
 async fn try_main() -> Result<()> {
-    let docker = Docker::connect_with_local_defaults()?;
+    let docker = &Docker::connect_with_local_defaults()?;
     match App::parse() {
         App::Init { database } =>
             for store in unique_stores(&database) {
                 info!("🎮 Initializing {} ...", store.name().blue().bold());
-                docker.init(store).await?;
+                with_flock(&store.name(), async move || docker.init(store).await).await?;
                 info!("🟢 {}", "Store is ready.".bold());
             },
         App::Stop { database } =>
             for store in unique_stores(&database) {
                 info!("🔌 Stopping {} ...", store.name().blue().bold());
-                docker.stop(store).await?;
+                with_flock(&store.name(), async move || docker.stop(store).await).await?;
                 info!("🔴 {}", "Stopped.".bold());
             },
         App::Completion { shell } => {

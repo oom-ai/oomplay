@@ -108,7 +108,8 @@ where
     }
 
     async fn stop(&self, store: &T) -> Result<()> {
-        self.stop_container(&store.name(), None).await.or_else(|e| match e {
+        let opt = Some(container::KillContainerOptions { signal: "SIGKILL" });
+        self.kill_container(&store.name(), opt).await.or_else(|e| match e {
             errors::Error::DockerResponseNotFoundError { .. } => {
                 debug!("'{}' already stopped", store.name());
                 Ok(())

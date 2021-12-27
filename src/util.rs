@@ -15,6 +15,7 @@ pub fn unique_stores(databases: &[Database]) -> impl Iterator<Item = StoreRef> {
         Database::Mysql => &Mysql as StoreRef,
         Database::Dynamodb => &DynamoDB as StoreRef,
         Database::Cassandra => &Cassandra as StoreRef,
+        Database::Tidb => &Tidb as StoreRef,
     })
 }
 

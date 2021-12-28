@@ -32,14 +32,14 @@ _oomplay() {
 _arguments "${_arguments_options[@]}" \
 '-h[Print help information]' \
 '--help[Print help information]' \
-'*::database -- Databases:(redis postgres mysql dynamodb cassandra tidb)' \
+'*::database -- Databases:(redis postgres mysql dynamodb cassandra tidb tikv)' \
 && ret=0
 ;;
 (stop)
 _arguments "${_arguments_options[@]}" \
 '-h[Print help information]' \
 '--help[Print help information]' \
-'*::database -- Databases:(redis postgres mysql dynamodb cassandra tidb)' \
+'*::database -- Databases:(redis postgres mysql dynamodb cassandra tidb tikv)' \
 && ret=0
 ;;
 (completion)

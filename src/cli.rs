@@ -38,4 +38,5 @@ pub enum Database {
     Dynamodb,
     Cassandra,
     Tidb,
+    Tikv,
 }

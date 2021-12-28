@@ -21,6 +21,9 @@ pub enum App {
         database: Vec<Database>,
     },
 
+    /// Check for updates
+    Update,
+
     /// Output shell completion code
     Completion {
         /// Target shell name

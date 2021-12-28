@@ -6,16 +6,19 @@ mod backend;
 mod cli;
 mod docker;
 mod store;
+mod update;
 mod util;
 
 #[macro_use]
 extern crate log;
+use crate::update::update;
 use anyhow::Result;
 use bollard::Docker;
 use clap::{IntoApp, Parser};
 use cli::App;
 use colored::Colorize;
 use docker::StoreRuntime;
+use self_update::Status;
 use std::io;
 use util::unique_stores;
 
@@ -46,6 +49,10 @@ async fn try_main() -> Result<()> {
                 with_flock(&store.name(), async move || docker.stop(store).await).await?;
                 info!("🔴 {}", "Stopped.".bold());
             },
+        App::Update => match update().await? {
+            Status::Updated(v) => info!("🎉 Upgrade to version {v} successfully!"),
+            Status::UpToDate(v) => info!("✨ The current version {v} is up to date."),
+        },
         App::Completion { shell } => {
             let app = &mut App::into_app();
             clap_generate::generate(shell, app, app.get_name().to_string(), &mut io::stdout())

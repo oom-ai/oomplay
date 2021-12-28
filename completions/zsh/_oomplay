@@ -42,6 +42,12 @@ _arguments "${_arguments_options[@]}" \
 '*::database -- Databases:(redis postgres mysql dynamodb cassandra tidb tikv)' \
 && ret=0
 ;;
+(update)
+_arguments "${_arguments_options[@]}" \
+'-h[Print help information]' \
+'--help[Print help information]' \
+&& ret=0
+;;
 (completion)
 _arguments "${_arguments_options[@]}" \
 '-h[Print help information]' \
@@ -59,6 +65,7 @@ _oomplay_commands() {
     local commands; commands=(
 'init:Initialize playgrounds' \
 'stop:Stop playgrounds' \
+'update:Check for updates' \
 'completion:Output shell completion code' \
     )
     _describe -t commands 'oomplay commands' commands "$@"
@@ -77,6 +84,11 @@ _oomplay__init_commands() {
 _oomplay__stop_commands() {
     local commands; commands=()
     _describe -t commands 'oomplay stop commands' commands "$@"
+}
+(( $+functions[_oomplay__update_commands] )) ||
+_oomplay__update_commands() {
+    local commands; commands=()
+    _describe -t commands 'oomplay update commands' commands "$@"
 }
 
 _oomplay "$@"

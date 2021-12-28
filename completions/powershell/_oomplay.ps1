@@ -26,7 +26,7 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             [CompletionResult]::new('--version', 'version', [CompletionResultType]::ParameterName, 'Print version information')
             [CompletionResult]::new('init', 'init', [CompletionResultType]::ParameterValue, 'Initialize playgrounds')
             [CompletionResult]::new('stop', 'stop', [CompletionResultType]::ParameterValue, 'Stop playgrounds')
-            [CompletionResult]::new('list', 'list', [CompletionResultType]::ParameterValue, 'List supported backends')
+            [CompletionResult]::new('list', 'list', [CompletionResultType]::ParameterValue, 'List supported playgrounds')
             [CompletionResult]::new('completion', 'completion', [CompletionResultType]::ParameterValue, 'Output shell completion code')
             break
         }

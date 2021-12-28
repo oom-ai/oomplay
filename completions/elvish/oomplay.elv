@@ -24,7 +24,7 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand --version 'Print version information'
             cand init 'Initialize playgrounds'
             cand stop 'Stop playgrounds'
-            cand list 'List supported backends'
+            cand list 'List supported playgrounds'
             cand completion 'Output shell completion code'
         }
         &'oomplay;init'= {

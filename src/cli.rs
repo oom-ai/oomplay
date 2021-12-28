@@ -21,7 +21,7 @@ pub enum App {
         database: Vec<Database>,
     },
 
-    /// List supported backends
+    /// List supported playgrounds
     List,
 
     /// Output shell completion code

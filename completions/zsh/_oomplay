@@ -65,7 +65,7 @@ _oomplay_commands() {
     local commands; commands=(
 'init:Initialize playgrounds' \
 'stop:Stop playgrounds' \
-'list:List supported backends' \
+'list:List supported playgrounds' \
 'completion:Output shell completion code' \
     )
     _describe -t commands 'oomplay commands' commands "$@"

@@ -15,21 +15,17 @@ impl Store for TiDB {
     }
 
     fn port_map(&self) -> Vec<PortMap> {
-        vec![
-            PortMap::Tcp(4000, 24000), // TiDB
-            PortMap::Tcp(2379, 22379), // PD
-        ]
+        vec![PortMap::Tcp(4000, 24000)]
     }
 
-    #[rustfmt::skip]
     fn entry_cmd(&self) -> Option<Vec<String>> {
         Some(svec![
             "tiup",
             "playground",
             "--host=0.0.0.0",
             "--without-monitor",
-            "--tiflash", "0",
-            "--ticdc", "0",
+            "--tiflash=0",
+            "--ticdc=0",
         ])
     }
 
@@ -37,16 +33,18 @@ impl Store for TiDB {
         svec![
             "sh",
             "-c",
-            r#"mysql -h $(hostname -i) -P 4000 -e "
-                CREATE USER IF NOT EXISTS 'oomplay'@'%' IDENTIFIED BY 'oomplay';
-                GRANT ALL PRIVILEGES ON *.* TO 'oomplay'@'%' WITH GRANT OPTION;
-                DROP DATABASE IF EXISTS oomplay;
-                CREATE DATABASE oomplay;
-            ""#
+            r#"
+                mysql -h $HOSTNAME -P 4000 -e "
+                    CREATE USER IF NOT EXISTS 'oomplay'@'%' IDENTIFIED BY 'oomplay';
+                    GRANT ALL PRIVILEGES ON *.* TO 'oomplay'@'%' WITH GRANT OPTION;
+                    DROP DATABASE IF EXISTS oomplay;
+                    CREATE DATABASE oomplay;
+                "
+            "#
         ]
     }
 
     fn ping_cmd(&self) -> Vec<String> {
-        svec!["sh", "-c", "mysqladmin -h $(hostname -i) -P 4000 ping"]
+        svec!["sh", "-c", "mysqladmin -h $HOSTNAME -P 4000 ping"]
     }
 }

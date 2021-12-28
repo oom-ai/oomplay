@@ -41,6 +41,7 @@ impl Store for TiDB {
                 CREATE USER IF NOT EXISTS 'oomplay'@'%' IDENTIFIED BY 'oomplay';
                 GRANT ALL PRIVILEGES ON *.* TO 'oomplay'@'%' WITH GRANT OPTION;
                 DROP DATABASE IF EXISTS oomplay;
+                CREATE DATABASE oomplay;
             ""#
         ]
     }

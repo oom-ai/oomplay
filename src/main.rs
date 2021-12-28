@@ -1,4 +1,3 @@
-#![feature(box_syntax)]
 #![feature(duration_constants)]
 #![feature(async_closure)]
 
@@ -17,6 +16,7 @@ use cli::App;
 use colored::Colorize;
 use docker::StoreRuntime;
 use std::io::Write;
+use tokio::time::Instant;
 
 use std::io;
 use strum::VariantNames;
@@ -40,8 +40,9 @@ async fn try_main() -> Result<()> {
         App::Init { database } =>
             for store in unique_stores(&database) {
                 info!("🎮 Initializing {} ...", store.name().blue().bold());
+                let now = Instant::now();
                 with_flock(&store.name(), async move || docker.init(store).await).await?;
-                info!("🟢 {}", "Store is ready.".bold());
+                info!("🟢 {} ({:?})", "Store is ready.".bold(), now.elapsed());
             },
         App::Stop { database } =>
             for store in unique_stores(&database) {

@@ -18,9 +18,19 @@ impl Store for TiDB {
         vec![
             PortMap::Tcp(4000, 24000), // TiDB
             PortMap::Tcp(2379, 22379), // PD
-            PortMap::Tcp(9090, 29090), // Prometheus
-            PortMap::Tcp(3000, 23000), // Grafana
         ]
+    }
+
+    #[rustfmt::skip]
+    fn entry_cmd(&self) -> Option<Vec<String>> {
+        Some(svec![
+            "tiup",
+            "playground",
+            "--host=0.0.0.0",
+            "--without-monitor",
+            "--tiflash", "0",
+            "--ticdc", "0",
+        ])
     }
 
     fn init_cmd(&self) -> Vec<String> {

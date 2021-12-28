@@ -16,7 +16,10 @@ use clap::{IntoApp, Parser};
 use cli::App;
 use colored::Colorize;
 use docker::StoreRuntime;
+use std::io::Write;
+
 use std::io;
+use strum::VariantNames;
 use util::unique_stores;
 
 use crate::util::with_flock;
@@ -46,6 +49,9 @@ async fn try_main() -> Result<()> {
                 with_flock(&store.name(), async move || docker.stop(store).await).await?;
                 info!("🔴 {}", "Stopped.".bold());
             },
+        App::List => cli::Database::VARIANTS
+            .iter()
+            .try_for_each(|db| writeln!(io::stdout(), "{}", db))?,
         App::Completion { shell } => {
             let app = &mut App::into_app();
             clap_generate::generate(shell, app, app.get_name().to_string(), &mut io::stdout())

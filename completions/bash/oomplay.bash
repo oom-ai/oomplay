@@ -18,6 +18,9 @@ _oomplay() {
             init)
                 cmd+="__init"
                 ;;
+            list)
+                cmd+="__list"
+                ;;
             stop)
                 cmd+="__stop"
                 ;;
@@ -28,7 +31,7 @@ _oomplay() {
 
     case "${cmd}" in
         oomplay)
-            opts="-h -V --help --version init stop completion"
+            opts="-h -V --help --version init stop list completion"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 1 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -57,6 +60,20 @@ _oomplay() {
             ;;
         oomplay__init)
             opts="-h --help redis postgres mysql dynamodb cassandra tidb tikv"
+            if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
+                COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+                return 0
+            fi
+            case "${prev}" in
+                *)
+                    COMPREPLY=()
+                    ;;
+            esac
+            COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+            return 0
+            ;;
+        oomplay__list)
+            opts="-h --help"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0

@@ -21,6 +21,9 @@ pub enum App {
         database: Vec<Database>,
     },
 
+    /// List supported backends
+    List,
+
     /// Output shell completion code
     Completion {
         /// Target shell name

@@ -67,6 +67,7 @@ $ oomplay stop redis postgres
 - [x] DynamoDB
 - [x] Cassandra
 - [x] TiDB
+- [x] TiKV
 
 ## Installation
 

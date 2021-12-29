@@ -12,7 +12,7 @@ Playground manager for [oomstore](https://github.com/oom-ai/oomstore).
 
 ```help
 $ oomplay --help
-oomplay 0.3.2
+oomplay 0.4.4
 Playground manager for oomstore
 
 USAGE:
@@ -25,6 +25,7 @@ OPTIONS:
 SUBCOMMANDS:
     init          Initialize playgrounds
     stop          Stop playgrounds
+    list          List supported backends
     completion    Output shell completion code
 ```
 
@@ -65,6 +66,7 @@ $ oomplay stop redis postgres
 - [x] MySQL
 - [x] DynamoDB
 - [x] Cassandra
+- [x] TiDB
 
 ## Installation
 

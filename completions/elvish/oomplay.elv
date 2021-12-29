@@ -34,6 +34,8 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand --help 'Print help information'
         }
         &'oomplay;stop'= {
+            cand -j 'Allow specified number of parallel jobs'
+            cand --jobs 'Allow specified number of parallel jobs'
             cand -h 'Print help information'
             cand --help 'Print help information'
         }

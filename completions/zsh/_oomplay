@@ -39,6 +39,8 @@ _arguments "${_arguments_options[@]}" \
 ;;
 (stop)
 _arguments "${_arguments_options[@]}" \
+'-j+[Allow specified number of parallel jobs]:JOBS: ' \
+'--jobs=[Allow specified number of parallel jobs]:JOBS: ' \
 '-h[Print help information]' \
 '--help[Print help information]' \
 '*::database -- Databases:(redis postgres mysql dynamodb cassandra tidb tikv)' \

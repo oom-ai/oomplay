@@ -51,12 +51,17 @@ async fn try_main() -> Result<()> {
             .collect::<Vec<_>>()
             .await;
         }
-        App::Stop { database } =>
-            for store in unique_stores(&database) {
+        App::Stop { database, jobs } => {
+            futures::stream::iter(unique_stores(&database).into_iter().map(async move |store| {
                 info!("🔌 Stopping {} ...", store.name().blue().bold());
                 with_flock(&store.name(), async move || docker.stop(store).await).await?;
-                info!("🔴 {}", "Stopped.".bold());
-            },
+                info!("🔴 {} stopped.", store.name().bold());
+                Ok::<_, Error>(())
+            }))
+            .buffer_unordered(jobs)
+            .collect::<Vec<_>>()
+            .await;
+        }
         App::List => cli::Database::VARIANTS
             .iter()
             .try_for_each(|db| writeln!(io::stdout(), "{}", db))?,

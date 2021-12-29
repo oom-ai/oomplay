@@ -22,8 +22,10 @@ impl Store for TiDB {
         Some(svec![
             "tiup",
             "playground",
+            "--tag=oomplay",
             "--host=0.0.0.0",
             "--without-monitor",
+            "--mode=tidb",
             "--tiflash=0",
             "--ticdc=0",
         ])

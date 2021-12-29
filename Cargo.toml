@@ -1,6 +1,6 @@
 [package]
 name = "oomplay"
-version = "0.4.5-dev"
+version = "0.5.0"
 edition = "2021"
 authors = ["Wenxuan Zhang <wenxuangm@gmail.com>"]
 categories = ["command-line-utilities"]

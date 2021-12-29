@@ -25,7 +25,7 @@ OPTIONS:
 SUBCOMMANDS:
     init          Initialize playgrounds
     stop          Stop playgrounds
-    list          List supported backends
+    list          List supported playgrounds
     completion    Output shell completion code
 ```
 

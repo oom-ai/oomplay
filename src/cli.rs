@@ -12,6 +12,10 @@ pub enum App {
         /// Databases
         #[clap(possible_values = Database::VARIANTS, required = true)]
         database: Vec<Database>,
+
+        /// Allow specified number of parallel jobs
+        #[clap(short, long, default_value = "1")]
+        jobs: usize,
     },
 
     /// Stop playgrounds

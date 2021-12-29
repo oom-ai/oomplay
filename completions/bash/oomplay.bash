@@ -59,12 +59,20 @@ _oomplay() {
             return 0
             ;;
         oomplay__init)
-            opts="-h --help redis postgres mysql dynamodb cassandra tidb tikv"
+            opts="-j -h --jobs --help redis postgres mysql dynamodb cassandra tidb tikv"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
             fi
             case "${prev}" in
+                --jobs)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
+                -j)
+                    COMPREPLY=($(compgen -f "${cur}"))
+                    return 0
+                    ;;
                 *)
                     COMPREPLY=()
                     ;;

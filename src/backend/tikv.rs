@@ -24,9 +24,12 @@ impl Store for TiKV {
         Some(svec![
             "tiup",
             "playground",
+            "--tag=oomplay",
             "--host=0.0.0.0",
             "--without-monitor",
             "--mode=tikv-slim",
+            "--tiflash=0",
+            "--ticdc=0",
         ])
     }
 

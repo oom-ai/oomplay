@@ -9,12 +9,13 @@ mod util;
 
 #[macro_use]
 extern crate log;
-use anyhow::Result;
+use anyhow::{Error, Result};
 use bollard::Docker;
 use clap::{IntoApp, Parser};
 use cli::App;
 use colored::Colorize;
 use docker::StoreRuntime;
+use futures::StreamExt;
 use std::io::Write;
 use tokio::time::Instant;
 
@@ -35,15 +36,21 @@ async fn main() {
 }
 
 async fn try_main() -> Result<()> {
+    tokio::runtime::Builder::new_multi_thread();
     let docker = &Docker::connect_with_local_defaults()?;
     match App::parse() {
-        App::Init { database } =>
-            for store in unique_stores(&database) {
+        App::Init { database, jobs } => {
+            futures::stream::iter(unique_stores(&database).into_iter().map(async move |store| {
                 info!("🎮 Initializing {} ...", store.name().blue().bold());
                 let now = Instant::now();
                 with_flock(&store.name(), async move || docker.init(store).await).await?;
-                info!("🟢 {} ({:?})", "Store is ready.".bold(), now.elapsed());
-            },
+                info!("🟢 {} is ready. ({:?})", store.name().bold(), now.elapsed());
+                Ok::<_, Error>(())
+            }))
+            .buffer_unordered(jobs)
+            .collect::<Vec<_>>()
+            .await;
+        }
         App::Stop { database } =>
             for store in unique_stores(&database) {
                 info!("🔌 Stopping {} ...", store.name().blue().bold());

@@ -4,6 +4,7 @@ complete -c oomplay -n "__fish_use_subcommand" -f -a "init" -d 'Initialize playg
 complete -c oomplay -n "__fish_use_subcommand" -f -a "stop" -d 'Stop playgrounds'
 complete -c oomplay -n "__fish_use_subcommand" -f -a "list" -d 'List supported playgrounds'
 complete -c oomplay -n "__fish_use_subcommand" -f -a "completion" -d 'Output shell completion code'
+complete -c oomplay -n "__fish_seen_subcommand_from init" -s j -l jobs -d 'Allow specified number of parallel jobs' -r
 complete -c oomplay -n "__fish_seen_subcommand_from init" -s h -l help -d 'Print help information'
 complete -c oomplay -n "__fish_seen_subcommand_from stop" -s h -l help -d 'Print help information'
 complete -c oomplay -n "__fish_seen_subcommand_from list" -s h -l help -d 'Print help information'

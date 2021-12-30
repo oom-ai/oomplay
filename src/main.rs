@@ -15,7 +15,7 @@ use clap::{IntoApp, Parser};
 use cli::App;
 use colored::Colorize;
 use docker::StoreRuntime;
-use futures::StreamExt;
+use futures::{StreamExt, TryStreamExt};
 use std::io::Write;
 use tokio::time::Instant;
 
@@ -48,8 +48,8 @@ async fn try_main() -> Result<()> {
                 Ok::<_, Error>(())
             }))
             .buffer_unordered(jobs)
-            .collect::<Vec<_>>()
-            .await;
+            .try_collect::<Vec<_>>()
+            .await?;
         }
         App::Stop { database, jobs } => {
             futures::stream::iter(unique_stores(&database).into_iter().map(async move |store| {
@@ -59,8 +59,8 @@ async fn try_main() -> Result<()> {
                 Ok::<_, Error>(())
             }))
             .buffer_unordered(jobs)
-            .collect::<Vec<_>>()
-            .await;
+            .try_collect::<Vec<_>>()
+            .await?;
         }
         App::List => cli::Database::VARIANTS
             .iter()

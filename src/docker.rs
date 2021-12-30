@@ -33,7 +33,7 @@ where
     T: Store + Sync + ?Sized,
 {
     async fn start(&self, store: &T) -> Result<()> {
-        info!("🚀 Starting container ...");
+        info!("🚀 Starting container {} ...", store.name());
         match self.start_container::<String>(&store.name(), None).await {
             Ok(_) => Ok(()),
             Err(errors::Error::DockerResponseNotModifiedError { .. }) => {
@@ -45,7 +45,7 @@ where
     }
 
     async fn create(&self, store: &T) -> Result<()> {
-        info!("📦 Creating container ...",);
+        info!("📦 Creating container {} ...", store.name());
         let config = container::Config {
             image: Some(store.image()),
             env: Some(store.envs()),
@@ -87,7 +87,7 @@ where
     async fn init(&self, store: &T) -> Result<()> {
         match self.check_health(store).await {
             Ok(_) => {
-                info!("🔰 Store is already running");
+                info!("🔰 {} is already running", store.name());
                 self.init_db(store).await?;
             }
             _ => {
@@ -119,17 +119,17 @@ where
     }
 
     async fn init_db(&self, store: &T) -> Result<()> {
-        info!("💫 Initializing database ...");
+        info!("💫 Initializing {} ...", store.name());
         // Sometimes `init_cmd` fails even after `ping_cmd` succeeded so we should retry here
         while let Err(e) = exec(self, &store.name(), store.init_cmd()).await {
-            debug!("init database failed: {}", e);
+            debug!("init {} failed: {}", store.name(), e);
             tokio::time::sleep(Duration::SECOND).await;
         }
         Ok(())
     }
 
     async fn check_health(&self, store: &T) -> Result<()> {
-        info!("📡 Pinging database ...");
+        info!("📡 Pinging {} ...", store.name());
         exec(self, &store.name(), store.ping_cmd()).await
     }
 }
@@ -147,7 +147,7 @@ async fn exec(docker: &Docker, container: &str, cmd: Vec<String>) -> Result<()> 
     match docker.start_exec(&id, None).await? {
         exec::StartExecResults::Attached { mut output, .. } =>
             while let Some(Ok(msg)) = output.next().await {
-                debug!("{}", msg);
+                debug!("exec {} output: {}", container, msg);
             },
         exec::StartExecResults::Detached => bail!("should not be detached"),
     }

@@ -39,8 +39,8 @@ async fn try_main() -> Result<()> {
     tokio::runtime::Builder::new_multi_thread();
     let docker = &Docker::connect_with_local_defaults()?;
     match App::parse() {
-        App::Init { database, jobs } => {
-            futures::stream::iter(unique_stores(&database).into_iter().map(async move |store| {
+        App::Init { playground, jobs } => {
+            futures::stream::iter(unique_stores(&playground).into_iter().map(async move |store| {
                 info!("🎮 Initializing {} ...", store.name().blue().bold());
                 let now = Instant::now();
                 with_flock(&store.name(), async move || docker.init(store).await).await?;
@@ -51,8 +51,8 @@ async fn try_main() -> Result<()> {
             .try_collect::<Vec<_>>()
             .await?;
         }
-        App::Stop { database, jobs } => {
-            futures::stream::iter(unique_stores(&database).into_iter().map(async move |store| {
+        App::Stop { playground, jobs } => {
+            futures::stream::iter(unique_stores(&playground).into_iter().map(async move |store| {
                 info!("🔌 Stopping {} ...", store.name().blue().bold());
                 with_flock(&store.name(), async move || docker.stop(store).await).await?;
                 info!("🔴 {} stopped.", store.name().bold());
@@ -62,7 +62,7 @@ async fn try_main() -> Result<()> {
             .try_collect::<Vec<_>>()
             .await?;
         }
-        App::List => cli::Database::VARIANTS
+        App::List => cli::Playground::VARIANTS
             .iter()
             .try_for_each(|db| writeln!(io::stdout(), "{}", db))?,
         App::Completion { shell } => {

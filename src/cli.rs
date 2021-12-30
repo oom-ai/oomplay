@@ -9,23 +9,23 @@ use strum::{Display, EnumString, EnumVariantNames, VariantNames};
 pub enum App {
     /// Initialize playgrounds
     Init {
-        /// Databases
-        #[clap(possible_values = Database::VARIANTS, required = true)]
-        database: Vec<Database>,
+        /// Playground type
+        #[clap(possible_values = Playground::VARIANTS, required = true)]
+        playground: Vec<Playground>,
 
-        /// Allow specified number of parallel jobs
-        #[clap(short, long, default_value = "1")]
+        /// Number of parallel jobs, defaults to # of CPUs
+        #[clap(short, long, default_value_t = num_cpus::get(), value_name = "N")]
         jobs: usize,
     },
 
     /// Stop playgrounds
     Stop {
-        /// Databases
-        #[clap(possible_values = Database::VARIANTS, default_values = Database::VARIANTS, hide_default_value = true)]
-        database: Vec<Database>,
+        /// Playground type
+        #[clap(possible_values = Playground::VARIANTS, default_values = Playground::VARIANTS, hide_default_value = true)]
+        playground: Vec<Playground>,
 
-        /// Allow specified number of parallel jobs
-        #[clap(short, long, default_value = "1")]
+        /// Number of parallel jobs, defaults to # of CPUs
+        #[clap(short, long, default_value_t = num_cpus::get(), value_name = "N")]
         jobs: usize,
     },
 
@@ -42,7 +42,7 @@ pub enum App {
 
 #[derive(Display, EnumString, EnumVariantNames, Hash, Eq, PartialEq)]
 #[strum(serialize_all = "snake_case")]
-pub enum Database {
+pub enum Playground {
     Redis,
     Postgres,
     Mysql,

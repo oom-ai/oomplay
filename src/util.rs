@@ -5,18 +5,18 @@ use futures::Future;
 use itertools::Itertools;
 use std::env;
 
-use crate::{backend::*, cli::Database, store::Store};
+use crate::{backend::*, cli::Playground, store::Store};
 type StoreRef<'a> = &'a (dyn Store + Sync);
 
-pub fn unique_stores(databases: &[Database]) -> impl Iterator<Item = StoreRef> {
-    databases.iter().unique().map(|backend| match backend {
-        Database::Redis => &Redis as StoreRef,
-        Database::Postgres => &PostgreSQL as StoreRef,
-        Database::Mysql => &MySQL as StoreRef,
-        Database::Dynamodb => &DynamoDB as StoreRef,
-        Database::Cassandra => &Cassandra as StoreRef,
-        Database::Tidb => &TiDB as StoreRef,
-        Database::Tikv => &TiKV as StoreRef,
+pub fn unique_stores(playground: &[Playground]) -> impl Iterator<Item = StoreRef> {
+    playground.iter().unique().map(|backend| match backend {
+        Playground::Redis => &Redis as StoreRef,
+        Playground::Postgres => &PostgreSQL as StoreRef,
+        Playground::Mysql => &MySQL as StoreRef,
+        Playground::Dynamodb => &DynamoDB as StoreRef,
+        Playground::Cassandra => &Cassandra as StoreRef,
+        Playground::Tidb => &TiDB as StoreRef,
+        Playground::Tikv => &TiKV as StoreRef,
     })
 }
 

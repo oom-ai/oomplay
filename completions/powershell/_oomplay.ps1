@@ -31,15 +31,15 @@ Register-ArgumentCompleter -Native -CommandName 'oomplay' -ScriptBlock {
             break
         }
         'oomplay;init' {
-            [CompletionResult]::new('-j', 'j', [CompletionResultType]::ParameterName, 'Allow specified number of parallel jobs')
-            [CompletionResult]::new('--jobs', 'jobs', [CompletionResultType]::ParameterName, 'Allow specified number of parallel jobs')
+            [CompletionResult]::new('-j', 'j', [CompletionResultType]::ParameterName, 'Number of parallel jobs, defaults to # of CPUs')
+            [CompletionResult]::new('--jobs', 'jobs', [CompletionResultType]::ParameterName, 'Number of parallel jobs, defaults to # of CPUs')
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
             break
         }
         'oomplay;stop' {
-            [CompletionResult]::new('-j', 'j', [CompletionResultType]::ParameterName, 'Allow specified number of parallel jobs')
-            [CompletionResult]::new('--jobs', 'jobs', [CompletionResultType]::ParameterName, 'Allow specified number of parallel jobs')
+            [CompletionResult]::new('-j', 'j', [CompletionResultType]::ParameterName, 'Number of parallel jobs, defaults to # of CPUs')
+            [CompletionResult]::new('--jobs', 'jobs', [CompletionResultType]::ParameterName, 'Number of parallel jobs, defaults to # of CPUs')
             [CompletionResult]::new('-h', 'h', [CompletionResultType]::ParameterName, 'Print help information')
             [CompletionResult]::new('--help', 'help', [CompletionResultType]::ParameterName, 'Print help information')
             break

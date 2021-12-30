@@ -28,14 +28,14 @@ set edit:completion:arg-completer[oomplay] = [@words]{
             cand completion 'Output shell completion code'
         }
         &'oomplay;init'= {
-            cand -j 'Allow specified number of parallel jobs'
-            cand --jobs 'Allow specified number of parallel jobs'
+            cand -j 'Number of parallel jobs, defaults to # of CPUs'
+            cand --jobs 'Number of parallel jobs, defaults to # of CPUs'
             cand -h 'Print help information'
             cand --help 'Print help information'
         }
         &'oomplay;stop'= {
-            cand -j 'Allow specified number of parallel jobs'
-            cand --jobs 'Allow specified number of parallel jobs'
+            cand -j 'Number of parallel jobs, defaults to # of CPUs'
+            cand --jobs 'Number of parallel jobs, defaults to # of CPUs'
             cand -h 'Print help information'
             cand --help 'Print help information'
         }

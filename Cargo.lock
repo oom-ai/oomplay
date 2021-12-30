@@ -693,6 +693,7 @@ dependencies = [
  "futures",
  "itertools",
  "log",
+ "num_cpus",
  "strum",
  "tokio",
 ]

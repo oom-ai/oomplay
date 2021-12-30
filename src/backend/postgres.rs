@@ -31,8 +31,8 @@ impl Store for PostgreSQL {
             "sh",
             "-c",
             r#"
-                psql -c 'drop database oomplay';
-                psql -c 'create database oomplay';
+                psql -c 'DROP DATABASE oomplay';
+                psql -c 'CREATE DATABASE oomplay';
                 psql -tc '\du oomplay' | grep oomplay && exit
                 psql -c "CREATE ROLE oomplay WITH LOGIN SUPERUSER PASSWORD 'oomplay'";
             "#,

@@ -1,5 +1,4 @@
 #![feature(duration_constants)]
-#![feature(async_closure)]
 
 mod backend;
 mod cli;
@@ -32,26 +31,21 @@ async fn main() {
 }
 
 async fn try_main() -> Result<()> {
-    tokio::runtime::Builder::new_multi_thread();
     let docker = &Docker::connect_with_local_defaults()?;
     match App::parse() {
         App::Init { playground, jobs } => {
-            stream::iter(
-                unique_stores(&playground)
-                    .map(async move |store| with_flock(&store.name(), || docker.init(store)).await),
-            )
-            .buffer_unordered(jobs)
-            .try_collect::<Vec<_>>()
-            .await?;
+            stream::iter(unique_stores(&playground))
+                .map(|store| with_flock(store.name(), || docker.init(store)))
+                .buffer_unordered(jobs)
+                .try_collect::<Vec<_>>()
+                .await?;
         }
         App::Stop { playground, jobs } => {
-            stream::iter(
-                unique_stores(&playground)
-                    .map(async move |store| with_flock(&store.name(), || docker.stop(store)).await),
-            )
-            .buffer_unordered(jobs)
-            .try_collect::<Vec<_>>()
-            .await?;
+            stream::iter(unique_stores(&playground))
+                .map(|store| with_flock(store.name(), || docker.stop(store)))
+                .buffer_unordered(jobs)
+                .try_collect::<Vec<_>>()
+                .await?;
         }
         App::List => cli::Playground::VARIANTS
             .iter()

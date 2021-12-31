@@ -20,7 +20,7 @@ pub fn unique_stores(playground: &[Playground]) -> impl Iterator<Item = StoreRef
     })
 }
 
-pub async fn with_flock<F, Fut>(name: &str, f: F) -> Result<()>
+pub async fn with_flock<F, Fut>(name: String, f: F) -> Result<()>
 where
     F: FnOnce() -> Fut,
     Fut: Future<Output = Result<()>>,

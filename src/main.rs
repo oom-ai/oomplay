@@ -43,7 +43,7 @@ async fn try_main() -> Result<()> {
             futures::stream::iter(unique_stores(&playground).into_iter().map(async move |store| {
                 info!("🎮 Initializing {} ...", store.name().blue().bold());
                 let now = Instant::now();
-                with_flock(&store.name(), async move || docker.init(store).await).await?;
+                with_flock(&store.name(), || docker.init(store)).await?;
                 info!("🟢 {} is ready. ({:?})", store.name().bold(), now.elapsed());
                 Ok::<_, Error>(())
             }))
@@ -54,7 +54,7 @@ async fn try_main() -> Result<()> {
         App::Stop { playground, jobs } => {
             futures::stream::iter(unique_stores(&playground).into_iter().map(async move |store| {
                 info!("🔌 Stopping {} ...", store.name().blue().bold());
-                with_flock(&store.name(), async move || docker.stop(store).await).await?;
+                with_flock(&store.name(), || docker.stop(store)).await?;
                 info!("🔴 {} stopped.", store.name().bold());
                 Ok::<_, Error>(())
             }))

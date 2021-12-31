@@ -15,8 +15,10 @@ where
     async fn create(&self, store: &T) -> Result<()>;
     async fn init(&self, store: &T) -> Result<()>;
     async fn stop(&self, store: &T) -> Result<()>;
-    async fn init_db(&self, store: &T) -> Result<()>;
+    async fn pull(&self, store: &T) -> Result<()>;
+    async fn init_db(&self, store: &T, retry: bool) -> Result<()>;
     async fn check_health(&self, store: &T) -> Result<()>;
+    async fn check_image(&self, store: &T) -> Result<()>;
 
     async fn wait_ready(&self, store: &T) -> Result<()> {
         while let Err(e) = self.check_health(store).await {
@@ -85,26 +87,15 @@ where
     }
 
     async fn init(&self, store: &T) -> Result<()> {
-        match self.check_health(store).await {
-            Ok(_) => {
-                info!("🔰 {} is already running", store.name());
-                self.init_db(store).await?;
-            }
-            _ => {
-                self.inspect_image(&store.image())
-                    .map_ok(|_| ())
-                    .or_else(async move |_| {
-                        info!("🚚 Pulling image '{}' ...", store.image());
-                        pull(self, &store.image()).await
-                    })
+        self.init_db(store, false)
+            .or_else(|_| {
+                self.check_image(store)
+                    .or_else(|_| self.pull(store))
                     .and_then(|_| self.create(store))
                     .and_then(|_| self.start(store))
-                    .and_then(|_| self.wait_ready(store))
-                    .and_then(|_| self.init_db(store))
-                    .await?;
-            }
-        };
-        Ok(())
+                    .and_then(|_| self.init_db(store, true))
+            })
+            .await
     }
 
     async fn stop(&self, store: &T) -> Result<()> {
@@ -118,19 +109,37 @@ where
         })
     }
 
-    async fn init_db(&self, store: &T) -> Result<()> {
-        info!("💫 Initializing {} ...", store.name());
-        // Sometimes `init_cmd` fails even after `ping_cmd` succeeded so we should retry here
+    async fn init_db(&self, store: &T, retry: bool) -> Result<()> {
+        info!("💫 Resetting {} ...", store.name());
+        // sometimes `init_cmd` fails even after `ping_cmd` succeeded so we may retry
         while let Err(e) = exec(self, &store.name(), store.init_cmd()).await {
+            info!("⌛ {} may not ready", store.name());
             debug!("init {} failed: {}", store.name(), e);
+            if !retry {
+                return Err(e);
+            }
             tokio::time::sleep(Duration::SECOND).await;
         }
+        info!("✨ {} has been reset.", store.name());
         Ok(())
     }
 
     async fn check_health(&self, store: &T) -> Result<()> {
         info!("📡 Pinging {} ...", store.name());
         exec(self, &store.name(), store.ping_cmd()).await
+    }
+
+    async fn pull(&self, store: &T) -> Result<()> {
+        info!("🚚 Pulling image '{}' ...", store.name());
+        let opts = image::CreateImageOptions { from_image: store.image(), ..Default::default() };
+        self.create_image(Some(opts), None, None)
+            .try_collect::<Vec<_>>()
+            .await?;
+        Ok(())
+    }
+
+    async fn check_image(&self, store: &T) -> Result<()> {
+        Ok(self.inspect_image(&store.image()).map_ok(|_| ()).await?)
     }
 }
 
@@ -160,16 +169,4 @@ async fn exec(docker: &Docker, container: &str, cmd: Vec<String>) -> Result<()> 
             0 => Ok(()),
             _ => bail!("none-zero exit code: {}", code),
         })
-}
-
-async fn pull(docker: &Docker, image: &str) -> Result<()> {
-    docker
-        .create_image(
-            Some(image::CreateImageOptions { from_image: image, ..Default::default() }),
-            None,
-            None,
-        )
-        .try_collect::<Vec<_>>()
-        .await?;
-    Ok(())
 }

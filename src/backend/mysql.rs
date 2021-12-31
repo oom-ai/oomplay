@@ -22,7 +22,7 @@ impl Store for MySQL {
         vec![PortMap::Tcp(3306, 23306)]
     }
 
-    fn init_cmd(&self) -> Vec<String> {
+    fn reset_cmd(&self) -> Vec<String> {
         svec![
             "mysql",
             "-e",

@@ -26,7 +26,7 @@ impl Store for PostgreSQL {
         vec![PortMap::Tcp(5432, 25432)]
     }
 
-    fn init_cmd(&self) -> Vec<String> {
+    fn reset_cmd(&self) -> Vec<String> {
         svec![
             "sh",
             "-c",

@@ -18,7 +18,7 @@ impl Store for Cassandra {
         vec![PortMap::Tcp(9042, 29042)]
     }
 
-    fn init_cmd(&self) -> Vec<String> {
+    fn reset_cmd(&self) -> Vec<String> {
         svec![
             "cqlsh",
             "-e",

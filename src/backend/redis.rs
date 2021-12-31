@@ -18,7 +18,7 @@ impl Store for Redis {
         vec![PortMap::Tcp(6379, 26379)]
     }
 
-    fn init_cmd(&self) -> Vec<String> {
+    fn reset_cmd(&self) -> Vec<String> {
         svec!["redis-cli", "flushdb"]
     }
 

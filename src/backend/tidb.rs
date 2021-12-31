@@ -31,7 +31,7 @@ impl Store for TiDB {
         ])
     }
 
-    fn init_cmd(&self) -> Vec<String> {
+    fn reset_cmd(&self) -> Vec<String> {
         svec![
             "sh",
             "-c",

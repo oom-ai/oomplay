@@ -121,7 +121,7 @@ where
     async fn reset(&self, store: &T, retry: bool) -> Result<()> {
         info!("💫 Resetting {} ...", store.name());
         // sometimes `init_cmd` fails even after `ping_cmd` succeeded so we may retry
-        while let Err(e) = exec(self, &store.name(), store.init_cmd()).await {
+        while let Err(e) = exec(self, &store.name(), store.reset_cmd()).await {
             info!("⌛ {} may not ready", store.name());
             debug!("init {} failed: {}", store.name(), e);
             if !retry {

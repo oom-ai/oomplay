@@ -33,7 +33,7 @@ impl Store for TiKV {
         ])
     }
 
-    fn init_cmd(&self) -> Vec<String> {
+    fn reset_cmd(&self) -> Vec<String> {
         svec![
             "python3",
             "-c",

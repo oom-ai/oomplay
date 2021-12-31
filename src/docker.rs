@@ -1,8 +1,10 @@
 use anyhow::{anyhow, bail, Result};
 use async_trait::async_trait;
 use bollard::{container, errors, exec, image, models, Docker};
+use colored::Colorize;
 use futures::prelude::*;
 use std::time::Duration;
+use tokio::time::Instant;
 
 use crate::store::{PortMap, Store};
 
@@ -16,7 +18,7 @@ where
     async fn init(&self, store: &T) -> Result<()>;
     async fn stop(&self, store: &T) -> Result<()>;
     async fn pull(&self, store: &T) -> Result<()>;
-    async fn init_db(&self, store: &T, retry: bool) -> Result<()>;
+    async fn reset(&self, store: &T, retry: bool) -> Result<()>;
     async fn check_health(&self, store: &T) -> Result<()>;
     async fn check_image(&self, store: &T) -> Result<()>;
 
@@ -87,29 +89,36 @@ where
     }
 
     async fn init(&self, store: &T) -> Result<()> {
-        self.init_db(store, false)
+        info!("🎮 Initializing {} ...", store.name().blue().bold());
+        let now = Instant::now();
+        self.reset(store, false)
             .or_else(|_| {
                 self.check_image(store)
                     .or_else(|_| self.pull(store))
                     .and_then(|_| self.create(store))
                     .and_then(|_| self.start(store))
-                    .and_then(|_| self.init_db(store, true))
+                    .and_then(|_| self.reset(store, true))
             })
-            .await
+            .await?;
+        info!("🟢 {} is ready. ({:?})", store.name().bold(), now.elapsed());
+        Ok(())
     }
 
     async fn stop(&self, store: &T) -> Result<()> {
+        info!("🔌 Stopping {} ...", store.name().blue().bold());
         let opt = Some(container::KillContainerOptions { signal: "SIGKILL" });
         self.kill_container(&store.name(), opt).await.or_else(|e| match e {
             errors::Error::DockerResponseNotFoundError { .. } => {
                 debug!("'{}' already stopped", store.name());
                 Ok(())
             }
-            _ => Err(e.into()),
-        })
+            _ => bail!(e),
+        })?;
+        info!("🔴 Stopped {}.", store.name().bold());
+        Ok(())
     }
 
-    async fn init_db(&self, store: &T, retry: bool) -> Result<()> {
+    async fn reset(&self, store: &T, retry: bool) -> Result<()> {
         info!("💫 Resetting {} ...", store.name());
         // sometimes `init_cmd` fails even after `ping_cmd` succeeded so we may retry
         while let Err(e) = exec(self, &store.name(), store.init_cmd()).await {

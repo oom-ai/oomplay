@@ -9,17 +9,13 @@ mod util;
 
 #[macro_use]
 extern crate log;
-use anyhow::{Error, Result};
+use anyhow::Result;
 use bollard::Docker;
 use clap::{IntoApp, Parser};
 use cli::App;
-use colored::Colorize;
 use docker::StoreRuntime;
-use futures::{StreamExt, TryStreamExt};
-use std::io::Write;
-use tokio::time::Instant;
-
-use std::io;
+use futures::{stream, StreamExt, TryStreamExt};
+use std::{io, io::Write};
 use strum::VariantNames;
 use util::unique_stores;
 
@@ -40,24 +36,19 @@ async fn try_main() -> Result<()> {
     let docker = &Docker::connect_with_local_defaults()?;
     match App::parse() {
         App::Init { playground, jobs } => {
-            futures::stream::iter(unique_stores(&playground).into_iter().map(async move |store| {
-                info!("🎮 Initializing {} ...", store.name().blue().bold());
-                let now = Instant::now();
-                with_flock(&store.name(), || docker.init(store)).await?;
-                info!("🟢 {} is ready. ({:?})", store.name().bold(), now.elapsed());
-                Ok::<_, Error>(())
-            }))
+            stream::iter(
+                unique_stores(&playground)
+                    .map(async move |store| with_flock(&store.name(), || docker.init(store)).await),
+            )
             .buffer_unordered(jobs)
             .try_collect::<Vec<_>>()
             .await?;
         }
         App::Stop { playground, jobs } => {
-            futures::stream::iter(unique_stores(&playground).into_iter().map(async move |store| {
-                info!("🔌 Stopping {} ...", store.name().blue().bold());
-                with_flock(&store.name(), || docker.stop(store)).await?;
-                info!("🔴 {} stopped.", store.name().bold());
-                Ok::<_, Error>(())
-            }))
+            stream::iter(
+                unique_stores(&playground)
+                    .map(async move |store| with_flock(&store.name(), || docker.stop(store)).await),
+            )
             .buffer_unordered(jobs)
             .try_collect::<Vec<_>>()
             .await?;

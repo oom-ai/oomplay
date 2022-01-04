@@ -49,6 +49,7 @@ pub enum Playground {
     DynamoDB,
     Cassandra,
     TiDB,
+    TiDBExt,
     TiKV,
     TiKVExt,
 }

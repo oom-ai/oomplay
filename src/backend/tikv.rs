@@ -31,7 +31,7 @@ impl Store for TiKV {
 
     fn port_map(&self) -> Vec<PortMap> {
         match self {
-            TiKV::External => Vec::new(),
+            TiKV::External => vec![],
             TiKV::Internal => vec![PortMap::Tcp(2379, 22379)],
         }
     }
@@ -45,9 +45,9 @@ impl Store for TiKV {
                 "--tag=oomplay",
                 "--host=0.0.0.0",
                 "--without-monitor",
-                "--mode=tikv-slim",
                 "--tiflash=0",
                 "--ticdc=0",
+                "--mode=tikv-slim",
             ]),
         }
     }

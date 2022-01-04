@@ -44,11 +44,11 @@ pub enum App {
 #[strum(ascii_case_insensitive)]
 pub enum Playground {
     Redis,
-    Postgres,
-    Mysql,
-    Dynamodb,
+    PostgreSQL,
+    MySQL,
+    DynamoDB,
     Cassandra,
-    Tidb,
-    Tikv,
-    TikvExt,
+    TiDB,
+    TiKV,
+    TiKVExt,
 }

@@ -34,7 +34,7 @@ _arguments "${_arguments_options[@]}" \
 '--jobs=[Number of parallel jobs, defaults to # of CPUs]:N: ' \
 '-h[Print help information]' \
 '--help[Print help information]' \
-'*::playground -- Playground type:(redis postgres mysql dynamodb cassandra tidb tikv)' \
+'*::playground -- Playground type:(Redis Postgres Mysql Dynamodb Cassandra Tidb Tikv TikvExt)' \
 && ret=0
 ;;
 (stop)
@@ -43,7 +43,7 @@ _arguments "${_arguments_options[@]}" \
 '--jobs=[Number of parallel jobs, defaults to # of CPUs]:N: ' \
 '-h[Print help information]' \
 '--help[Print help information]' \
-'*::playground -- Playground type:(redis postgres mysql dynamodb cassandra tidb tikv)' \
+'*::playground -- Playground type:(Redis Postgres Mysql Dynamodb Cassandra Tidb Tikv TikvExt)' \
 && ret=0
 ;;
 (list)

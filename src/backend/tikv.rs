@@ -5,42 +5,67 @@ use crate::{
     svec,
 };
 
-pub struct TiKV;
+pub enum TiKV {
+    External,
+    Internal,
+}
 
 impl Store for TiKV {
     fn name(&self) -> String {
-        "oomplay-tikv".to_string()
+        match self {
+            TiKV::External => "oomplay-tikv-ext".to_string(),
+            TiKV::Internal => "oomplay-tikv".to_string(),
+        }
     }
 
     fn image(&self) -> String {
         "oomai/tiup:5.3.0".to_string()
     }
 
+    fn network(&self) -> String {
+        match self {
+            TiKV::External => "host".to_string(),
+            TiKV::Internal => "bridge".to_string(),
+        }
+    }
+
     fn port_map(&self) -> Vec<PortMap> {
-        vec![PortMap::Tcp(2379, 22379)]
+        match self {
+            TiKV::External => Vec::new(),
+            TiKV::Internal => vec![PortMap::Tcp(2379, 22379)],
+        }
     }
 
     fn entry_cmd(&self) -> Option<Vec<String>> {
-        Some(svec![
-            "tiup",
-            "playground",
-            "--tag=oomplay",
-            "--host=0.0.0.0",
-            "--without-monitor",
-            "--mode=tikv-slim",
-            "--tiflash=0",
-            "--ticdc=0",
-        ])
+        match self {
+            TiKV::External => Some(svec!["sleep", "infinity"]),
+            TiKV::Internal => Some(svec![
+                "tiup",
+                "playground",
+                "--tag=oomplay",
+                "--host=0.0.0.0",
+                "--without-monitor",
+                "--mode=tikv-slim",
+                "--tiflash=0",
+                "--ticdc=0",
+            ]),
+        }
     }
 
     fn reset_cmd(&self) -> Vec<String> {
+        let host = match self {
+            TiKV::External => "127.0.0.1",
+            TiKV::Internal => "{socket.gethostname()}",
+        };
         svec![
             "python3",
             "-c",
-            r#"
-                import socket; from tikv_client import RawClient;
-                RawClient.connect([f'{socket.gethostname()}:2379']).delete_range('')
-            "#
+            format!(
+                r#"
+                    import socket; from tikv_client import RawClient;
+                    RawClient.connect([f'{host}:2379']).delete_range('')
+                "#
+            )
             .lines()
             .map(|l| l.trim())
             .join("\n")
@@ -48,13 +73,19 @@ impl Store for TiKV {
     }
 
     fn ping_cmd(&self) -> Vec<String> {
+        let host = match self {
+            TiKV::External => "127.0.0.1",
+            TiKV::Internal => "{socket.gethostname()}",
+        };
         svec![
             "python3",
             "-c",
-            r#"
-                import socket; from tikv_client import RawClient;
-                RawClient.connect([f'{socket.gethostname()}:2379']).get('')
-            "#
+            format!(
+                r#"
+                    import socket; from tikv_client import RawClient;
+                    RawClient.connect([f'{host}:2379']).get('')
+                "#
+            )
             .lines()
             .map(|l| l.trim())
             .join("\n")

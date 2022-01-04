@@ -10,7 +10,7 @@ pub enum App {
     /// Initialize playgrounds
     Init {
         /// Playground type
-        #[clap(possible_values = Playground::VARIANTS, required = true)]
+        #[clap(possible_values = Playground::VARIANTS, required = true, ignore_case = true)]
         playground: Vec<Playground>,
 
         /// Number of parallel jobs, defaults to # of CPUs
@@ -21,7 +21,7 @@ pub enum App {
     /// Stop playgrounds
     Stop {
         /// Playground type
-        #[clap(possible_values = Playground::VARIANTS, default_values = Playground::VARIANTS, hide_default_value = true)]
+        #[clap(possible_values = Playground::VARIANTS, default_values = Playground::VARIANTS, hide_default_value = true, ignore_case = true)]
         playground: Vec<Playground>,
 
         /// Number of parallel jobs, defaults to # of CPUs
@@ -41,7 +41,7 @@ pub enum App {
 }
 
 #[derive(Display, EnumString, EnumVariantNames, Hash, Eq, PartialEq)]
-#[strum(serialize_all = "snake_case")]
+#[strum(ascii_case_insensitive)]
 pub enum Playground {
     Redis,
     Postgres,
@@ -50,4 +50,5 @@ pub enum Playground {
     Cassandra,
     Tidb,
     Tikv,
+    TikvExt,
 }

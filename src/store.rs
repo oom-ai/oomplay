@@ -7,9 +7,14 @@ pub enum PortMap {
 pub trait Store {
     fn name(&self) -> String;
     fn image(&self) -> String;
-    fn port_map(&self) -> Vec<PortMap>;
     fn ping_cmd(&self) -> Vec<String>;
     fn reset_cmd(&self) -> Vec<String>;
+    fn network(&self) -> String {
+        "bridge".to_string()
+    }
+    fn port_map(&self) -> Vec<PortMap> {
+        Vec::new()
+    }
     fn entry_cmd(&self) -> Option<Vec<String>> {
         None
     }

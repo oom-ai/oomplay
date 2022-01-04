@@ -16,7 +16,8 @@ pub fn unique_stores(playground: &[Playground]) -> impl Iterator<Item = StoreRef
         Playground::Dynamodb => &DynamoDB as StoreRef,
         Playground::Cassandra => &Cassandra as StoreRef,
         Playground::Tidb => &TiDB as StoreRef,
-        Playground::Tikv => &TiKV as StoreRef,
+        Playground::Tikv => &TiKV::Internal as StoreRef,
+        Playground::TikvExt => &TiKV::External as StoreRef,
     })
 }
 

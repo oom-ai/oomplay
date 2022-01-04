@@ -56,6 +56,7 @@ where
             cmd: store.entry_cmd(),
             host_config: Some(models::HostConfig {
                 auto_remove: Some(true),
+                network_mode: Some(store.network()),
                 port_bindings: Some(
                     store
                         .port_map()

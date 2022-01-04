@@ -6,6 +6,7 @@ pub enum PortMap {
 
 pub trait Store {
     fn name(&self) -> String;
+
     fn full_name(&self) -> String {
         format!("oomplay-{}", self.name())
     }
@@ -29,5 +30,6 @@ pub trait Store {
     }
 
     fn ping_cmd(&self) -> Vec<String>;
+
     fn reset_cmd(&self) -> Vec<String>;
 }

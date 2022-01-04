@@ -25,7 +25,7 @@ async fn main() {
     colog::init();
 
     if let Err(e) = try_main().await {
-        error!("❗ {}", e.to_string().trim());
+        error!("💢 {}", e.to_string().trim());
         std::process::exit(1)
     }
 }

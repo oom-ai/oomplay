@@ -3,6 +3,7 @@ mod dynamodb;
 mod mysql;
 mod postgres;
 mod redis;
+mod sqlite;
 mod tidb;
 mod tikv;
 
@@ -11,6 +12,7 @@ pub use dynamodb::DynamoDB;
 pub use mysql::MySQL;
 pub use postgres::Postgres;
 pub use redis::Redis;
+pub use sqlite::SQLite;
 pub use tidb::TiDB;
 pub use tikv::TiKV;
 

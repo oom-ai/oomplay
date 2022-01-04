@@ -1,8 +1,4 @@
-#[allow(dead_code)]
-pub enum PortMap {
-    Tcp(u16, u16),
-    Udp(u16, u16),
-}
+use crate::docker::{Mount, PortMap};
 
 pub trait Store {
     fn name(&self) -> String;
@@ -18,6 +14,10 @@ pub trait Store {
     }
 
     fn port_map(&self) -> Vec<PortMap> {
+        Vec::new()
+    }
+
+    fn mounts(&self) -> Vec<Mount> {
         Vec::new()
     }
 

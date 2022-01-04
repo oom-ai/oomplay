@@ -1,9 +1,6 @@
 use itertools::Itertools;
 
-use crate::{
-    store::{PortMap, Store},
-    svec,
-};
+use crate::{docker::PortMap, store::Store, svec};
 
 pub enum TiKV {
     External,

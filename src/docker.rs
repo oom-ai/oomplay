@@ -6,7 +6,29 @@ use futures::prelude::*;
 use std::time::Duration;
 use tokio::time::Instant;
 
-use crate::store::{PortMap, Store};
+#[allow(dead_code)]
+pub enum PortMap {
+    Tcp(u16, u16),
+    Udp(u16, u16),
+}
+
+pub struct Mount {
+    pub source: String,
+    pub target: String,
+}
+
+impl From<Mount> for models::Mount {
+    fn from(m: Mount) -> Self {
+        Self {
+            target: Some(m.target),
+            source: Some(m.source),
+            typ: Some(models::MountTypeEnum::BIND),
+            ..Default::default()
+        }
+    }
+}
+
+use crate::store::Store;
 
 #[async_trait]
 pub trait StoreRuntime<T>
@@ -57,6 +79,7 @@ where
             host_config: Some(models::HostConfig {
                 auto_remove: Some(true),
                 network_mode: Some(store.network()),
+                mounts: Some(store.mounts().into_iter().map(|x| x.into()).collect()),
                 port_bindings: Some(
                     store
                         .port_map()

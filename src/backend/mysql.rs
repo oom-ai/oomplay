@@ -1,7 +1,4 @@
-use crate::{
-    store::{PortMap, Store},
-    svec,
-};
+use crate::{docker::PortMap, store::Store, svec};
 
 pub struct MySQL;
 

@@ -52,4 +52,5 @@ pub enum Playground {
     TiDBExt,
     TiKV,
     TiKVExt,
+    SQLite,
 }

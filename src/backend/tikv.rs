@@ -36,6 +36,13 @@ impl Store for TiKV {
         }
     }
 
+    fn envs(&self) -> Vec<String> {
+        match self {
+            TiKV::External => svec!["TIKV_HOST=127.0.0.1"],
+            TiKV::Internal => svec![],
+        }
+    }
+
     fn entry_cmd(&self) -> Option<Vec<String>> {
         match self {
             TiKV::External => Some(svec!["sleep", "infinity"]),
@@ -53,19 +60,14 @@ impl Store for TiKV {
     }
 
     fn reset_cmd(&self) -> Vec<String> {
-        let host = match self {
-            TiKV::External => "127.0.0.1",
-            TiKV::Internal => "{socket.gethostname()}",
-        };
         svec![
             "python3",
             "-c",
-            format!(
-                r#"
-                    import socket; from tikv_client import RawClient;
-                    RawClient.connect([f'{host}:2379']).delete_range('')
-                "#
-            )
+            r#"
+                import os; from tikv_client import RawClient;
+                host = os.getenv('TIKV_HOST', os.uname().nodename)
+                RawClient.connect([f'{host}:2379']).delete_range('')
+            "#
             .lines()
             .map(|l| l.trim())
             .join("\n")
@@ -73,19 +75,14 @@ impl Store for TiKV {
     }
 
     fn ping_cmd(&self) -> Vec<String> {
-        let host = match self {
-            TiKV::External => "127.0.0.1",
-            TiKV::Internal => "{socket.gethostname()}",
-        };
         svec![
             "python3",
             "-c",
-            format!(
-                r#"
-                    import socket; from tikv_client import RawClient;
-                    RawClient.connect([f'{host}:2379']).get('')
-                "#
-            )
+            r#"
+                import os; from tikv_client import RawClient;
+                host = os.getenv('TIKV_HOST', os.uname().nodename)
+                RawClient.connect([f'{host}:2379']).get('')
+            "#
             .lines()
             .map(|l| l.trim())
             .join("\n")

@@ -11,8 +11,8 @@ pub enum TiDB {
 impl Store for TiDB {
     fn name(&self) -> String {
         match self {
-            TiDB::External => "oomplay-tidb-ext".to_string(),
-            TiDB::Internal => "oomplay-tidb".to_string(),
+            TiDB::External => "tidb-ext".to_string(),
+            TiDB::Internal => "tidb".to_string(),
         }
     }
 

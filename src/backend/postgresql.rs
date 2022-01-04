@@ -7,7 +7,7 @@ pub struct PostgreSQL;
 
 impl Store for PostgreSQL {
     fn name(&self) -> String {
-        "oomplay-postgres".to_string()
+        "postgres".to_string()
     }
 
     fn image(&self) -> String {

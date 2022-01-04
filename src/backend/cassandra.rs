@@ -7,7 +7,7 @@ pub struct Cassandra;
 
 impl Store for Cassandra {
     fn name(&self) -> String {
-        "oomplay-cassandra".to_string()
+        "cassandra".to_string()
     }
 
     fn image(&self) -> String {

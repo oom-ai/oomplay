@@ -13,8 +13,8 @@ pub enum TiKV {
 impl Store for TiKV {
     fn name(&self) -> String {
         match self {
-            TiKV::External => "oomplay-tikv-ext".to_string(),
-            TiKV::Internal => "oomplay-tikv".to_string(),
+            TiKV::External => "tikv-ext".to_string(),
+            TiKV::Internal => "tikv".to_string(),
         }
     }
 

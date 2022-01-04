@@ -7,7 +7,7 @@ pub struct Redis;
 
 impl Store for Redis {
     fn name(&self) -> String {
-        "oomplay-redis".to_string()
+        "redis".to_string()
     }
 
     fn image(&self) -> String {

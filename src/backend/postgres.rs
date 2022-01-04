@@ -3,9 +3,9 @@ use crate::{
     svec,
 };
 
-pub struct PostgreSQL;
+pub struct Postgres;
 
-impl Store for PostgreSQL {
+impl Store for Postgres {
     fn name(&self) -> String {
         "postgres".to_string()
     }

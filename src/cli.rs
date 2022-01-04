@@ -44,7 +44,7 @@ pub enum App {
 #[strum(ascii_case_insensitive)]
 pub enum Playground {
     Redis,
-    PostgreSQL,
+    Postgres,
     MySQL,
     DynamoDB,
     Cassandra,

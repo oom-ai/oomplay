@@ -11,7 +11,7 @@ type StoreRef<'a> = &'a (dyn Store + Sync);
 pub fn unique_stores(playground: &[Playground]) -> impl Iterator<Item = StoreRef> {
     playground.iter().unique().map(|backend| match backend {
         Playground::Redis => &Redis as StoreRef,
-        Playground::PostgreSQL => &PostgreSQL as StoreRef,
+        Playground::Postgres => &Postgres as StoreRef,
         Playground::MySQL => &MySQL as StoreRef,
         Playground::DynamoDB => &DynamoDB as StoreRef,
         Playground::Cassandra => &Cassandra as StoreRef,

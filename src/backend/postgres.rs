@@ -1,3 +1,5 @@
+use anyhow::Result;
+
 use crate::{docker::PortBinding, store::Store, svec};
 
 pub struct Postgres;
@@ -11,12 +13,12 @@ impl Store for Postgres {
         "postgres:14.0-alpine".to_string()
     }
 
-    fn envs(&self) -> Vec<String> {
-        svec![
+    fn envs(&self) -> Result<Vec<String>> {
+        Ok(svec![
             "POSTGRES_PASSWORD=postgres",
             "POSTGRES_USER=postgres",
             "PGUSER=postgres",
-        ]
+        ])
     }
 
     fn port_map(&self) -> Vec<PortBinding> {

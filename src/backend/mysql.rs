@@ -1,3 +1,5 @@
+use anyhow::Result;
+
 use crate::{docker::PortBinding, store::Store, svec};
 
 pub struct MySQL;
@@ -11,8 +13,8 @@ impl Store for MySQL {
         "mysql:8.0".to_string()
     }
 
-    fn envs(&self) -> Vec<String> {
-        svec!["MYSQL_ALLOW_EMPTY_PASSWORD=yes"]
+    fn envs(&self) -> Result<Vec<String>> {
+        Ok(svec!["MYSQL_ALLOW_EMPTY_PASSWORD=yes"])
     }
 
     fn port_map(&self) -> Vec<PortBinding> {

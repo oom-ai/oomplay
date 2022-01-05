@@ -71,7 +71,7 @@ where
         info!("📦 Creating container for {} ...", store.name());
         let config = container::Config {
             image: Some(store.image()),
-            env: Some(store.envs()),
+            env: Some(store.envs()?),
             cmd: store.entry_cmd(),
             host_config: Some(models::HostConfig {
                 auto_remove: Some(true),

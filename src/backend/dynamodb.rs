@@ -1,3 +1,5 @@
+use anyhow::Result;
+
 use crate::{docker::PortBinding, store::Store, svec};
 
 pub struct DynamoDB;
@@ -11,8 +13,8 @@ impl Store for DynamoDB {
         "localstack/localstack:0.12.2".to_string()
     }
 
-    fn envs(&self) -> Vec<String> {
-        svec!["SERVICES=dynamodb", "AWS_DEFAULT_OUTPUT=text"]
+    fn envs(&self) -> Result<Vec<String>> {
+        Ok(svec!["SERVICES=dynamodb", "AWS_DEFAULT_OUTPUT=text"])
     }
 
     fn port_map(&self) -> Vec<PortBinding> {

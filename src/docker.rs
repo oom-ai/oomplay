@@ -144,7 +144,7 @@ where
         info!("💫 Resetting {} ...", store.name());
         // sometimes `init_cmd` fails even after `ping_cmd` succeeded so we may retry
         while let Err(e) = exec(self, &store.full_name(), store.reset_cmd()).await {
-            info!("⌛ {} may not ready", store.name());
+            info!("⌛ {} may not be ready yet ...", store.name());
             debug!("init {} failed: {}", store.name(), e);
             if !retry {
                 return Err(e);

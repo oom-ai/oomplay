@@ -61,6 +61,17 @@ $ oomplay stop redis postgres
 [*] 🔴 oomplay-postgres stopped.
 ```
 
+**Snowflake**
+
+Snowflake playground requires some environment variables:
+
+```sh
+export SNOWFLAKE_ACCOUNT=...
+export SNOWFLAKE_USER=...
+export SNOWFLAKE_PASSWORD=...
+export SNOWFLAKE_DATABASE=...
+```
+
 ## Supported playgrounds
 
 - [x] Redis
@@ -71,6 +82,7 @@ $ oomplay stop redis postgres
 - [x] TiDB
 - [x] TiKV
 - [x] SQLite
+- [x] Snowflake
 
 ## Installation
 

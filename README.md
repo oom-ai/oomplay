@@ -70,6 +70,7 @@ $ oomplay stop redis postgres
 - [x] Cassandra
 - [x] TiDB
 - [x] TiKV
+- [x] SQLite
 
 ## Installation
 

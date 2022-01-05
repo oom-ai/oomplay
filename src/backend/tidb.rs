@@ -35,7 +35,7 @@ impl Store for TiDB {
     fn envs(&self) -> Vec<String> {
         match self {
             TiDB::External => {
-                let host = env::var("TIKV_HOST").unwrap_or_else(|_| "127.0.0.1".into());
+                let host = env::var("TIDB_HOST").unwrap_or_else(|_| "127.0.0.1".into());
                 svec![format!("TIDB_HOST={host}")]
             }
             TiDB::Internal => svec![],

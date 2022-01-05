@@ -79,7 +79,7 @@ $ oomplay stop redis postgres
 You can install `oomplay` with Homebrew:
 
 ```
-brew tap oom-ai/oomplay
+brew tap oom-ai/oom-ai
 brew install oomplay
 ```
 

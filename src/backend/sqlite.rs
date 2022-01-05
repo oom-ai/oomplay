@@ -8,7 +8,7 @@ impl Store for SQLite {
     }
 
     fn image(&self) -> String {
-        "alpine".to_string()
+        "alpine:latest".to_string()
     }
 
     fn mounts(&self) -> Vec<Mount> {

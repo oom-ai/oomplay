@@ -1,4 +1,5 @@
 use crate::{docker::PortBinding, store::Store, svec};
+use std::env;
 
 pub enum TiDB {
     External,
@@ -33,7 +34,10 @@ impl Store for TiDB {
 
     fn envs(&self) -> Vec<String> {
         match self {
-            TiDB::External => svec!["TIDB_HOST=127.0.0.1"],
+            TiDB::External => {
+                let host = env::var("TIKV_HOST").unwrap_or_else(|_| "127.0.0.1".into());
+                svec![format!("TIDB_HOST={host}")]
+            }
             TiDB::Internal => svec![],
         }
     }

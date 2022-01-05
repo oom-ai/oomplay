@@ -1,4 +1,5 @@
 use itertools::Itertools;
+use std::env;
 
 use crate::{docker::PortBinding, store::Store, svec};
 
@@ -35,7 +36,10 @@ impl Store for TiKV {
 
     fn envs(&self) -> Vec<String> {
         match self {
-            TiKV::External => svec!["TIKV_HOST=127.0.0.1"],
+            TiKV::External => {
+                let host = env::var("TIKV_HOST").unwrap_or_else(|_| "127.0.0.1".into());
+                svec![format!("TIKV_HOST={host}")]
+            }
             TiKV::Internal => svec![],
         }
     }

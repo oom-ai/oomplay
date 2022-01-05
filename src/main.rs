@@ -25,7 +25,7 @@ async fn main() {
     colog::init();
 
     if let Err(e) = try_main().await {
-        error!("❗ {}", e.to_string().trim());
+        error!("💢 {}", e.to_string().trim());
         std::process::exit(1)
     }
 }
@@ -35,14 +35,14 @@ async fn try_main() -> Result<()> {
     match App::parse() {
         App::Init { playground, jobs } => {
             stream::iter(unique_stores(&playground))
-                .map(|store| with_flock(store.name(), || docker.init(store)))
+                .map(|store| with_flock(store.full_name(), || docker.init(store)))
                 .buffer_unordered(jobs)
                 .try_collect::<Vec<_>>()
                 .await?;
         }
         App::Stop { playground, jobs } => {
             stream::iter(unique_stores(&playground))
-                .map(|store| with_flock(store.name(), || docker.stop(store)))
+                .map(|store| with_flock(store.full_name(), || docker.stop(store)))
                 .buffer_unordered(jobs)
                 .try_collect::<Vec<_>>()
                 .await?;

@@ -1,13 +1,10 @@
-use crate::{
-    store::{PortMap, Store},
-    svec,
-};
+use crate::{docker::PortMap, store::Store, svec};
 
 pub struct DynamoDB;
 
 impl Store for DynamoDB {
     fn name(&self) -> String {
-        "oomplay-localstack-dynamodb".to_string()
+        "localstack-dynamodb".to_string()
     }
 
     fn image(&self) -> String {

@@ -8,15 +8,19 @@ use std::env;
 use crate::{backend::*, cli::Playground, store::Store};
 type StoreRef<'a> = &'a (dyn Store + Sync);
 
+#[rustfmt::skip]
 pub fn unique_stores(playground: &[Playground]) -> impl Iterator<Item = StoreRef> {
     playground.iter().unique().map(|backend| match backend {
-        Playground::Redis => &Redis as StoreRef,
-        Playground::Postgres => &PostgreSQL as StoreRef,
-        Playground::Mysql => &MySQL as StoreRef,
-        Playground::Dynamodb => &DynamoDB as StoreRef,
-        Playground::Cassandra => &Cassandra as StoreRef,
-        Playground::Tidb => &TiDB as StoreRef,
-        Playground::Tikv => &TiKV as StoreRef,
+        Playground::Redis     => &Redis          as StoreRef,
+        Playground::Postgres  => &Postgres       as StoreRef,
+        Playground::MySQL     => &MySQL          as StoreRef,
+        Playground::DynamoDB  => &DynamoDB       as StoreRef,
+        Playground::Cassandra => &Cassandra      as StoreRef,
+        Playground::TiDB      => &TiDB::Internal as StoreRef,
+        Playground::TiDBExt   => &TiDB::External as StoreRef,
+        Playground::TiKV      => &TiKV::Internal as StoreRef,
+        Playground::TiKVExt   => &TiKV::External as StoreRef,
+        Playground::SQLite    => &SQLite         as StoreRef,
     })
 }
 

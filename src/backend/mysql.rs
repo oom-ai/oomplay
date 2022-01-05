@@ -1,13 +1,10 @@
-use crate::{
-    store::{PortMap, Store},
-    svec,
-};
+use crate::{docker::PortMap, store::Store, svec};
 
 pub struct MySQL;
 
 impl Store for MySQL {
     fn name(&self) -> String {
-        "oomplay-mysql".to_string()
+        "mysql".to_string()
     }
 
     fn image(&self) -> String {

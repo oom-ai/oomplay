@@ -1,13 +1,10 @@
-use crate::{
-    store::{PortMap, Store},
-    svec,
-};
+use crate::{docker::PortMap, store::Store, svec};
 
 pub struct Redis;
 
 impl Store for Redis {
     fn name(&self) -> String {
-        "oomplay-redis".to_string()
+        "redis".to_string()
     }
 
     fn image(&self) -> String {

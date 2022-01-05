@@ -1,13 +1,10 @@
-use crate::{
-    store::{PortMap, Store},
-    svec,
-};
+use crate::{docker::PortMap, store::Store, svec};
 
-pub struct PostgreSQL;
+pub struct Postgres;
 
-impl Store for PostgreSQL {
+impl Store for Postgres {
     fn name(&self) -> String {
-        "oomplay-postgres".to_string()
+        "postgres".to_string()
     }
 
     fn image(&self) -> String {

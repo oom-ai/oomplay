@@ -6,7 +6,29 @@ use futures::prelude::*;
 use std::time::Duration;
 use tokio::time::Instant;
 
-use crate::store::{PortMap, Store};
+#[allow(dead_code)]
+pub enum PortMap {
+    Tcp(u16, u16),
+    Udp(u16, u16),
+}
+
+pub struct Mount {
+    pub source: String,
+    pub target: String,
+}
+
+impl From<Mount> for models::Mount {
+    fn from(m: Mount) -> Self {
+        Self {
+            target: Some(m.target),
+            source: Some(m.source),
+            typ: Some(models::MountTypeEnum::BIND),
+            ..Default::default()
+        }
+    }
+}
+
+use crate::store::Store;
 
 #[async_trait]
 pub trait StoreRuntime<T>
@@ -37,11 +59,11 @@ where
     T: Store + Sync + ?Sized,
 {
     async fn start(&self, store: &T) -> Result<()> {
-        info!("🚀 Starting container {} ...", store.name());
-        match self.start_container::<String>(&store.name(), None).await {
+        info!("🚀 Starting container for {} ...", store.name());
+        match self.start_container::<String>(&store.full_name(), None).await {
             Ok(_) => Ok(()),
             Err(errors::Error::DockerResponseNotModifiedError { .. }) => {
-                debug!("container {} already started", store.name());
+                debug!("container {} already started", store.full_name());
                 Ok(())
             }
             Err(e) => bail!(e),
@@ -49,13 +71,15 @@ where
     }
 
     async fn create(&self, store: &T) -> Result<()> {
-        info!("📦 Creating container {} ...", store.name());
+        info!("📦 Creating container for {} ...", store.name());
         let config = container::Config {
             image: Some(store.image()),
             env: Some(store.envs()),
             cmd: store.entry_cmd(),
             host_config: Some(models::HostConfig {
                 auto_remove: Some(true),
+                network_mode: Some(store.network()),
+                mounts: Some(store.mounts().into_iter().map(|x| x.into()).collect()),
                 port_bindings: Some(
                     store
                         .port_map()
@@ -76,12 +100,12 @@ where
             }),
             ..Default::default()
         };
-        let options = container::CreateContainerOptions { name: store.name() };
+        let options = container::CreateContainerOptions { name: store.full_name() };
 
         match self.create_container(Some(options), config).await {
             Ok(_) => Ok(()),
             Err(errors::Error::DockerResponseConflictError { .. }) => {
-                debug!("container {} already exists", store.name());
+                debug!("container {} already exists", store.full_name());
                 Ok(())
             }
             Err(e) => bail!(e),
@@ -107,13 +131,15 @@ where
     async fn stop(&self, store: &T) -> Result<()> {
         info!("🔌 Stopping {} ...", store.name().blue().bold());
         let opt = Some(container::KillContainerOptions { signal: "SIGKILL" });
-        self.kill_container(&store.name(), opt).await.or_else(|e| match e {
-            errors::Error::DockerResponseNotFoundError { .. } => {
-                debug!("'{}' already stopped", store.name());
-                Ok(())
-            }
-            _ => bail!(e),
-        })?;
+        self.kill_container(&store.full_name(), opt)
+            .await
+            .or_else(|e| match e {
+                errors::Error::DockerResponseNotFoundError { .. } => {
+                    debug!("'{}' already stopped", store.full_name());
+                    Ok(())
+                }
+                _ => bail!(e),
+            })?;
         info!("🔴 Stopped {}.", store.name().bold());
         Ok(())
     }
@@ -121,7 +147,7 @@ where
     async fn reset(&self, store: &T, retry: bool) -> Result<()> {
         info!("💫 Resetting {} ...", store.name());
         // sometimes `init_cmd` fails even after `ping_cmd` succeeded so we may retry
-        while let Err(e) = exec(self, &store.name(), store.reset_cmd()).await {
+        while let Err(e) = exec(self, &store.full_name(), store.reset_cmd()).await {
             info!("⌛ {} may not ready", store.name());
             debug!("init {} failed: {}", store.name(), e);
             if !retry {
@@ -135,11 +161,11 @@ where
 
     async fn check_health(&self, store: &T) -> Result<()> {
         info!("📡 Pinging {} ...", store.name());
-        exec(self, &store.name(), store.ping_cmd()).await
+        exec(self, &store.full_name(), store.ping_cmd()).await
     }
 
     async fn pull(&self, store: &T) -> Result<()> {
-        info!("🚚 Pulling image '{}' ...", store.name());
+        info!("🚚 Pulling image '{}' for {} ...", store.image(), store.name());
         let opts = image::CreateImageOptions { from_image: store.image(), ..Default::default() };
         self.create_image(Some(opts), None, None)
             .try_collect::<Vec<_>>()

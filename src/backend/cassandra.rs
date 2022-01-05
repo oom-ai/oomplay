@@ -1,13 +1,10 @@
-use crate::{
-    store::{PortMap, Store},
-    svec,
-};
+use crate::{docker::PortMap, store::Store, svec};
 
 pub struct Cassandra;
 
 impl Store for Cassandra {
     fn name(&self) -> String {
-        "oomplay-cassandra".to_string()
+        "cassandra".to_string()
     }
 
     fn image(&self) -> String {

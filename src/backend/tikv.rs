@@ -1,6 +1,6 @@
 use itertools::Itertools;
 
-use crate::{docker::PortMap, store::Store, svec};
+use crate::{docker::PortBinding, store::Store, svec};
 
 pub enum TiKV {
     External,
@@ -26,10 +26,10 @@ impl Store for TiKV {
         }
     }
 
-    fn port_map(&self) -> Vec<PortMap> {
+    fn port_map(&self) -> Vec<PortBinding> {
         match self {
             TiKV::External => vec![],
-            TiKV::Internal => vec![PortMap::Tcp(2379, 22379)],
+            TiKV::Internal => vec![(2379, 22379)],
         }
     }
 

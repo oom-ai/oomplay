@@ -1,4 +1,4 @@
-use crate::{docker::PortMap, store::Store, svec};
+use crate::{docker::PortBinding, store::Store, svec};
 
 pub struct DynamoDB;
 
@@ -15,8 +15,8 @@ impl Store for DynamoDB {
         svec!["SERVICES=dynamodb", "AWS_DEFAULT_OUTPUT=text"]
     }
 
-    fn port_map(&self) -> Vec<PortMap> {
-        vec![PortMap::Tcp(4566, 24566)]
+    fn port_map(&self) -> Vec<PortBinding> {
+        vec![(4566, 24566)]
     }
 
     fn reset_cmd(&self) -> Vec<String> {

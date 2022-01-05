@@ -1,4 +1,4 @@
-use crate::{docker::PortMap, store::Store, svec};
+use crate::{docker::PortBinding, store::Store, svec};
 
 pub struct Postgres;
 
@@ -19,8 +19,8 @@ impl Store for Postgres {
         ]
     }
 
-    fn port_map(&self) -> Vec<PortMap> {
-        vec![PortMap::Tcp(5432, 25432)]
+    fn port_map(&self) -> Vec<PortBinding> {
+        vec![(5432, 25432)]
     }
 
     fn reset_cmd(&self) -> Vec<String> {

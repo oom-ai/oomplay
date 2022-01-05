@@ -1,4 +1,4 @@
-use crate::{docker::PortMap, store::Store, svec};
+use crate::{docker::PortBinding, store::Store, svec};
 
 pub enum TiDB {
     External,
@@ -24,10 +24,10 @@ impl Store for TiDB {
         }
     }
 
-    fn port_map(&self) -> Vec<PortMap> {
+    fn port_map(&self) -> Vec<PortBinding> {
         match self {
             TiDB::External => vec![],
-            TiDB::Internal => vec![PortMap::Tcp(4000, 24000)],
+            TiDB::Internal => vec![(4000, 24000)],
         }
     }
 

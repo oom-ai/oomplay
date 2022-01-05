@@ -1,4 +1,4 @@
-use crate::docker::{Mount, PortMap};
+use crate::docker::{Mount, PortBinding};
 
 pub trait Store {
     fn name(&self) -> String;
@@ -13,7 +13,7 @@ pub trait Store {
         "bridge".to_string()
     }
 
-    fn port_map(&self) -> Vec<PortMap> {
+    fn port_map(&self) -> Vec<PortBinding> {
         Vec::new()
     }
 

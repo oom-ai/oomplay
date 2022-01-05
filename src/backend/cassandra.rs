@@ -1,4 +1,4 @@
-use crate::{docker::PortMap, store::Store, svec};
+use crate::{docker::PortBinding, store::Store, svec};
 
 pub struct Cassandra;
 
@@ -11,8 +11,8 @@ impl Store for Cassandra {
         "cassandra:4.0".to_string()
     }
 
-    fn port_map(&self) -> Vec<PortMap> {
-        vec![PortMap::Tcp(9042, 29042)]
+    fn port_map(&self) -> Vec<PortBinding> {
+        vec![(9042, 29042)]
     }
 
     fn reset_cmd(&self) -> Vec<String> {

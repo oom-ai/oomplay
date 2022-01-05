@@ -1,4 +1,4 @@
-use crate::{docker::PortMap, store::Store, svec};
+use crate::{docker::PortBinding, store::Store, svec};
 
 pub struct Redis;
 
@@ -11,8 +11,8 @@ impl Store for Redis {
         "redis:alpine".to_string()
     }
 
-    fn port_map(&self) -> Vec<PortMap> {
-        vec![PortMap::Tcp(6379, 26379)]
+    fn port_map(&self) -> Vec<PortBinding> {
+        vec![(6379, 26379)]
     }
 
     fn reset_cmd(&self) -> Vec<String> {

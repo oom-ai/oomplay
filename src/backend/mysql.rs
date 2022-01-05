@@ -1,4 +1,4 @@
-use crate::{docker::PortMap, store::Store, svec};
+use crate::{docker::PortBinding, store::Store, svec};
 
 pub struct MySQL;
 
@@ -15,8 +15,8 @@ impl Store for MySQL {
         svec!["MYSQL_ALLOW_EMPTY_PASSWORD=yes"]
     }
 
-    fn port_map(&self) -> Vec<PortMap> {
-        vec![PortMap::Tcp(3306, 23306)]
+    fn port_map(&self) -> Vec<PortBinding> {
+        vec![(3306, 23306)]
     }
 
     fn reset_cmd(&self) -> Vec<String> {

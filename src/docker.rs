@@ -6,11 +6,8 @@ use futures::prelude::*;
 use std::time::Duration;
 use tokio::time::Instant;
 
-#[allow(dead_code)]
-pub enum PortMap {
-    Tcp(u16, u16),
-    Udp(u16, u16),
-}
+// tcp port binding from container to host
+pub type PortBinding = (u16, u16);
 
 pub struct Mount {
     pub source: String,
@@ -84,14 +81,13 @@ where
                     store
                         .port_map()
                         .into_iter()
-                        .map(|pm| {
-                            let (from, to) = match pm {
-                                PortMap::Tcp(from, to) => (format!("{from}/tcp"), to.to_string()),
-                                PortMap::Udp(from, to) => (format!("{from}/udp"), to.to_string()),
-                            };
+                        .map(|(from, to)| {
                             (
-                                from,
-                                Some(vec![models::PortBinding { host_port: Some(to), ..Default::default() }]),
+                                format!("{from}/tcp"),
+                                Some(vec![models::PortBinding {
+                                    host_port: Some(to.to_string()),
+                                    ..Default::default()
+                                }]),
                             )
                         })
                         .collect(),

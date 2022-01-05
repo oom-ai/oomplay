@@ -1,3 +1,5 @@
+use anyhow::Result;
+
 use crate::docker::{Mount, PortBinding};
 
 pub trait Store {
@@ -21,8 +23,8 @@ pub trait Store {
         Vec::new()
     }
 
-    fn envs(&self) -> Vec<String> {
-        Vec::new()
+    fn envs(&self) -> Result<Vec<String>> {
+        Ok(Vec::new())
     }
 
     fn entry_cmd(&self) -> Option<Vec<String>> {

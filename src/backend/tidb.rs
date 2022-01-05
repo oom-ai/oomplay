@@ -1,3 +1,5 @@
+use anyhow::Result;
+
 use crate::{docker::PortBinding, store::Store, svec};
 use std::env;
 
@@ -32,14 +34,14 @@ impl Store for TiDB {
         }
     }
 
-    fn envs(&self) -> Vec<String> {
-        match self {
+    fn envs(&self) -> Result<Vec<String>> {
+        Ok(match self {
             TiDB::External => {
                 let host = env::var("TIDB_HOST").unwrap_or_else(|_| "127.0.0.1".into());
                 svec![format!("TIDB_HOST={host}")]
             }
             TiDB::Internal => svec![],
-        }
+        })
     }
 
     fn entry_cmd(&self) -> Option<Vec<String>> {

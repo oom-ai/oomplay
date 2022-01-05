@@ -1,9 +1,9 @@
-use anyhow::Result;
+use anyhow::{anyhow, Result};
 use colored::Colorize;
 use fslock::LockFile;
 use futures::Future;
 use itertools::Itertools;
-use std::env;
+use std::{env, ffi::OsStr};
 
 use crate::{backend::*, cli::Playground, store::Store};
 type StoreRef<'a> = &'a (dyn Store + Sync);
@@ -21,6 +21,7 @@ pub fn unique_stores(playground: &[Playground]) -> impl Iterator<Item = StoreRef
         Playground::TiKV      => &TiKV::Internal as StoreRef,
         Playground::TiKVExt   => &TiKV::External as StoreRef,
         Playground::SQLite    => &SQLite         as StoreRef,
+        Playground::Snowflake => &Snowflake      as StoreRef,
     })
 }
 
@@ -37,4 +38,11 @@ where
         flock.lock()?;
     };
     f().await
+}
+
+pub fn get_env<K: AsRef<OsStr>>(key: K) -> Result<String> {
+    env::var(key.as_ref()).map_err(|e| match e {
+        env::VarError::NotPresent => anyhow!("environment variable {:?} not found", key.as_ref()),
+        e => anyhow!(e),
+    })
 }

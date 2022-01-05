@@ -1,3 +1,4 @@
+use anyhow::Result;
 use itertools::Itertools;
 use std::env;
 
@@ -34,14 +35,14 @@ impl Store for TiKV {
         }
     }
 
-    fn envs(&self) -> Vec<String> {
-        match self {
+    fn envs(&self) -> Result<Vec<String>> {
+        Ok(match self {
             TiKV::External => {
                 let host = env::var("TIKV_HOST").unwrap_or_else(|_| "127.0.0.1".into());
                 svec![format!("TIKV_HOST={host}")]
             }
             TiKV::Internal => svec![],
-        }
+        })
     }
 
     fn entry_cmd(&self) -> Option<Vec<String>> {

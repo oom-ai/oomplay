@@ -8,6 +8,23 @@
 
 Playground manager for [oomstore](https://github.com/oom-ai/oomstore).
 
+## Supported playgrounds
+
+- [x] Redis
+- [x] Postgres
+- [x] MySQL
+- [x] DynamoDB
+- [x] Cassandra
+- [x] TiDB
+- [x] TiDBExt
+- [x] TiKV
+- [x] TiKVExt
+- [x] SQLite
+- [x] SnowflakeExt
+- [x] BigQueryExt
+
+*Postfix `Ext` means using the external service supplied by the user.*
+
 ## Usage
 
 ```help
@@ -63,26 +80,23 @@ $ oomplay stop redis postgres
 
 **Snowflake**
 
-Snowflake playground requires some environment variables:
+Snowflake playground requires the following environment variables:
 
 ```sh
-export SNOWFLAKE_ACCOUNT=...
-export SNOWFLAKE_USER=...
-export SNOWFLAKE_PASSWORD=...
-export SNOWFLAKE_DATABASE=...
+SNOWFLAKE_ACCOUNT
+SNOWFLAKE_USER
+SNOWFLAKE_PASSWORD
+SNOWFLAKE_DATABASE
 ```
 
-## Supported playgrounds
+**BigQuery**
 
-- [x] Redis
-- [x] Postgres
-- [x] MySQL
-- [x] DynamoDB
-- [x] Cassandra
-- [x] TiDB
-- [x] TiKV
-- [x] SQLite
-- [x] Snowflake
+BigQuery playground requires the following environment variables:
+
+```sh
+BIGQUERY_CREDENTIALS
+BIGQUERY_DATASET_ID
+```
 
 ## Installation
 

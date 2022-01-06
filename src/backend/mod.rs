@@ -1,3 +1,4 @@
+mod bigquery;
 mod cassandra;
 mod dynamodb;
 mod mysql;
@@ -8,6 +9,7 @@ mod sqlite;
 mod tidb;
 mod tikv;
 
+pub use bigquery::BigQuery;
 pub use cassandra::Cassandra;
 pub use dynamodb::DynamoDB;
 pub use mysql::MySQL;

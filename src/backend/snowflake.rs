@@ -6,7 +6,7 @@ pub struct Snowflake;
 
 impl Store for Snowflake {
     fn name(&self) -> String {
-        "snowflake".to_string()
+        "snowflake-ext".to_string()
     }
 
     fn image(&self) -> String {

@@ -59,7 +59,7 @@ _oomplay() {
             return 0
             ;;
         oomplay__init)
-            opts="-j -h --jobs --help Redis Postgres MySQL DynamoDB Cassandra TiDB TiKV SQLite TiDBExt TiKVExt SnowflakeExt BigQueryExt"
+            opts="-j -h --jobs --help Redis Postgres MySQL DynamoDB Cassandra TiDB TiKV SQLite TiDBExt TiKVExt SnowflakeExt BigQueryExt RedshiftExt"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0
@@ -95,7 +95,7 @@ _oomplay() {
             return 0
             ;;
         oomplay__stop)
-            opts="-j -h --jobs --help Redis Postgres MySQL DynamoDB Cassandra TiDB TiKV SQLite TiDBExt TiKVExt SnowflakeExt BigQueryExt"
+            opts="-j -h --jobs --help Redis Postgres MySQL DynamoDB Cassandra TiDB TiKV SQLite TiDBExt TiKVExt SnowflakeExt BigQueryExt RedshiftExt"
             if [[ ${cur} == -* || ${COMP_CWORD} -eq 2 ]] ; then
                 COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
                 return 0

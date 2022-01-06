@@ -55,4 +55,5 @@ pub enum Playground {
     TiKVExt,
     SnowflakeExt,
     BigQueryExt,
+    RedshiftExt,
 }

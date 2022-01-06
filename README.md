@@ -22,6 +22,7 @@ Playground manager for [oomstore](https://github.com/oom-ai/oomstore).
 - [x] SQLite
 - [x] SnowflakeExt
 - [x] BigQueryExt
+- [x] RedshiftExt
 
 *Postfix `Ext` means using the external service supplied by the user.*
 
@@ -78,24 +79,32 @@ $ oomplay stop redis postgres
 [*] 🔴 oomplay-postgres stopped.
 ```
 
-**Snowflake**
+**SnowflakeExt**
+SnowflakeExt playground requires the following environment variables:
 
-Snowflake playground requires the following environment variables:
-
-```sh
+```
 SNOWFLAKE_ACCOUNT
 SNOWFLAKE_USER
 SNOWFLAKE_PASSWORD
 SNOWFLAKE_DATABASE
 ```
 
-**BigQuery**
+**BigQueryExt**
+BigQueryExt playground requires the following environment variables:
 
-BigQuery playground requires the following environment variables:
-
-```sh
+```
 BIGQUERY_CREDENTIALS
 BIGQUERY_DATASET_ID
+```
+**RedshiftExt**
+RedshiftExt playground requires the following environment variables:
+
+```
+REDSHIFT_HOST
+REDSHIFT_USER
+REDSHIFT_DATABASE
+REDSHIFT_PASSWORD
+REDSHIFT_DEFAULT_DATABASE
 ```
 
 ## Installation

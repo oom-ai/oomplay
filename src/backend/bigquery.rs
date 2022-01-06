@@ -7,7 +7,7 @@ pub struct BigQuery;
 
 impl Store for BigQuery {
     fn name(&self) -> String {
-        "bigquery".to_string()
+        "bigquery-ext".to_string()
     }
 
     fn image(&self) -> String {

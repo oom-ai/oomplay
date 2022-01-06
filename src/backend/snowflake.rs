@@ -31,10 +31,10 @@ impl Store for Snowflake {
             "sh",
             "-c",
             r#"
-                snowsql -a $SNOWSQL_ACCOUNT -u $SNOWSQL_USER -q '
-                            DROP DATABASE IF EXISTS "$SNOWFLAKE_DATABASE";
-                            CREATE DATABASE "$SNOWFLAKE_DATABASE";
-                '
+                snowsql -a $SNOWSQL_ACCOUNT -u $SNOWSQL_USER -q "
+                            DROP DATABASE IF EXISTS \"$SNOWSQL_DATABASE\";
+                            CREATE DATABASE \"$SNOWSQL_DATABASE\";
+                "
             "#,
         ]
     }

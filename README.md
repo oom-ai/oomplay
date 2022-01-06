@@ -16,10 +16,14 @@ Playground manager for [oomstore](https://github.com/oom-ai/oomstore).
 - [x] DynamoDB
 - [x] Cassandra
 - [x] TiDB
+- [x] TiDBExt
 - [x] TiKV
+- [x] TiKVExt
 - [x] SQLite
-- [x] Snowflake
-- [x] BigQuery
+- [x] SnowflakeExt
+- [x] BigQueryExt
+
+*Postfix `Ext` means using the external service supplied by the user.*
 
 ## Usage
 

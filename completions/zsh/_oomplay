@@ -34,7 +34,7 @@ _arguments "${_arguments_options[@]}" \
 '--jobs=[Number of parallel jobs, defaults to # of CPUs]:N: ' \
 '-h[Print help information]' \
 '--help[Print help information]' \
-'*::playground -- Playground type:(Redis Postgres MySQL DynamoDB Cassandra TiDB TiDBExt TiKV TiKVExt SQLite Snowflake)' \
+'*::playground -- Playground type:(Redis Postgres MySQL DynamoDB Cassandra TiDB TiDBExt TiKV TiKVExt SQLite Snowflake BigQuery)' \
 && ret=0
 ;;
 (stop)
@@ -43,7 +43,7 @@ _arguments "${_arguments_options[@]}" \
 '--jobs=[Number of parallel jobs, defaults to # of CPUs]:N: ' \
 '-h[Print help information]' \
 '--help[Print help information]' \
-'*::playground -- Playground type:(Redis Postgres MySQL DynamoDB Cassandra TiDB TiDBExt TiKV TiKVExt SQLite Snowflake)' \
+'*::playground -- Playground type:(Redis Postgres MySQL DynamoDB Cassandra TiDB TiDBExt TiKV TiKVExt SQLite Snowflake BigQuery)' \
 && ret=0
 ;;
 (list)

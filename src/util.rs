@@ -22,6 +22,7 @@ pub fn unique_stores(playground: &[Playground]) -> impl Iterator<Item = StoreRef
         Playground::TiKVExt   => &TiKV::External as StoreRef,
         Playground::SQLite    => &SQLite         as StoreRef,
         Playground::Snowflake => &Snowflake      as StoreRef,
+        Playground::BigQuery =>  &BigQuery       as StoreRef,
     })
 }
 

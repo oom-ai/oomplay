@@ -54,4 +54,5 @@ pub enum Playground {
     TiKVExt,
     SQLite,
     Snowflake,
+    BigQuery,
 }

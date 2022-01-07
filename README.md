@@ -80,6 +80,7 @@ $ oomplay stop redis postgres
 ```
 
 **SnowflakeExt**
+
 SnowflakeExt playground requires the following environment variables:
 
 ```
@@ -90,6 +91,7 @@ SNOWFLAKE_DATABASE
 ```
 
 **BigQueryExt**
+
 BigQueryExt playground requires the following environment variables:
 
 ```
@@ -97,6 +99,7 @@ BIGQUERY_CREDENTIALS
 BIGQUERY_DATASET_ID
 ```
 **RedshiftExt**
+
 RedshiftExt playground requires the following environment variables:
 
 ```

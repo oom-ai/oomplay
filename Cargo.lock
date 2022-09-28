@@ -143,12 +143,22 @@ dependencies = [
 ]
 
 [[package]]
-name = "clap_complete"
-version = "3.1.0"
+name = "clap"
+version = "4.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "23eec4dd324308f49d8bf86a2732078c34d57955fec1e1d865554fc37c15d420"
+checksum = "31c9484ccdc4cb8e7b117cbd0eb150c7c0f04464854e4679aeb50ef03b32d003"
 dependencies = [
- "clap",
+ "bitflags",
+ "clap_lex",
+]
+
+[[package]]
+name = "clap_complete"
+version = "4.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f04c8f8007e8a1813ba933df2d8fb50cad04e0d9e89a22d64485f25a6a6c35d8"
+dependencies = [
+ "clap 4.0.2",
 ]
 
 [[package]]
@@ -162,6 +172,15 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
+]
+
+[[package]]
+name = "clap_lex"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0d4198f73e42b4936b35b5bb248d81d2b595ecb170da0bac7655c54eedfa8da8"
+dependencies = [
+ "os_str_bytes",
 ]
 
 [[package]]
@@ -682,7 +701,7 @@ dependencies = [
  "anyhow",
  "async-trait",
  "bollard",
- "clap",
+ "clap 3.1.1",
  "clap_complete",
  "colog",
  "colored",
